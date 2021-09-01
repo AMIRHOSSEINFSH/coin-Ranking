@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.CardView.Spinner" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">30dp</item>
+        <item name="startIconDrawable">@drawable/ic_arrow_bottom</item>
+        <item name="cardBackgroundColor">@color/titan_white</item>
+    </style>
+
+    <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_navigation_item_color</item>
+        <item name="itemTextColor">@color/bottom_navigation_item_color</item>
+        <item name="itemRippleColor">@color/bottom_navigation_ripple_color</item>
+        <item name="itemTextAppearanceActive">@style/ActiveBottomNavigationTextAppearance</item>
+        
+    </style>
+
+    <style name="ActiveBottomNavigationTextAppearance" parent="TextAppearance.MyTheme.Caption">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <!--<style name="spinnerStyle" parent="android:Widget.Spinner.DropDown">
+        <item name="android:textAppearance">@style/TextAppearance.MyTheme.Headline5</item>
+        <item name="backgroundColor">@color/spinner_bg</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">30dp</item>
+    </style>-->
+
+    <style name="searchViewStyle" parent="android:Widget.Material.SearchView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">32dp</item>
+        <item name="backgroundColor">?attr/colorOnPrimary</item>
+        <item name="itemTextAppearance" >@style/TextAppearance.MyTheme.Subtitle1</item>
+    </style>
+    
+</resources>

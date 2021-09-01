@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="french_blue_200">#4557aa</color>
+    <!--#97a9ff-->
+    <color name="color_primary">@color/indigo_500</color>
+    <color name="color_primary_variant">@color/blue_50</color>
+    <color name="color_on_primary">@color/white</color>
+    <color name="color_Secondary">@color/blue_200</color>
+    <color name="color_on_Secondary">@color/white</color>
+    <color name="color_background">@color/blue_grey_950</color>
+    <!--  BottomNavigationView background == colorSurface   -->
+    <color name="color_Surface">@color/blue_grey_950</color>
+    <color name="color_On_Surface">@color/indigo_300</color>
+
+    <color name="blue_grey_900">#1C2449</color>
+    <color name="blue_grey_950">#0D122B</color>
+    <color name="indigo_300">#727DAF</color>
+    <color name="blue_50">#ECEFFF</color>
+    <color name="indigo_500">#4557AA</color>
+    <color name="cyan_600">#13B2B2</color>
+
+    <!-- Error Color -->
+    <color name="deep_orange_600">#EB5E2C</color>
+
+
+
+</resources>

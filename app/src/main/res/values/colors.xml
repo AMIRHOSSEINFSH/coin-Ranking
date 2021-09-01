@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+
+    <color name="color_primary">@color/french_blue_200</color>
+    <color name="color_primary_variant">@color/blue_200</color>
+    <color name="color_on_primary">@color/white</color>
+    <color name="color_Secondary">@color/blue_200</color>
+    <color name="color_on_Secondary">@color/white</color>
+    <color name="color_background">@color/white</color>
+    <color name="color_Surface">@color/white</color>
+    <color name="color_On_Surface">@color/purple</color>
+
+
+    <color name="french_blue_200">#4557aa</color>
+
+    <color name="grey_700">#585858</color>
+    <color name="blue_200">#6374c3</color>
+    <color name="darkGray">#7e7e7e</color>
+    <color name="gray_600">#717171</color>
+    <color name="gray_400">#979797</color>
+    <color name="gray_200">#c4c4c4</color>
+    <color name="green">#13b2b2</color>
+
+    <color name="titan_white">#ecefff</color>
+    <color name="black_600">#000000</color>
+    <color name="black_400">#FF000000</color>
+    <color name="black_200">#2c324b</color>
+    <color name="spinnerBlack">#686868</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple">#97a9ff</color>
+
+    <!-- Error Color -->
+    <color name="deep_orange_600">#EB5E2C</color>
+
+
+
 </resources>
