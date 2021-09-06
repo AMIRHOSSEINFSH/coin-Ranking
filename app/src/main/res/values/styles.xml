@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Base.CardView.Spinner" parent="Widget.MaterialComponents.CardView">
+    <style name="Base.Button.Spinner" parent="Widget.AppCompat.EditText">
         <item name="cardCornerRadius">30dp</item>
         <item name="startIconDrawable">@drawable/ic_arrow_bottom</item>
-        <item name="cardBackgroundColor">@color/titan_white</item>
+        <item name="background">@color/titan_white</item>
     </style>
 
     <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">

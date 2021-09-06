@@ -3,4 +3,7 @@
     <string name="home">Home</string>
     <string name="exchanges">Exchanges</string>
     <string name="bookmarks">BookMarks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello exchanges fragment</string>
+
 </resources>

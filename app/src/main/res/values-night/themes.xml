@@ -47,5 +47,8 @@
         <item name="bottomNavigationStyle">@style/DarkBottomNavigationView</item>
         <!--<item name="android:dropDownSpinnerStyle">@style/spinnerStyle</item>-->
         <item name="android:searchViewStyle">@style/searchViewStyle</item>
+
+
+
     </style>
 </resources>

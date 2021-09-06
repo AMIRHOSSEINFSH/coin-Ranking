@@ -3,7 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/button_press.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/ic_feedback.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/ic_home.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/ic_list.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/purple_frame.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/rounded_button.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/rounded_rect.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable/bg_filter_spinner.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable/ic_arrow_bottom.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable/ic_home.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_about.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_blank.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_book_marks.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_exchanges.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_register.xml" value="0.10625" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_registered.xml" value="0.10625" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_test.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_title.xml" value="0.10625" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/fragment_user_profile.xml" value="0.10625" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/layout_picker.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/list_view_item.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/user_card.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/layout/view_loading.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/menu/bottom_nav.xml" value="0.22239583333333332" />
         <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/menu/botton_navigation_items.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/User/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/ic_go_search_api_material.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/User/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/ic_search_api_material.xml" value="0.23541666666666666" />
