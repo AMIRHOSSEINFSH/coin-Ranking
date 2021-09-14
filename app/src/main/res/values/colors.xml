@@ -6,13 +6,18 @@
     <color name="color_on_primary">@color/white</color>
     <color name="color_Secondary">@color/blue_200</color>
     <color name="color_on_Secondary">@color/white</color>
-    <color name="color_background">@color/white</color>
+    <color name="color_background">@color/white_200</color>
     <color name="color_Surface">@color/white</color>
     <color name="color_On_Surface">@color/purple</color>
+    <color name="color_divider">@color/gray_200</color>
+
+    <color name="color_et_hint_search">@color/gray_400</color>
+    <color name="et_bg_color">@color/white</color>
 
 
     <color name="french_blue_200">#4557aa</color>
 
+    <color name="white_200">#FCFBFB</color>
     <color name="grey_700">#585858</color>
     <color name="blue_200">#6374c3</color>
     <color name="darkGray">#7e7e7e</color>

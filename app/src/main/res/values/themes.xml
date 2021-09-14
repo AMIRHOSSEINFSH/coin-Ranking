@@ -26,6 +26,9 @@
         <item name="android:actionBarStyle">
             @style/TextAppearance.MaterialComponents.Headline2
         </item>
+
+        <item name="dividerColor">@color/color_divider</item>
+
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
@@ -48,7 +51,7 @@
 
         <item name="bottomNavigationStyle">@style/MyBottomNavigationView</item>
         <!--<item name="android:dropDownSpinnerStyle">@style/spinnerStyle</item>-->
-        <item name="android:searchViewStyle">@style/searchViewStyle</item>
+        <item name="editTextStyle">@style/et_style</item>
     </style>
 
     <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
