@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking
+package com.code_chabok.coinranking.feature.home
 
 import android.content.res.Configuration
 import com.code_chabok.coinranking.common.CoinActivity
@@ -6,27 +6,21 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.code_chabok.coinranking.common.hide
-import com.code_chabok.coinranking.common.show
+import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : CoinActivity(),OnChangingFragmentListener {
+class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
 
     private lateinit var navController: NavController
@@ -39,7 +33,7 @@ class MainActivity : CoinActivity(),OnChangingFragmentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         initNavController()
         setUpToolBar()
@@ -63,17 +57,17 @@ class MainActivity : CoinActivity(),OnChangingFragmentListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       /* when(item.itemId){
+        when(item.itemId){
             R.id.mi_search -> {
-                Toast.makeText(this, "vugfn", Toast.LENGTH_SHORT).show()}
-        }*/
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
     private fun setupNavigationUiState() {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
-                R.id.homeFragment->{
+                R.id.homeFragment ->{
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }
@@ -87,6 +81,7 @@ class MainActivity : CoinActivity(),OnChangingFragmentListener {
                 }
                 R.id.searchFragment -> {
                     onChanged(false)
+
                 }
             }
         }
@@ -147,6 +142,7 @@ class MainActivity : CoinActivity(),OnChangingFragmentListener {
             navController.navigateUp()
             }else{
                 setupDrawerLayout()
+                binding.drawerLayout.openDrawer(GravityCompat.START)
             }
         }
     }

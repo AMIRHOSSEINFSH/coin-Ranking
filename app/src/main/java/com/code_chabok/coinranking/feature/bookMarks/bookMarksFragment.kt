@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 
 
 class bookMarksFragment : CoinFragment() {
 
+    private lateinit var binding: FragmentBookMarksBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,14 +22,9 @@ class bookMarksFragment : CoinFragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-
-        return inflater.inflate(R.layout.fragment_book_marks, container, false)
+        binding = FragmentBookMarksBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_toolbar_search,menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
 }
