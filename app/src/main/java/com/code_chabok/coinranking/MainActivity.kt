@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -25,7 +26,8 @@ import com.code_chabok.coinranking.databinding.ActivityMainBinding
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : CoinActivity() {
+class MainActivity : CoinActivity(),OnChangingFragmentListener {
+
 
     private lateinit var navController: NavController
 
@@ -33,20 +35,26 @@ class MainActivity : CoinActivity() {
 
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
+    private lateinit var configuration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         initNavController()
         setUpToolBar()
-        setupDrawerLayout()
         setupNavigationUiState()
-
+        setupDrawerLayout()
 
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
 
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(configuration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,6 +63,10 @@ class MainActivity : CoinActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+       /* when(item.itemId){
+            R.id.mi_search -> {
+                Toast.makeText(this, "vugfn", Toast.LENGTH_SHORT).show()}
+        }*/
         return super.onOptionsItemSelected(item)
     }
 
@@ -62,17 +74,19 @@ class MainActivity : CoinActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
                 R.id.homeFragment->{
-                    binding.toolbar.show()
-                    binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(true)
                 }
                 R.id.exchangesFragment -> {
-                    binding.toolbar.hide()
-                    binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(false)
                 }
-
                 R.id.bookMarksFragment -> {
-                    binding.toolbar.hide()
-                    binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(false)
+                }
+                R.id.searchFragment -> {
+                    onChanged(false)
                 }
             }
         }
@@ -99,10 +113,11 @@ class MainActivity : CoinActivity() {
     private fun setUpToolBar() {
         setSupportActionBar(binding.toolbar)
 
-        val configuration = AppBarConfiguration.Builder(setOf(R.id.homeFragment,R.id.bookMarksFragment,R.id.exchangesFragment))
+         configuration = AppBarConfiguration.Builder(setOf(R.id.homeFragment))
             .setOpenableLayout(binding.drawerLayout)
             .build()
         setupActionBarWithNavController(navController, configuration)
+
     }
 
     private fun setupDrawerLayout() {
@@ -113,6 +128,8 @@ class MainActivity : CoinActivity() {
             R.string.action_open_drawer,
             R.string.action_close_drawer
         )
+        //drawerToggle = ActionBarDrawerToggle(this,binding.drawerLayout,R.string.action_open_drawer, R.string.action_open_drawer)
+        //drawerToggle = ActionBarDrawerToggle(this,null,R.string.action_open_drawer,R.string.action_open_drawer)
 
         binding.drawerLayout.addDrawerListener(drawerToggle)
     }
@@ -124,7 +141,19 @@ class MainActivity : CoinActivity() {
         navController = navHostFragment.navController
     }
 
+    override fun onChanged(isHome: Boolean) {
+        binding.toolbar.setNavigationOnClickListener{
+            if(!isHome){
+            navController.navigateUp()
+            }else{
+                setupDrawerLayout()
+            }
+        }
+    }
 
 
+}
 
+interface OnChangingFragmentListener{
+    fun onChanged(isHome: Boolean)
 }

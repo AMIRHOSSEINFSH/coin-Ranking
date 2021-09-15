@@ -6,17 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.exchanges.exchangesFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        app:navigationIcon="@drawable/ic_back"
-        android:id="@+id/materialToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary"
-        app:menu="@menu/menu_toolbar_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:text="@string/hello_blank_fragment"
         android:layout_width="wrap_content"
@@ -24,6 +13,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
