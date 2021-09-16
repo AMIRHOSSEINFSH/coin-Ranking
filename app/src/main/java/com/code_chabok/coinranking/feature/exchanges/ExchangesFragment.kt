@@ -9,7 +9,7 @@ import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
 
-class exchangesFragment : CoinFragment() {
+class ExchangesFragment : CoinFragment() {
 
     private lateinit var binding: FragmentExchangesBinding
 

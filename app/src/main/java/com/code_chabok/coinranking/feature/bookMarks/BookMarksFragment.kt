@@ -9,7 +9,7 @@ import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 
 
-class bookMarksFragment : CoinFragment() {
+class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
     override fun onCreate(savedInstanceState: Bundle?) {
