@@ -105,6 +105,14 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         drawerToggle.onConfigurationChanged(newConfig)
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        //todo we should setUpNavigationUiState because of refreshing navController
+        // for understanding witch fragment is loading and behave approach(home->drawerLayout start else-> navigationUp)
+        setupNavigationUiState()
+    }
+
+
     private fun setUpToolBar() {
         setSupportActionBar(binding.toolbar)
 
