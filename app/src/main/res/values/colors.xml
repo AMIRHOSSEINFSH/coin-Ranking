@@ -25,6 +25,7 @@
     <color name="gray_400">#979797</color>
     <color name="gray_200">#c4c4c4</color>
     <color name="green">#13b2b2</color>
+    <color name="grey_500">#979797</color>
 
     <color name="titan_white">#ecefff</color>
     <color name="black_600">#000000</color>

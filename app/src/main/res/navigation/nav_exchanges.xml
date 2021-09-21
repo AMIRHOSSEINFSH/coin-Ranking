@@ -8,6 +8,14 @@
     <fragment
         android:id="@+id/exchangesFragment"
         android:name="com.code_chabok.coinranking.feature.exchanges.ExchangesFragment"
-        android:label="fragment_exchanges"
-        tools:layout="@layout/fragment_exchanges" />
+        android:label="Exchanges"
+        tools:layout="@layout/fragment_exchanges" >
+        <action
+            android:id="@+id/action_exchangesFragment_to_searchFragment2"
+            app:destination="@id/searchFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
+        android:label="Search" />
 </navigation>

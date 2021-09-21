@@ -1,11 +1,14 @@
 package com.code_chabok.coinranking.feature.home
 
 import android.content.res.Configuration
+import android.os.Build
 import com.code_chabok.coinranking.common.CoinActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -16,6 +19,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.enableFullScreenMode
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,8 +37,9 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        enableFullScreenMode()
         initNavController()
         setUpToolBar()
         setupNavigationUiState()

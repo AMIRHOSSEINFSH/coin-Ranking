@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
@@ -24,6 +25,13 @@ class ExchangesFragment : CoinFragment() {
         // Inflate the layout for this fragment
         binding = FragmentExchangesBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tv.setOnClickListener {
+            findNavController().navigate(R.id.action_exchangesFragment_to_searchFragment2)
+        }
     }
 
 }

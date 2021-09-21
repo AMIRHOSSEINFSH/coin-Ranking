@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/bookMarksFragment"
         android:name="com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment"
-        android:label="fragment_book_marks"
+        android:label="Bookmarks"
         tools:layout="@layout/fragment_book_marks" />
 </navigation>
