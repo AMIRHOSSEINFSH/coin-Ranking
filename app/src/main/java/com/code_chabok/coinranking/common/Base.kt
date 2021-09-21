@@ -41,13 +41,13 @@ abstract class CoinActivity: AppCompatActivity(),CoinView{
 interface CoinView{
     val rootView: CoordinatorLayout?
     val viewContext: Context?
-    fun setProgressIndicator(mustShow: Boolean) {
+    fun setShimmerIndicator(mustShow: Boolean) {
         rootView?.let {
             viewContext?.let { context ->
-                var loadingView = it.findViewById<View>(R.id.loadingView)
+                var loadingView = it.findViewById<View>(R.id.loading)
                 if (loadingView == null && mustShow) {
                     loadingView =
-                        LayoutInflater.from(context).inflate(R.layout.view_loading, it, false)
+                        LayoutInflater.from(context).inflate(R.layout.shimmer_placeholder_layout, it, false)
                     it.addView(loadingView)
                 }
 

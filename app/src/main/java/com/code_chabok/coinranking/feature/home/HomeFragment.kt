@@ -45,11 +45,11 @@ class HomeFragment : CoinFragment() {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
 
         }*/
-        val dialog = AlertDialog.Builder(requireContext()).create()
+        /*val dialog = AlertDialog.Builder(requireContext()).create()
         dialog.setTitle("Hello")
-        dialog.setMessage("This is Sample")
+        dialog.setMessage("This is Sample")*/
 
-        view.findViewById<View>(R.id.button).setOnTouchListener(OnTouchListener { v, event ->
+        /*view.findViewById<View>(R.id.button).setOnTouchListener(OnTouchListener { v, event ->
 
             var x = event.x
             var y = event.y
@@ -60,14 +60,14 @@ class HomeFragment : CoinFragment() {
                     //oast.makeText(this.context, "Action Up", Toast.LENGTH_SHORT).show()
                     //Log.i("TAGAA", "onViewCreated: ")
                     Toast.makeText(v.context, "Down", Toast.LENGTH_SHORT).show()
-                    /*GlobalScope.launch {
+                    *//*GlobalScope.launch {
                         if (getTime()){
                             Log.i("TAGAA", "OnReach: ")
                         }
                         else{
                             Log.i("TAGAA", "NotReach: ")
                         }
-                    }*/
+                    }*//*
                     return@OnTouchListener true
                 }
             MotionEvent.ACTION_UP -> {
@@ -86,7 +86,7 @@ class HomeFragment : CoinFragment() {
 
 
             false
-        })
+        })*/
 
     }
 

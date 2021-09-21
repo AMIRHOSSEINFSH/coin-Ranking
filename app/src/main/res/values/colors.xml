@@ -34,6 +34,7 @@
     <color name="spinnerBlack">#686868</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#97a9ff</color>
+    <color name="colorGrey">#dddddd</color>
 
     <!-- Error Color -->
     <color name="deep_orange_600">#EB5E2C</color>
