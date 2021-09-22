@@ -36,7 +36,7 @@ class BookMarksFragment : CoinFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setShimmerIndicator(true)
         val array = arrayListOf<Crypto>(
             Crypto(
                 "Bitcoin",
@@ -183,24 +183,14 @@ class BookMarksFragment : CoinFragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        //rootView = binding.root as CoordinatorLayout
-        //shimmerBinding.shimmerFrameLayout.startShimmer()
-        setShimmerIndicator(true)
-    }
-
     override fun onStop() {
         super.onStop()
-        //rootView = binding.root as CoordinatorLayout
-        //shimmerBinding.shimmerFrameLayout.stopShimmer()
         setShimmerIndicator(false)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //shimmerBinding.shimmerFrameLayout.stopShimmer()
-        //setShimmerIndicator(false)
+    override fun onPause() {
+        super.onPause()
+        setShimmerIndicator(false)
     }
 
 
