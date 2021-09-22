@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.formatPrice
+import com.code_chabok.coinranking.common.implementSpringAnimationTrait
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCase
@@ -39,6 +41,8 @@ class BookMarkAdapter constructor(
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Crypto) {
+            binding.constExpandable.implementSpringAnimationTrait()
+
             binding.model = item
             if (adapterPosition == 1 && tof){
                 item.isExpanded = true

@@ -1,10 +1,27 @@
 package com.code_chabok.coinranking.common
 
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.view.MotionEvent
 import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+
+fun formatPrice(
+    price: Number,
+    unitRelativeSizeFactor: Float = 0.7f
+): SpannableString {
+    val currencyLabel = "$"
+    val spannableString = SpannableString("$price $currencyLabel")
+    spannableString.setSpan(
+        RelativeSizeSpan(unitRelativeSizeFactor),
+        spannableString.indexOf(currencyLabel),
+        spannableString.length,
+        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    return spannableString
+}
 
 fun View.implementSpringAnimationTrait() {
     val scaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 0.90f)

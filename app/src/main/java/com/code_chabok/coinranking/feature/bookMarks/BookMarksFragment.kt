@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.data.model.Crypto
+import com.code_chabok.coinranking.data.repo.CryptoRepository
+import com.code_chabok.coinranking.data.repo.CryptoRepositoryImp
+import com.code_chabok.coinranking.data.repo.source.LocalCryptoDataSource
+import com.code_chabok.coinranking.data.repo.source.RemoteCryptoDataSource
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 import com.code_chabok.coinranking.databinding.ShimmerPlaceholderLayoutBinding
+import com.code_chabok.coinranking.feature.home.HomeViewModel
 import kotlinx.coroutines.*
 
 
@@ -18,6 +23,7 @@ class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
     private lateinit var shimmerBinding: ShimmerPlaceholderLayoutBinding
+    private lateinit var viewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,123 +43,19 @@ class BookMarksFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true)
-        val array = arrayListOf<Crypto>(
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "1"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "2"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "3"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "4"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "5"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "6"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "7"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "8"
-            ),
-            Crypto(
-                "Bitcoin",
-                "BTC",
-                "2.50975",
-                "15%",
-                true,
-                "dusd",
-                "fdhuvd",
-                false,
-                img_url = "https://example.com",
-                "9"
+
+        viewModel = HomeViewModel(
+            CryptoRepositoryImp(
+                LocalCryptoDataSource(),
+                RemoteCryptoDataSource()
             )
         )
-
 
         val adapter = BookMarkAdapter({
 
         }, {
 
-        },requireActivity())
+        }, requireActivity())
         binding.rec.layoutManager =
             object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
@@ -161,16 +63,14 @@ class BookMarksFragment : CoinFragment() {
                 }
             }
 
-        lifecycleScope.launchWhenCreated {
-            delay(3000)
-            withContext(Dispatchers.Main) {
-                adapter.submitList(array)
-                setShimmerIndicator(false)
+        viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+            setShimmerIndicator(false)
 
-                shimmerBinding.shimmerFrameLayout.visibility = View.GONE
-                binding.rec.visibility = View.VISIBLE
-            }
-        }
+            shimmerBinding.shimmerFrameLayout.visibility = View.GONE
+            binding.rec.visibility = View.VISIBLE
+        })
+
 
         binding.rec.addItemDecoration(
             DividerItemDecoration(
