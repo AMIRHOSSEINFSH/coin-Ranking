@@ -41,10 +41,13 @@ class HomeFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       /* view.findViewById<View>(R.id.button).setOnClickListener {
+        view.findViewById<View>(R.id.button).setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
 
-        }*/
+        }
+
+
+
         /*val dialog = AlertDialog.Builder(requireContext()).create()
         dialog.setTitle("Hello")
         dialog.setMessage("This is Sample")*/

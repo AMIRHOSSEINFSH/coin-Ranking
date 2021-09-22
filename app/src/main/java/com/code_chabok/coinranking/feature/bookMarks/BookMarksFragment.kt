@@ -2,6 +2,8 @@ package com.code_chabok.coinranking.feature.bookMarks
 
 import android.os.Bundle
 import android.view.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +29,8 @@ class BookMarksFragment : CoinFragment() {
     ): View? {
         setHasOptionsMenu(true)
         binding = FragmentBookMarksBinding.inflate(inflater, container, false)
-
-        shimmerBinding = ShimmerPlaceholderLayoutBinding.inflate(inflater,container,false)
+        shimmerBinding = ShimmerPlaceholderLayoutBinding.inflate(inflater, container, false)
+        rootView = binding.root as CoordinatorLayout
         return binding.root
     }
 
@@ -46,7 +48,7 @@ class BookMarksFragment : CoinFragment() {
                 "fdhuvd",
                 false,
                 img_url = "https://example.com",
-            "1"
+                "1"
             ),
             Crypto(
                 "Bitcoin",
@@ -149,48 +151,56 @@ class BookMarksFragment : CoinFragment() {
 
         val adapter = BookMarkAdapter({
 
-        },{
+        }, {
 
-        })
-        binding.rec.layoutManager =  object : LinearLayoutManager(requireContext(),RecyclerView.VERTICAL,false){
-            override fun canScrollVertically(): Boolean { return true }
-        }
-
-        GlobalScope.launch {
-            delay(2000)
-            withContext(Dispatchers.Main){
-                adapter.submitList(array)
-                setShimmerIndicator(false)
-                shimmerBinding.shimmerFrameLayout.stopShimmer()
-                shimmerBinding.shimmerFrameLayout.visibility = View.GONE
-                binding.rec.visibility = View.VISIBLE
-
+        },requireActivity())
+        binding.rec.layoutManager =
+            object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return true
+                }
             }
 
+        lifecycleScope.launchWhenCreated {
+            delay(3000)
+            withContext(Dispatchers.Main) {
+                adapter.submitList(array)
+                setShimmerIndicator(false)
+
+                shimmerBinding.shimmerFrameLayout.visibility = View.GONE
+                binding.rec.visibility = View.VISIBLE
+            }
         }
 
         binding.rec.addItemDecoration(
             DividerItemDecoration(
-            requireContext(),
-            (binding.rec.layoutManager as LinearLayoutManager).orientation
-        )
+                requireContext(),
+                (binding.rec.layoutManager as LinearLayoutManager).orientation
+            )
         )
         binding.rec.adapter = adapter
-
 
 
     }
 
     override fun onResume() {
         super.onResume()
-        shimmerBinding.shimmerFrameLayout.startShimmer()
+        //rootView = binding.root as CoordinatorLayout
+        //shimmerBinding.shimmerFrameLayout.startShimmer()
         setShimmerIndicator(true)
     }
 
     override fun onStop() {
         super.onStop()
-        shimmerBinding.shimmerFrameLayout.stopShimmer()
+        //rootView = binding.root as CoordinatorLayout
+        //shimmerBinding.shimmerFrameLayout.stopShimmer()
         setShimmerIndicator(false)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        //shimmerBinding.shimmerFrameLayout.stopShimmer()
+        //setShimmerIndicator(false)
     }
 
 

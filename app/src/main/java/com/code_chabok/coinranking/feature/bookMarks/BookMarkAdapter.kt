@@ -1,20 +1,28 @@
 package com.code_chabok.coinranking.feature.bookMarks
 
+import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
+import com.elconfidencial.bubbleshowcase.BubbleShowCase
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 import kotlinx.coroutines.delay
 
 
 class BookMarkAdapter constructor(
     private val onItemClickListener: (Crypto) -> Unit,
-    private val onLockRec: (Boolean) -> Unit
+    private val onLockRec: (Boolean) -> Unit,
+    private val activity: Activity
 ) : ListAdapter<Crypto, BookMarkAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<Crypto>() {
 
@@ -27,11 +35,30 @@ class BookMarkAdapter constructor(
         }
     }
 ) {
-
+    var tof = true
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Crypto) {
             binding.model = item
+            if (adapterPosition == 1 && tof){
+                item.isExpanded = true
+                binding.cryptoDivider.visibility = View.VISIBLE
+                binding.expandableLayout.visibility = View.VISIBLE
+
+                tof = false
+                val first = BubbleShowCaseBuilder(activity)
+                    .title("You can watch more Details here!\n by Long Click")
+                    .targetView(binding.constExpandable)
+
+                val second = BubbleShowCaseBuilder(activity)
+                    .title("You can watch more Details here!\n by Long Click")
+                    .targetView(binding.expandableLayout)
+
+            BubbleShowCaseSequence()
+                .addShowCase(first)
+                .addShowCase(second)
+                .show()
+            }
 
             /*val dialog = AlertDialog.Builder(itemView.context).create()
             *//*dialog.setTitle("Hello")
@@ -73,12 +100,9 @@ class BookMarkAdapter constructor(
                     false
                 }*/
 
-
-
-
-
             val isExpanded = item.isExpanded
             if (isExpanded){
+
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
                     binding.cryptoDivider.visibility = View.GONE
@@ -88,11 +112,16 @@ class BookMarkAdapter constructor(
                 }
             }
             else{
+
                 binding.constExpandable.setOnLongClickListener {
-                    item.isExpanded = true
-                    binding.cryptoDivider.visibility = View.VISIBLE
-                    binding.expandableLayout.visibility = View.VISIBLE
-                    notifyItemChanged(adapterPosition)
+                    if (scanList()){
+                        item.isExpanded = true
+                        binding.cryptoDivider.visibility = View.VISIBLE
+                        binding.expandableLayout.visibility = View.VISIBLE
+                        Log.i("TAGAAB", "bind: ${item.Id}")
+                        notifyItemChanged(adapterPosition)
+                    }
+
                     true
                 }
             }
@@ -109,5 +138,16 @@ class BookMarkAdapter constructor(
         holder.bind(getItem(position))
     }
 
+    fun scanList():Boolean{
+        var counter = 0
+        currentList.forEach {
+            if (it.isExpanded){
+                counter++
+                if(counter>1)
+                    return@forEach
+            }
+        }
+        return counter <= 1
+    }
 
 }

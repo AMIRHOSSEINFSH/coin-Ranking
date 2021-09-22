@@ -1,6 +1,7 @@
 package com.code_chabok.coinranking.feature.home
 
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.os.Build
 import com.code_chabok.coinranking.common.CoinActivity
 import android.os.Bundle
@@ -21,6 +22,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.enableFullScreenMode
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -29,7 +32,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     private lateinit var navController: NavController
 
-    private lateinit var binding :ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
@@ -44,6 +47,11 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         setUpToolBar()
         setupNavigationUiState()
         setupDrawerLayout()
+
+        BubbleShowCaseBuilder(this)
+            .title("You can Switch Between Tabs for more Detail")
+            .targetView(binding.bottomNav)
+            .show()
 
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
@@ -62,7 +70,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.mi_search -> {
             }
         }
@@ -71,8 +79,8 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     private fun setupNavigationUiState() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id){
-                R.id.homeFragment ->{
+            when (destination.id) {
+                R.id.homeFragment -> {
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }
@@ -121,7 +129,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     private fun setUpToolBar() {
         setSupportActionBar(binding.toolbar)
 
-         configuration = AppBarConfiguration.Builder(setOf(R.id.homeFragment))
+        configuration = AppBarConfiguration.Builder(setOf(R.id.homeFragment))
             .setOpenableLayout(binding.drawerLayout)
             .build()
         setupActionBarWithNavController(navController, configuration)
@@ -150,10 +158,10 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     }
 
     override fun onChanged(isHome: Boolean) {
-        binding.toolbar.setNavigationOnClickListener{
-            if(!isHome){
-            navController.navigateUp()
-            }else{
+        binding.toolbar.setNavigationOnClickListener {
+            if (!isHome) {
+                navController.navigateUp()
+            } else {
                 setupDrawerLayout()
                 binding.drawerLayout.openDrawer(GravityCompat.START)
             }
@@ -163,6 +171,6 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
 }
 
-interface OnChangingFragmentListener{
+interface OnChangingFragmentListener {
     fun onChanged(isHome: Boolean)
 }
