@@ -19,12 +19,13 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 
-class BookMarkAdapter constructor(
-    private val onItemClickListener: (Crypto) -> Unit,
-    private val onLockRec: (Boolean) -> Unit,
-    private val activity: Activity
+class BookMarkAdapter @Inject constructor(
+    /*private val onItemClickListener: (Crypto) -> Unit,
+    private val onLockRec: (Boolean) -> Unit,*/
+    //private val activity: Activity
 ) : ListAdapter<Crypto, BookMarkAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<Crypto>() {
 
@@ -37,6 +38,10 @@ class BookMarkAdapter constructor(
         }
     }
 ) {
+    private lateinit var activity: Activity
+    fun setActivity(activity: Activity) {
+        this.activity = activity
+    }
     var tof = true
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,9 +53,9 @@ class BookMarkAdapter constructor(
                 item.isExpanded = true
                 binding.cryptoDivider.visibility = View.VISIBLE
                 binding.expandableLayout.visibility = View.VISIBLE
-
                 tof = false
-                val first = BubbleShowCaseBuilder(activity)
+
+                /*val first = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.constExpandable)
 
@@ -61,7 +66,7 @@ class BookMarkAdapter constructor(
             BubbleShowCaseSequence()
                 .addShowCase(first)
                 .addShowCase(second)
-                .show()
+                .show()*/
             }
 
             /*val dialog = AlertDialog.Builder(itemView.context).create()

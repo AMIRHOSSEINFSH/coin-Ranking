@@ -45,7 +45,7 @@ interface CoinView{
     fun setShimmerIndicator(mustShow: Boolean) {
         rootView?.let {
             viewContext?.let { context ->
-                var loadingView = it.findViewById<View>(R.id.loading)
+                /*var loadingView = it.findViewById<View>(R.id.loading)
                 if (loadingView == null && mustShow) {
 
                     loadingView =
@@ -63,7 +63,7 @@ interface CoinView{
                         loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).stopShimmer()
                         loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).visibility = View.GONE
                     }
-                }
+                }*/
                // loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
 
             }

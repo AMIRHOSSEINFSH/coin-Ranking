@@ -26,7 +26,9 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
 

@@ -1,8 +1,9 @@
 package com.code_chabok.coinranking.data.repo.source
 
 import com.code_chabok.coinranking.data.model.Crypto
+import com.code_chabok.coinranking.services.http.ApiService
 
-class RemoteCryptoDataSource: CryptoDataSource {
+class RemoteCryptoDataSource constructor(apiService: ApiService): CryptoDataSource {
 
 
     override fun getAllCryptos():List<Crypto> {
