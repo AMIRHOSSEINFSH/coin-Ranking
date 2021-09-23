@@ -1,10 +1,12 @@
 package com.code_chabok.coinranking.feature.bookMarks
 
-import android.content.res.Configuration
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,17 +23,26 @@ import com.code_chabok.coinranking.feature.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import android.view.ViewGroup
+
 
 
 @AndroidEntryPoint
 class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
+    private lateinit var shimmerBinding: ShimmerPlaceholderLayoutBinding
 
-    val viewModel: BookMarksViewModel by viewModels()
+
+     val viewModel: BookMarksViewModel by viewModels()
 
     @Inject
-    lateinit var adapter: BookMarkAdapter
+    lateinit var adapter : BookMarkAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
 
     override fun onCreateView(
@@ -40,12 +51,36 @@ class BookMarksFragment : CoinFragment() {
     ): View? {
         setHasOptionsMenu(true)
         binding = FragmentBookMarksBinding.inflate(inflater, container, false)
+        shimmerBinding = ShimmerPlaceholderLayoutBinding.inflate(inflater, container, false)
+        rootView = binding.root as CoordinatorLayout
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.shimmerFrameLayout.startShimmer()
+
+        setShimmerIndicator(true)
+        if (savedInstanceState !=null){
+            //setShimmerIndicator(false)
+
+            //rootView?.removeView(shimmerBinding.loading)
+
+            //rootView?.removeView(shimmerBinding.loading)
+            //rootView?.removeAllViews()
+            //((shimmerBinding.loading.getParent()) as ViewGroup).removeView(shimmerBinding.loading)
+            //it.addView(loadingView)
+            //setShimmerIndicator(true)
+            /*var loadingView =  rootView?.findViewById<CoordinatorLayout>(R.id.loading)
+            rootView?.removeView(loadingView)*/
+            //setShimmerIndicator(true)
+        }
+
+
+        adapter.setActivity(requireActivity())
+        adapter.apply {
+            setActivity(requireActivity())
+            showBubble = savedInstanceState == null
+        }
         binding.rec.layoutManager =
             object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
@@ -55,12 +90,10 @@ class BookMarksFragment : CoinFragment() {
 
         viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            binding.apply {
-                rec.visibility = View.VISIBLE
-                shimmerFrameLayout.visibility = View.GONE
-                shimmerFrameLayout.stopShimmer()
-            }
+            setShimmerIndicator(false)
 
+            //shimmerBinding.shimmerFrameLayout.visibility = View.GONE
+            binding.rec.visibility = View.VISIBLE
         })
 
 
@@ -70,42 +103,26 @@ class BookMarksFragment : CoinFragment() {
                 (binding.rec.layoutManager as LinearLayoutManager).orientation
             )
         )
-        adapter.setActivity(requireActivity())
         binding.rec.adapter = adapter
 
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onStop() {
         super.onStop()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.shimmerFrameLayout.startShimmer()
+        setShimmerIndicator(false)
     }
 
     override fun onPause() {
         super.onPause()
-        binding.shimmerFrameLayout.stopShimmer()
-        /*binding.shimmerFrameLayout.visibility = View.VISIBLE
-        binding.shimmerFrameLayout.visibility = View.GONE*/
+        //setShimmerIndicator(false)
+        //(rootView as ViewGroup).removeView(shimmerBinding.loading)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        //rootView?.removeAllViews()
+        //setShimmerIndicator(false)
     }
 
 

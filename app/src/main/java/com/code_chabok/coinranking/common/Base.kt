@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
@@ -12,16 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.code_chabok.coinranking.R
-import com.facebook.shimmer.ShimmerFrameLayout
 
-abstract class CoinFragment: Fragment(),CoinView{
+abstract class CoinFragment : Fragment(), CoinView {
     override var rootView: CoordinatorLayout? = null
         get() = view as CoordinatorLayout
     override val viewContext: Context?
         get() = context
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
 }
 
-abstract class CoinActivity: AppCompatActivity(),CoinView{
+abstract class CoinActivity : AppCompatActivity(), CoinView {
 
     override var rootView: CoordinatorLayout? =null
         get() {
@@ -39,44 +41,37 @@ abstract class CoinActivity: AppCompatActivity(),CoinView{
         get() = this
 }
 
-interface CoinView{
+interface CoinView {
     var rootView: CoordinatorLayout?
     val viewContext: Context?
+
     fun setShimmerIndicator(mustShow: Boolean) {
         rootView?.let {
             viewContext?.let { context ->
-                /*var loadingView = it.findViewById<View>(R.id.loading)
-                if (loadingView == null && mustShow) {
 
+
+                var loadingView = it.findViewById<View>(R.id.shimmerFrameLayout)
+                if (loadingView == null && mustShow) {
                     loadingView =
-                        LayoutInflater.from(context).inflate(R.layout.shimmer_placeholder_layout, it, false)
+                        LayoutInflater.from(context)
+                            .inflate(R.layout.shimmer_placeholder_layout, it, false)
+
                     it.addView(loadingView)
 
                 }
-                if (mustShow){
-                    loadingView.visibility = View.VISIBLE
-                    loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).startShimmer()
-                    loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).visibility = View.VISIBLE
-                }else{
-                    if (rootView !=null){
-                        loadingView.visibility = View.GONE
-                        loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).stopShimmer()
-                        loadingView.findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout).visibility = View.GONE
-                    }
-                }*/
-               // loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
-
+                loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
             }
 
         }
     }
-}
 
-abstract class CoinViewModel : ViewModel() {
-    val progressBarLiveData = MutableLiveData<Boolean>()
 
-    override fun onCleared() {
-        super.onCleared()
+    abstract class CoinViewModel : ViewModel() {
+        val progressBarLiveData = MutableLiveData<Boolean>()
+
+        override fun onCleared() {
+            super.onCleared()
+        }
+
     }
-
 }
