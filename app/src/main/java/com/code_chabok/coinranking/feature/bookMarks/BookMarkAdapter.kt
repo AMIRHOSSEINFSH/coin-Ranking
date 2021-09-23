@@ -42,7 +42,17 @@ class BookMarkAdapter @Inject constructor(
     fun setActivity(activity: Activity) {
         this.activity = activity
     }
-    var tof = true
+
+    fun showBubble(){
+            BubbleShowCaseSequence()
+                .addShowCase(first)
+                .addShowCase(second)
+                .show()
+    }
+    private lateinit var first: BubbleShowCaseBuilder
+    private lateinit var second: BubbleShowCaseBuilder
+    private var tof = true
+    var showBubble = true
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Crypto) {
@@ -55,18 +65,19 @@ class BookMarkAdapter @Inject constructor(
                 binding.expandableLayout.visibility = View.VISIBLE
                 tof = false
 
-                /*val first = BubbleShowCaseBuilder(activity)
+
+                first = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.constExpandable)
 
-                val second = BubbleShowCaseBuilder(activity)
+                second = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.expandableLayout)
 
-            BubbleShowCaseSequence()
-                .addShowCase(first)
-                .addShowCase(second)
-                .show()*/
+                if (showBubble){
+                   showBubble()
+                }
+
             }
 
             /*val dialog = AlertDialog.Builder(itemView.context).create()

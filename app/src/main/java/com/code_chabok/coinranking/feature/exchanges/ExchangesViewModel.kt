@@ -1,6 +1,6 @@
 package com.code_chabok.coinranking.feature.exchanges
 
-import com.code_chabok.coinranking.common.CoinViewModel
+import com.code_chabok.coinranking.common.CoinView
 
-class ExchangesViewModel: CoinViewModel() {
+class ExchangesViewModel: CoinView.CoinViewModel() {
 }
