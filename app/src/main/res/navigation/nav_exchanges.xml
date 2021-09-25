@@ -13,9 +13,24 @@
         <action
             android:id="@+id/action_exchangesFragment_to_searchFragment2"
             app:destination="@id/searchFragment2" />
+        <action
+            android:id="@+id/action_exchangesFragment_to_exchangeDetailFragment"
+            app:destination="@id/exchangeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment2"
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="Search" />
+    <fragment
+        android:id="@+id/exchangeDetailFragment"
+        android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
+        android:label="ExchangeDetailFragment" >
+        <action
+            android:id="@+id/action_exchangeDetailFragment_to_cryptoDetailFragment3"
+            app:destination="@id/cryptoDetailFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/cryptoDetailFragment3"
+        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
+        android:label="CryptoDetailFragment" />
 </navigation>

@@ -6,43 +6,23 @@ import android.util.Log
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.common.CoinFragment
-import com.code_chabok.coinranking.data.model.Crypto
-import com.code_chabok.coinranking.data.repo.CryptoRepository
-import com.code_chabok.coinranking.data.repo.CryptoRepositoryImp
-import com.code_chabok.coinranking.data.repo.source.LocalCryptoDataSource
-import com.code_chabok.coinranking.data.repo.source.RemoteCryptoDataSource
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
-import com.code_chabok.coinranking.databinding.ShimmerPlaceholderLayoutBinding
-import com.code_chabok.coinranking.feature.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import javax.inject.Inject
 import android.view.ViewGroup
-
+import androidx.navigation.fragment.findNavController
+import com.code_chabok.coinranking.R
 
 
 @AndroidEntryPoint
 class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
-    private lateinit var shimmerBinding: ShimmerPlaceholderLayoutBinding
-
-
-     val viewModel: BookMarksViewModel by viewModels()
-
-    @Inject
-    lateinit var adapter : BookMarkAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    val viewModel: BookMarksViewModel by viewModels()
+    lateinit var adapter: BookMarkAdapter
 
 
     override fun onCreateView(
@@ -51,32 +31,41 @@ class BookMarksFragment : CoinFragment() {
     ): View? {
         setHasOptionsMenu(true)
         binding = FragmentBookMarksBinding.inflate(inflater, container, false)
-        shimmerBinding = ShimmerPlaceholderLayoutBinding.inflate(inflater, container, false)
         rootView = binding.root as CoordinatorLayout
+
         return binding.root
+    }
+    private var isDetail = false
+    fun isInDetail(boolean: Boolean):BookMarksFragment{
+        isDetail = boolean
+        return this
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setShimmerIndicator(true)
-        if (savedInstanceState !=null){
-            //setShimmerIndicator(false)
 
-            //rootView?.removeView(shimmerBinding.loading)
+        adapter = BookMarkAdapter {
 
-            //rootView?.removeView(shimmerBinding.loading)
-            //rootView?.removeAllViews()
-            //((shimmerBinding.loading.getParent()) as ViewGroup).removeView(shimmerBinding.loading)
-            //it.addView(loadingView)
-            //setShimmerIndicator(true)
-            /*var loadingView =  rootView?.findViewById<CoordinatorLayout>(R.id.loading)
-            rootView?.removeView(loadingView)*/
-            //setShimmerIndicator(true)
+            Log.i("TAG", "onViewCreated:${isDetail} ")
+            val bundle = Bundle().apply {
+                putParcelable("item",it)
+            }
+            if(isDetail){
+                findNavController().navigate(R.id.action_cryptoDetailFragment_to_exchangeDetailFragment2,bundle)
+                //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
+            }
+            else {
+                findNavController().navigate(
+                    R.id.action_bookMarksFragment_to_cryptoDetailFragment, bundle
+                    /*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
+                        it
+                    )*/
+                )
+            }
         }
-
-
-        adapter.setActivity(requireActivity())
+        //adapter.setActivity(requireActivity())
         adapter.apply {
             setActivity(requireActivity())
             showBubble = savedInstanceState == null
@@ -92,7 +81,6 @@ class BookMarksFragment : CoinFragment() {
             adapter.submitList(it)
             setShimmerIndicator(false)
 
-            //shimmerBinding.shimmerFrameLayout.visibility = View.GONE
             binding.rec.visibility = View.VISIBLE
         })
 
@@ -111,12 +99,6 @@ class BookMarksFragment : CoinFragment() {
     override fun onStop() {
         super.onStop()
         setShimmerIndicator(false)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //setShimmerIndicator(false)
-        //(rootView as ViewGroup).removeView(shimmerBinding.loading)
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,8 @@
         <variable
             name="model"
             type="com.code_chabok.coinranking.data.model.Crypto" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,11 +115,10 @@
             </LinearLayout>
 
             <View
-
                 android:id="@+id/crypto_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_400"
+                android:background="@color/color_divider"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -146,7 +147,6 @@
                     android:text="BTC value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
 
                 <LinearLayout
                     android:layout_marginBottom="3dp"

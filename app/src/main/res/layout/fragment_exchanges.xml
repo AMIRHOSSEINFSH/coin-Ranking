@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".feature.exchanges.ExchangesFragment">
 
-        <FrameLayout
+        <!--<FrameLayout
             android:padding="8dp"
             android:orientation="horizontal"
             android:background="@drawable/bg_spinner_framelayout"
@@ -29,15 +29,22 @@
                 android:gravity="center" />
 
             <ImageView
+                app:tint="@color/white"
                 android:id="@+id/iv"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="end|center_vertical"
-                android:tag="R.drawable.ic_arrow_up_spinner"
                 app:srcCompat="@drawable/ic_arrow_up_spinner" />
 
-        </FrameLayout>
+        </FrameLayout>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:visibility="gone" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
