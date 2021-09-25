@@ -55,6 +55,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         BubbleShowCaseBuilder(this)
             .title("You can Switch Between Tabs for more Detail")
             .targetView(binding.bottomNav)
+            .showOnce("BUBBLE_SHOW_CASE_ID_3")
             .show()
 
         // Setup the bottom navigation view with navController

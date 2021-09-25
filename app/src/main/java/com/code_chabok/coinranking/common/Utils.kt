@@ -7,6 +7,12 @@ import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment
+import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
+import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
+import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
 
 fun formatPrice(
     price: Number,

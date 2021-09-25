@@ -9,5 +9,26 @@
         android:id="@+id/bookMarksFragment"
         android:name="com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment"
         android:label="Bookmarks"
-        tools:layout="@layout/fragment_book_marks" />
+        tools:layout="@layout/fragment_book_marks" >
+        <action
+            android:id="@+id/action_bookMarksFragment_to_cryptoDetailFragment"
+            app:destination="@id/cryptoDetailFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_crypto_detail"
+        android:id="@+id/cryptoDetailFragment"
+        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
+        android:label="CryptoDetailFragment" >
+        <argument
+            android:name="crypto"
+            app:argType="com.code_chabok.coinranking.data.model.Crypto" />
+        <action
+            android:id="@+id/action_cryptoDetailFragment_to_exchangeDetailFragment2"
+            app:destination="@id/exchangeDetailFragment2" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/exchangeDetailFragment2"
+        android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
+        android:label="ExchangeDetailFragment" />
 </navigation>

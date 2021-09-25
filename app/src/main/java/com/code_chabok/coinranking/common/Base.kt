@@ -10,7 +10,13 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.data.model.Crypto
+import com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment
+import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
+import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
+import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
 
 abstract class CoinFragment : Fragment(), CoinView {
     override var rootView: CoordinatorLayout? = null
@@ -74,4 +80,34 @@ interface CoinView {
         }
 
     }
+}
+
+abstract class BaseFragmentAdapter(fragment: CoinFragment): FragmentStateAdapter(fragment){
+    override fun getItemCount(): Int {
+        return 2
+    }
+}
+
+class FragmentAdapterCrypto(fragment: CoinFragment): BaseFragmentAdapter(fragment){
+
+    override fun createFragment(position: Int): Fragment {
+        return when(position){
+            0 -> CryptoDetailChildFragment()
+            1 -> ExchangesFragment().isInDetail(true)
+            else -> CryptoDetailChildFragment()
+        }
+    }
+
+}
+
+class FragmentAdapterExchange(fragment: CoinFragment): BaseFragmentAdapter(fragment){
+
+    override fun createFragment(position: Int): Fragment {
+        return when(position){
+            0 -> ExchangeDetailChildFragment()
+            1 -> BookMarksFragment().isInDetail(true)
+            else -> ExchangeDetailChildFragment()
+        }
+    }
+
 }

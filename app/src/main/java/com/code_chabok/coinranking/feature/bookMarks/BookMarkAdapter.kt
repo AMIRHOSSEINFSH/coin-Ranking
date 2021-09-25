@@ -22,9 +22,9 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 
-class BookMarkAdapter @Inject constructor(
-    /*private val onItemClickListener: (Crypto) -> Unit,
-    private val onLockRec: (Boolean) -> Unit,*/
+class BookMarkAdapter constructor(
+    private val onItemClickListener: (Crypto) -> Unit,
+    /*private val onLockRec: (Boolean) -> Unit,*/
     //private val activity: Activity
 ) : ListAdapter<Crypto, BookMarkAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<Crypto>() {
@@ -59,20 +59,22 @@ class BookMarkAdapter @Inject constructor(
             binding.constExpandable.implementSpringAnimationTrait()
 
             binding.model = item
+            //binding.callback = this
+
             if (adapterPosition == 1 && tof){
                 item.isExpanded = true
-                binding.cryptoDivider.visibility = View.VISIBLE
+                binding.cryptoDivider.visibility = View.GONE
                 binding.expandableLayout.visibility = View.VISIBLE
                 tof = false
 
 
                 first = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.constExpandable)
+                    .targetView(binding.constExpandable).showOnce("BUBBLE_SHOW_CASE_ID_0")
 
                 second = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.expandableLayout)
+                    .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
 
                 if (showBubble){
                    showBubble()
@@ -146,11 +148,18 @@ class BookMarkAdapter @Inject constructor(
                 }
             }
             binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
+
+            binding.constExpandable.setOnClickListener {
+                onItemClickListener(item)
+            }
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return MyViewHolder(binding)
     }
 
@@ -170,4 +179,9 @@ class BookMarkAdapter @Inject constructor(
         return counter <= 1
     }
 
+
+
+}
+interface CallBack{
+    fun onClick(v: View,model: Crypto)
 }

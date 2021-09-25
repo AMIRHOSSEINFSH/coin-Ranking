@@ -12,7 +12,7 @@
 
     <color name="color_et_hint_search">@color/blue_50</color>
     <color name="et_bg_color">@color/cloud_burst_alpha_23</color>
-
+    <color name="bookmarkColor">@color/white</color>
     <!--  BottomNavigationView background == colorSurface   -->
     <color name="color_Surface">@color/blue_grey_950</color>
     <color name="color_On_Surface">@color/indigo_300</color>
