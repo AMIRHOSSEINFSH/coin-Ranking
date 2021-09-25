@@ -21,6 +21,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.enableFullScreenMode
+import com.code_chabok.coinranking.common.hide
+import com.code_chabok.coinranking.common.show
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 
@@ -82,7 +84,15 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     private fun setupNavigationUiState() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
+
+                R.id.splashFragment->{
+                    supportActionBar?.hide()
+                    binding.bottomNav.hide()
+
+                }
                 R.id.homeFragment -> {
+                    binding.bottomNav.show()
+                    supportActionBar?.show()
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }

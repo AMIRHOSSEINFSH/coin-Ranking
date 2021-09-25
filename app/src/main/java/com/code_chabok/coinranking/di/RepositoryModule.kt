@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.data.db
+package com.code_chabok.coinranking.di
 
 import com.code_chabok.coinranking.data.repo.CryptoRepository
 import com.code_chabok.coinranking.data.repo.CryptoRepositoryImp

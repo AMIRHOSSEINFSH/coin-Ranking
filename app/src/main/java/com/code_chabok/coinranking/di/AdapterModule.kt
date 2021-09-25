@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.data.db
+package com.code_chabok.coinranking.di
 
 import com.code_chabok.coinranking.feature.bookMarks.BookMarkAdapter
 import dagger.Module
