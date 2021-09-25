@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.code_chabok.coinranking.feature.splash.SplashFragment"
+        android:name="com.code_chabok.coinranking.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action

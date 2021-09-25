@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.code_chabok.coinranking.common.CoinFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashFragment : Fragment() {
+class SplashFragment : CoinFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +25,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             delay(3000)
-//            findNavController().navigate(R.id.)
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
     }
 
