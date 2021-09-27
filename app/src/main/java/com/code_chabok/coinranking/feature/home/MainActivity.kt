@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -28,11 +29,13 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
+    private lateinit var btnSwitchTheme: SwitchMaterial
 
     private lateinit var navController: NavController
 
@@ -46,6 +49,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initUiComponents()
         enableFullScreenMode()
         initNavController()
         setUpToolBar()
@@ -63,6 +67,21 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         bottomNavigationView.setupWithNavController(navController)
 
 
+    }
+
+    private fun initUiComponents() {
+        btnSwitchTheme =
+            binding.navigationView.menu.findItem(R.id.mi_night_mode).actionView as SwitchMaterial
+
+        btnSwitchTheme.setOnCheckedChangeListener { _, isChecked ->
+            val mode = if (isChecked) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+
+            AppCompatDelegate.setDefaultNightMode(mode)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

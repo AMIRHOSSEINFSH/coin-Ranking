@@ -12,4 +12,5 @@
     <string name="dollar_sign">%s $</string>
     <string name="upRate">%s</string>
     <string name="downRate">- %s %</string>
+    <string name="mi_night_mode">Dark Mode</string>
 </resources>
