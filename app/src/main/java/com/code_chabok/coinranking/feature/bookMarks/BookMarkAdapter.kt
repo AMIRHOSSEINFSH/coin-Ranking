@@ -5,21 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.common.formatPrice
 import com.code_chabok.coinranking.common.implementSpringAnimationTrait
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
-import com.elconfidencial.bubbleshowcase.BubbleShowCase
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
-import kotlinx.coroutines.delay
-import javax.inject.Inject
 
 
 class BookMarkAdapter constructor(
@@ -37,6 +30,7 @@ class BookMarkAdapter constructor(
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
+
 ) {
     private lateinit var activity: Activity
     fun setActivity(activity: Activity) {
@@ -66,6 +60,7 @@ class BookMarkAdapter constructor(
                 binding.cryptoDivider.visibility = View.GONE
                 binding.expandableLayout.visibility = View.VISIBLE
                 tof = false
+
 
 
                 first = BubbleShowCaseBuilder(activity)

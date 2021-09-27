@@ -1,12 +1,12 @@
-package com.code_chabok.coinranking
+package com.code_chabok.coinranking.feature.splash
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

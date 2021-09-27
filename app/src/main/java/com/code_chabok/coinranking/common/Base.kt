@@ -45,6 +45,7 @@ abstract class CoinActivity : AppCompatActivity(), CoinView {
         }
     override val viewContext: Context?
         get() = this
+
 }
 
 interface CoinView {

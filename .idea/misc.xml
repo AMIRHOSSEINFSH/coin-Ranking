@@ -3,15 +3,44 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable-v24/ic_home.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/background_et.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/bg_prev_dialog.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/bg_spinner_framelayout.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_24h_volume.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_arrow_bottom.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_arrow_down_spinner.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_arrow_up_spinner.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_bookmarks.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_exchages.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_group.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_home.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_market_icon.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_price_to_btc.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_price_usd.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_rank.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_search.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/drawable/ic_splash.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/activity_main.xml" value="0.12409420289855072" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/custom_prev_dialog.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_book_marks.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_crypto_detail.xml" value="0.6" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_exchange_detail.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_exchange_detail_child.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_exchanges.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_search.xml" value="0.22753623188405797" />
         <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/fragment_splash.xml" value="0.1" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/drawable/ic_night_mode.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/layout/fragment_book_marks.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/layout/fragment_crypto_detail.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/layout/fragment_exchange_detail.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/layout/item_crypto.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/layout/layout_nav_item_night_mode.xml" value="0.234375" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/coin-ranking/app/src/main/res/menu/menu_navigation.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/item_crypto.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/item_exchange.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/layout_navigation_header.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/shimmer_placeholder_exchange.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/spinner_items.xml" value="0.22" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/layout/view_loading.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/menu/botton_navigation_items.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/menu/menu_navigation.xml" value="0.1796875" />
+        <entry key="..\:/Users/Muhammad/StudioProjects/playground/coin-ranking/app/src/main/res/menu/menu_toolbar_search.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/button_press.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/ic_feedback.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/User/AndroidStudioProjects/coinRanking/app/src/main/res/drawable-v24/ic_home.xml" value="0.23854166666666668" />
@@ -56,24 +85,6 @@
         <entry key="..\:/Users/User/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/ic_go_search_api_material.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/User/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/ic_search_api_material.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/User/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/textfield_search_material.xml" value="0.23541666666666666" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/drawable/bg_spinner_framelayout.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/drawable/ic_arrow_down_spinner.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/drawable/ic_bookmarks.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/activity_main.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_book_marks.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_crypto_detail.xml" value="0.264" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_crypto_detail_child.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_exchange_detail.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_exchange_detail_child.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_exchange_detail_child2.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_exchange_detail_view_model.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_exchanges.xml" value="0.264" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/fragment_splash.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/item_crypto.xml" value="0.264" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/item_exchange.xml" value="0.4" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/shimmer_placeholder_exchange.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/User/Desktop/New folder/coin-ranking/app/src/main/res/menu/botton_navigation_items.xml" value="0.22239583333333332" />
       </map>
     </option>
   </component>
