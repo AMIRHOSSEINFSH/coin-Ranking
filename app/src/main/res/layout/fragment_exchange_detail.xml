@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="60dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,10 +82,12 @@
         >
 
     <com.google.android.material.tabs.TabItem
+        android:text="OverView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <com.google.android.material.tabs.TabItem
+        android:text="Cryptocurrencies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
