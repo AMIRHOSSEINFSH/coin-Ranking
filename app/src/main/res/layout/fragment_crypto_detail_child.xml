@@ -1,14 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.CryptoDetail.CryptoDetailChildFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Binance statistics"
+        android:textColor="@color/grey_700"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_Introduction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/Introdution"
+        android:textColor="@color/grey_700"
+        android:textSize="12sp"
+        android:lineSpacingExtra="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_volume"
+        app:layout_constraintTop_toBottomOf="@id/tv_Introduction"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_weight="1"
+        android:drawablePadding="2dp"
+        android:drawableStart="@drawable/ic_24h_volume"
+        android:text="24h volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="end"
+        android:text="$ 18.05 billion"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/ll_volume"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/color_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_rank"
+        app:layout_constraintTop_toBottomOf="@id/ll_volume"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_rank"
+            android:text="Rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="end"
+            android:text="1"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/ll_rank"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/color_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_Cryptocurrencies"
+        app:layout_constraintTop_toBottomOf="@id/ll_rank"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_price_usd"
+            android:text="Cryptocurrencies listed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="end"
+            android:text="279"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/ll_Cryptocurrencies"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/color_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_Market"
+        app:layout_constraintTop_toBottomOf="@id/ll_Cryptocurrencies"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_market_icon"
+            android:text="Market"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="end"
+            android:text="569"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/ll_Market"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/color_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_Market_share"
+        app:layout_constraintTop_toBottomOf="@id/ll_Market"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_market_share"
+            android:text="Market share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:gravity="end"
+            android:text="45.5%"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_Market_share"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="About Binance exchange"
+        android:textColor="@color/grey_700"
+        android:textSize="14sp"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_about_binance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_about"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/about_binance"
+        android:textColor="@color/grey_700"
+        android:textSize="12sp"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
