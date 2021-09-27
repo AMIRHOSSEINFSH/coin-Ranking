@@ -24,7 +24,6 @@ class ExchangesFragment : CoinFragment() {
     val viewModel: ExchangesViewModel by viewModels()
     private lateinit var adapter: ExchangeAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,7 +31,10 @@ class ExchangesFragment : CoinFragment() {
         // Inflate the layout for this fragment
         binding = FragmentExchangesBinding.inflate(inflater,container,false)
         return binding.root
+
+
     }
+
 
     private var isDetail = false
     fun isInDetail(boolean: Boolean): ExchangesFragment {

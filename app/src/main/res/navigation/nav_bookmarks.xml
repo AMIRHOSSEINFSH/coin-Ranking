@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_bookMarksFragment_to_cryptoDetailFragment"
             app:destination="@id/cryptoDetailFragment" />
+        <action
+            android:id="@+id/action_bookMarksFragment_to_searchFragment3"
+            app:destination="@id/searchFragment3" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_crypto_detail"
@@ -31,4 +34,8 @@
         android:id="@+id/exchangeDetailFragment2"
         android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
         android:label="ExchangeDetailFragment" />
+    <fragment
+        android:id="@+id/searchFragment3"
+        android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>

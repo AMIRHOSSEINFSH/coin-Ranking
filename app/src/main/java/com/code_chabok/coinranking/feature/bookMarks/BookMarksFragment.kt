@@ -1,27 +1,25 @@
 package com.code_chabok.coinranking.feature.bookMarks
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 import dagger.hilt.android.AndroidEntryPoint
-import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.code_chabok.coinranking.R
 
 
 @AndroidEntryPoint
 class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
-    val viewModel: BookMarksViewModel by viewModels()
+    private val viewModel: BookMarksViewModel by viewModels()
     lateinit var adapter: BookMarkAdapter
 
 
@@ -52,6 +50,7 @@ class BookMarksFragment : CoinFragment() {
             val bundle = Bundle().apply {
                 putParcelable("item",it)
             }
+
             if(isDetail){
                 findNavController().navigate(R.id.action_cryptoDetailFragment_to_exchangeDetailFragment2,bundle)
                 //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
@@ -80,9 +79,7 @@ class BookMarksFragment : CoinFragment() {
         viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             setShimmerIndicator(false)
-
-            binding.rec.visibility = View.VISIBLE
-        })
+            binding.rec.visibility = View.VISIBLE  })
 
 
         binding.rec.addItemDecoration(

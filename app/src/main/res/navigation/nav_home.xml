@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cryptoDetailFragment2"
+            app:destination="@id/cryptoDetailFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_cryptoDetailChildFragment"
+            app:destination="@id/cryptoDetailChildFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -21,7 +27,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.code_chabok.coinranking.SplashFragment"
+        android:name="com.code_chabok.coinranking.feature.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -30,4 +36,13 @@
             app:popUpToInclusive="true"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cryptoDetailFragment2"
+        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
+        android:label="CryptoDetailFragment" />
+    <fragment
+        android:id="@+id/cryptoDetailChildFragment"
+        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment"
+        android:label="fragment_crypto_detail_child"
+        tools:layout="@layout/fragment_crypto_detail_child" />
 </navigation>
