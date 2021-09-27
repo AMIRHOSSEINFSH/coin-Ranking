@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterCrypto
@@ -27,15 +28,19 @@ class ExchangeDetailFragment : CoinFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
 
-        binding.viewPager.adapter = FragmentAdapterExchange(this)
-        TabLayoutMediator(binding.tabLayout,binding.viewPager){ tab, position ->
-            when(position){
-                0-> tab.text = "OverView"
-                1-> tab.text = "Cryptocurrencies"
+    private fun setup() {
+        TabLayoutMediator(binding.tab, binding.pager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "Overview"
+                1 -> tab.text = "Cryptocurrencies"
             }
         }.attach()
     }
+
+
 
 
 
