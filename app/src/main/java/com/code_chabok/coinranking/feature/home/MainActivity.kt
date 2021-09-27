@@ -2,6 +2,7 @@ package com.code_chabok.coinranking.feature.home
 
 import android.content.res.Configuration
 import android.graphics.Typeface
+import android.icu.text.Transliterator
 import android.os.Build
 import com.code_chabok.coinranking.common.CoinActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -25,6 +27,7 @@ import com.code_chabok.coinranking.common.enableFullScreenMode
 import com.code_chabok.coinranking.common.hide
 import com.code_chabok.coinranking.common.show
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
+import com.code_chabok.coinranking.feature.search.SearchFragment
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 
 
@@ -84,6 +87,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         }
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(configuration)
     }
@@ -96,6 +100,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mi_search -> {
+                navController.navigate(R.id.action_homeFragment_to_searchFragment)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -105,7 +110,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
 
-                R.id.splashFragment->{
+                R.id.splashFragment -> {
                     supportActionBar?.hide()
                     binding.bottomNav.hide()
 
