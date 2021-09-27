@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,6 +35,7 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class MainActivity : CoinActivity(), OnChangingFragmentListener {
@@ -48,10 +50,21 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     private lateinit var configuration: AppBarConfiguration
 
+    private var isFirst = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        if (isFirst) {
+            lifecycleScope.launchWhenCreated {
+                delay(2000)
+                binding.splash.visibility = View.GONE
+                binding.drawerLayout.visibility = View.VISIBLE
+            }
+            isFirst = false
+        }
         initUiComponents()
         enableFullScreenMode()
         initNavController()
@@ -110,11 +123,11 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
 
-                R.id.splashFragment -> {
-                    supportActionBar?.hide()
-                    binding.bottomNav.hide()
+                /* R.id.splashFragment -> {
+                     supportActionBar?.hide()
+                     binding.bottomNav.hide()
 
-                }
+                 }*/
                 R.id.homeFragment -> {
                     binding.bottomNav.show()
                     supportActionBar?.show()

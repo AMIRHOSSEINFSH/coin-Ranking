@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -25,18 +25,9 @@
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search" />
+
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.code_chabok.coinranking.feature.splash.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
+        tools:layout="@layout/fragment_crypto_detail"
         android:id="@+id/cryptoDetailFragment2"
         android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
         android:label="CryptoDetailFragment" />

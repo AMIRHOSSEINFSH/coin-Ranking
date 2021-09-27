@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,9 +29,8 @@ class HomeFragment : CoinFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        setHasOptionsMenu(true)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-//        rootView = binding.root as CoordinatorLayout
+       rootView = binding.root as CoordinatorLayout
 
         return binding.root
     }
@@ -43,8 +43,7 @@ class HomeFragment : CoinFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        setShimmerIndicator(true)
+        setShimmerIndicator(true)
 
         adapter = BookMarkAdapter {
 
@@ -78,7 +77,7 @@ class HomeFragment : CoinFragment() {
 
                 viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
                     adapter.submitList(it)
-//            setShimmerIndicator(false)
+                setShimmerIndicator(false)
                     binding.rvHome.visibility = View.VISIBLE
                 })
 
@@ -96,7 +95,7 @@ class HomeFragment : CoinFragment() {
 
             override fun onStop() {
                 super.onStop()
-//        setShimmerIndicator(false)
+        setShimmerIndicator(false)
             }
 
             override fun onDestroyView() {

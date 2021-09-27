@@ -25,7 +25,7 @@ class SplashFragment : CoinFragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             delay(3000)
-            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            //findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
     }
 
