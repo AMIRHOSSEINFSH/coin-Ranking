@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AlphaAnimation
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
@@ -36,6 +37,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+
+import android.view.animation.RotateAnimation
+
+
+
 
 @AndroidEntryPoint
 class MainActivity : CoinActivity(), OnChangingFragmentListener {
@@ -50,21 +58,13 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     private lateinit var configuration: AppBarConfiguration
 
-    private var isFirst = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        if (isFirst) {
-            lifecycleScope.launchWhenCreated {
-                delay(2000)
-                binding.splash.visibility = View.GONE
-                binding.drawerLayout.visibility = View.VISIBLE
-            }
-            isFirst = false
-        }
+
+        showingSplash()
         initUiComponents()
         enableFullScreenMode()
         initNavController()
@@ -81,6 +81,34 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun showingSplash() {
+       val alphaAnimation = AlphaAnimation(0F,1F)
+        val animationSet = AnimationSet(true)
+        animationSet.addAnimation(alphaAnimation)
+
+        animationSet.duration = 4000
+        binding.tvLogo.animation = animationSet
+        binding.ivLogo.animation = animationSet
+        animationSet.fillAfter = true
+        animationSet.start()
+        animationSet.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                binding.splash.visibility = View.GONE
+                binding.drawerLayout.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+        })
+
     }
 
     private fun initUiComponents() {
