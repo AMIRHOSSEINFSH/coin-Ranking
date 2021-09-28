@@ -16,6 +16,8 @@
     <!--  BottomNavigationView background == colorSurface   -->
     <color name="color_Surface">@color/blue_grey_950</color>
     <color name="color_On_Surface">@color/indigo_300</color>
+    <color name="headLineColor">@color/color_primary_variant</color>
+    <color name="spinnerbgColor">@color/color_On_Surface</color>
 
     <color name="cloud_burst_alpha_23">#3A1C2449</color>
     <color name="blue_grey_900">#1C2449</color>

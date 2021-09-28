@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Button.Spinner" parent="Widget.AppCompat.EditText">
-        <item name="cardCornerRadius">30dp</item>
-        <item name="startIconDrawable">@drawable/ic_arrow_bottom</item>
-        <item name="background">@color/titan_white</item>
-    </style>
-
     <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconTint">@color/bottom_navigation_item_color</item>
         <item name="itemTextColor">@color/bottom_navigation_item_color</item>
@@ -21,7 +15,7 @@
     </style>
 
 
-    <style name="et_style" parent="Widget.AppCompat.EditText">
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:drawableTint" tools:targetApi="m">@color/color_et_hint_search</item>
         <item name="android:background">@drawable/background_et</item>
         <item name="android:height">48dp</item>
