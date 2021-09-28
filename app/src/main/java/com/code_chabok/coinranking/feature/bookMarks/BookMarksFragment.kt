@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class BookMarksFragment : CoinFragment() {
 
     private lateinit var binding: FragmentBookMarksBinding
     private val viewModel: BookMarksViewModel by viewModels()
-    lateinit var adapter: BookMarkAdapter
+    lateinit var adapter: BaseCoinAdapter
 
 
     override fun onCreateView(
@@ -44,7 +45,7 @@ class BookMarksFragment : CoinFragment() {
 
         setShimmerIndicator(true)
 
-        adapter = BookMarkAdapter {
+        adapter = BaseCoinAdapter {
 
             Log.i("TAG", "onViewCreated:${isDetail} ")
             val bundle = Bundle().apply {
@@ -79,7 +80,8 @@ class BookMarksFragment : CoinFragment() {
         viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             setShimmerIndicator(false)
-            binding.rec.visibility = View.VISIBLE  })
+            binding.rec.visibility = View.VISIBLE
+        })
 
 
         binding.rec.addItemDecoration(

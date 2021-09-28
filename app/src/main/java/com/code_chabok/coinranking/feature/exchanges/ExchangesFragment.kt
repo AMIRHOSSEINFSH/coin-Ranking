@@ -14,6 +14,7 @@ import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.BaseExchangeAdapter
 import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,7 @@ class ExchangesFragment : CoinFragment() {
 
     private lateinit var binding: FragmentExchangesBinding
     val viewModel: ExchangesViewModel by viewModels()
-    private lateinit var adapter: ExchangeAdapter
+    private lateinit var adapter: BaseExchangeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +47,7 @@ class ExchangesFragment : CoinFragment() {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true)
 
-        adapter = ExchangeAdapter {
+        adapter = BaseExchangeAdapter {
             Log.i("TAG", "onViewCreated:${isDetail} ")
             val bundle = Bundle().apply {
                 putParcelable("item",it)

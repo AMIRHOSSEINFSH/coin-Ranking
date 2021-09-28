@@ -1,6 +1,5 @@
 package com.code_chabok.coinranking.feature.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -20,9 +19,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.databinding.FragmentHomeBinding
-import com.code_chabok.coinranking.feature.bookMarks.BookMarkAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +30,7 @@ class HomeFragment : CoinFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
-    private lateinit var adapter: BookMarkAdapter
+    private lateinit var adapter: BaseCoinAdapter
     private val priceList = arrayListOf("2000", "3000", "4000")
     private val timeList = arrayListOf("1h", "24h", "7d", "1m", "1y")
     private val marketList = arrayListOf("marketCap", "C++")
@@ -40,6 +39,7 @@ class HomeFragment : CoinFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         rootView = bining?.root as CoordinatorLayout
 
@@ -55,9 +55,9 @@ class HomeFragment : CoinFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setShimmerIndicator(true)
+        setShimmerIndicator(true, coinView = true)
         setUpSpinners()
-        adapter = BookMarkAdapter {
+        adapter = BaseCoinAdapter {
 
             Log.i("TAG", "onViewCreated:${isDetail} ")
             val bundle = Bundle().apply {
@@ -92,8 +92,8 @@ class HomeFragment : CoinFragment() {
 
         viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            setShimmerIndicator(false)
-            bining?.rvHome?.visibility = View.VISIBLE
+            setShimmerIndicator(false, coinView = false)
+            bining?.constParent?.visibility = View.VISIBLE
         })
 
 
@@ -119,10 +119,10 @@ class HomeFragment : CoinFragment() {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    ((p0?.getChildAt(0)) as TextView).apply {
+                   /* ((p0?.getChildAt(0)) as TextView).apply {
                         setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
                         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }
+                    }*/
                     if (!isUp) {
                         _binding?.ivPriceArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
@@ -139,10 +139,10 @@ class HomeFragment : CoinFragment() {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    ((p0?.getChildAt(0)) as TextView).apply {
+                    /*((p0?.getChildAt(0)) as TextView).apply {
                         setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
                         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }
+                    }*/
                     if (!isUp) {
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
@@ -159,10 +159,10 @@ class HomeFragment : CoinFragment() {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    ((p0?.getChildAt(0)) as TextView).apply {
+                    /*((p0?.getChildAt(0)) as TextView).apply {
                         setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
                         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }
+                    }*/
                     if (!isUp) {
                         _binding?.ivMarketCapArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
@@ -216,7 +216,7 @@ class HomeFragment : CoinFragment() {
 
     override fun onStop() {
         super.onStop()
-        setShimmerIndicator(false)
+        setShimmerIndicator(false, coinView = true)
     }
 
     override fun onDestroyView() {

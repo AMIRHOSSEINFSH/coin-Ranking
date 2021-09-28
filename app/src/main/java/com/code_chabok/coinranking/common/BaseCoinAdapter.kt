@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.feature.bookMarks
+package com.code_chabok.coinranking.common
 
 import android.app.Activity
 import android.util.Log
@@ -8,18 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.code_chabok.coinranking.common.implementSpringAnimationTrait
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
-
-class BookMarkAdapter constructor(
+class BaseCoinAdapter  constructor(
     private val onItemClickListener: (Crypto) -> Unit,
     /*private val onLockRec: (Boolean) -> Unit,*/
     //private val activity: Activity
-) : ListAdapter<Crypto, BookMarkAdapter.MyViewHolder>(
+) : ListAdapter<Crypto, BaseCoinAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<Crypto>() {
 
         override fun areItemsTheSame(oldItem: Crypto, newItem: Crypto): Boolean {
@@ -37,16 +35,18 @@ class BookMarkAdapter constructor(
         this.activity = activity
     }
 
-    fun showBubble(){
-            BubbleShowCaseSequence()
-                .addShowCase(first)
-                .addShowCase(second)
-                .show()
+    fun showBubble() {
+        BubbleShowCaseSequence()
+            .addShowCase(first)
+            .addShowCase(second)
+            .show()
     }
+
     private lateinit var first: BubbleShowCaseBuilder
     private lateinit var second: BubbleShowCaseBuilder
     private var tof = true
     var showBubble = true
+
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Crypto) {
@@ -55,7 +55,7 @@ class BookMarkAdapter constructor(
             binding.model = item
             //binding.callback = this
 
-            if (adapterPosition == 1 && tof){
+            if (adapterPosition == 1 && tof) {
                 item.isExpanded = true
                 binding.cryptoDivider.visibility = View.GONE
                 binding.expandableLayout.visibility = View.VISIBLE
@@ -71,8 +71,8 @@ class BookMarkAdapter constructor(
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
 
-                if (showBubble){
-                   showBubble()
+                if (showBubble) {
+                    showBubble()
                 }
 
             }
@@ -118,7 +118,7 @@ class BookMarkAdapter constructor(
                 }*/
 
             val isExpanded = item.isExpanded
-            if (isExpanded){
+            if (isExpanded) {
 
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
@@ -127,11 +127,10 @@ class BookMarkAdapter constructor(
                     notifyItemChanged(adapterPosition)
                     true
                 }
-            }
-            else{
+            } else {
 
                 binding.constExpandable.setOnLongClickListener {
-                    if (scanList()){
+                    if (scanList()) {
                         item.isExpanded = true
                         binding.cryptoDivider.visibility = View.VISIBLE
                         binding.expandableLayout.visibility = View.VISIBLE
@@ -162,21 +161,15 @@ class BookMarkAdapter constructor(
         holder.bind(getItem(position))
     }
 
-    fun scanList():Boolean{
+    fun scanList(): Boolean {
         var counter = 0
         currentList.forEach {
-            if (it.isExpanded){
+            if (it.isExpanded) {
                 counter++
-                if(counter>1)
+                if (counter > 1)
                     return@forEach
             }
         }
         return counter <= 1
     }
-
-
-
-}
-interface CallBack{
-    fun onClick(v: View,model: Crypto)
 }

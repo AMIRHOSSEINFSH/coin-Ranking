@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.feature.exchanges
+package com.code_chabok.coinranking.common
 
 import android.app.Activity
 import android.util.Log
@@ -8,17 +8,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.code_chabok.coinranking.common.implementSpringAnimationTrait
 import com.code_chabok.coinranking.data.model.Exchange
-import com.code_chabok.coinranking.databinding.ItemCryptoBinding
 import com.code_chabok.coinranking.databinding.ItemExchangeBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
-class ExchangeAdapter constructor(
+class BaseExchangeAdapter constructor(
     private val onItemClickListener: (Exchange) -> Unit,
 
-) : ListAdapter<Exchange, ExchangeAdapter.MyViewHolder>(
+    ) : ListAdapter<Exchange, BaseExchangeAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<Exchange>() {
 
         override fun areItemsTheSame(oldItem: Exchange, newItem: Exchange): Boolean {

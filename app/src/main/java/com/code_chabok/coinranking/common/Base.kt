@@ -31,7 +31,7 @@ abstract class CoinFragment : Fragment(), CoinView {
 
 abstract class CoinActivity : AppCompatActivity(), CoinView {
 
-    override var rootView: CoordinatorLayout? =null
+    override var rootView: CoordinatorLayout? = null
         get() {
             val viewGroup = window.decorView.findViewById(android.R.id.content) as ViewGroup
             if (viewGroup !is CoordinatorLayout) {
@@ -52,7 +52,7 @@ interface CoinView {
     var rootView: CoordinatorLayout?
     val viewContext: Context?
 
-    fun setShimmerIndicator(mustShow: Boolean) {
+    fun setShimmerIndicator(mustShow: Boolean, coinView: Boolean = false) {
         rootView?.let {
             viewContext?.let { context ->
 
@@ -61,7 +61,12 @@ interface CoinView {
                 if (loadingView == null && mustShow) {
                     loadingView =
                         LayoutInflater.from(context)
-                            .inflate(R.layout.shimmer_placeholder_layout, it, false)
+                            .inflate(
+                                if (coinView) R.layout.shimmer_coin_page_place_holder
+                                else R.layout.shimmer_placeholder_layout,
+                                it,
+                                false
+                            )
 
                     it.addView(loadingView)
 
@@ -83,16 +88,16 @@ interface CoinView {
     }
 }
 
-abstract class BaseFragmentAdapter(fragment: CoinFragment): FragmentStateAdapter(fragment){
+abstract class BaseFragmentAdapter(fragment: CoinFragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return 2
     }
 }
 
-class FragmentAdapterCrypto(fragment: CoinFragment): BaseFragmentAdapter(fragment){
+class FragmentAdapterCrypto(fragment: CoinFragment) : BaseFragmentAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
+        return when (position) {
             0 -> CryptoDetailChildFragment()
             1 -> ExchangesFragment().isInDetail(true)
             else -> CryptoDetailChildFragment()
@@ -101,10 +106,10 @@ class FragmentAdapterCrypto(fragment: CoinFragment): BaseFragmentAdapter(fragmen
 
 }
 
-class FragmentAdapterExchange(fragment: CoinFragment): BaseFragmentAdapter(fragment){
+class FragmentAdapterExchange(fragment: CoinFragment) : BaseFragmentAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
+        return when (position) {
             0 -> ExchangeDetailChildFragment()
             1 -> BookMarksFragment().isInDetail(true)
             else -> ExchangeDetailChildFragment()

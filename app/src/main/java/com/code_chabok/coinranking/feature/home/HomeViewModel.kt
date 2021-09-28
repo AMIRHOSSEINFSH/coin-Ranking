@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(var repository: CryptoRepository): CoinV
 
     init {
         viewModelScope.launch {
-            delay(2000)
+            delay(5000)
             _cryptoListLiveData.postValue(repository.fetchCrypto())
         }
 
