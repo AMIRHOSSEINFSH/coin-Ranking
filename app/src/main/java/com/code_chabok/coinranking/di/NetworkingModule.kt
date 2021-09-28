@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.data.db
+package com.code_chabok.coinranking.di
 
 import dagger.Module
 import dagger.Provides

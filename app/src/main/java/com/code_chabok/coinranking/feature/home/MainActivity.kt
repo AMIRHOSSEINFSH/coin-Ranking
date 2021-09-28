@@ -81,8 +81,6 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
-
-
     }
 
     private fun initUiComponents() {
@@ -123,11 +121,6 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
 
-                /* R.id.splashFragment -> {
-                     supportActionBar?.hide()
-                     binding.bottomNav.hide()
-
-                 }*/
                 R.id.homeFragment -> {
                     binding.bottomNav.show()
                     supportActionBar?.show()
