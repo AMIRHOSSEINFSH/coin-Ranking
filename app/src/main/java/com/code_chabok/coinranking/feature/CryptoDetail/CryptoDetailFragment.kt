@@ -2,10 +2,9 @@ package com.code_chabok.coinranking.feature.CryptoDetail
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
@@ -22,8 +21,9 @@ class CryptoDetailFragment : CoinFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    private var _binding : FragmentCryptoDetailBinding? = null
-    private val binding : FragmentCryptoDetailBinding get() = _binding!!
+
+    private var _binding: FragmentCryptoDetailBinding? = null
+    private val binding: FragmentCryptoDetailBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +31,16 @@ class CryptoDetailFragment : CoinFragment() {
     ): View {
         //setShimmerIndicator(true)
         // Inflate the layout for this fragment
-        _binding = FragmentCryptoDetailBinding.inflate(inflater,container,false)
+        _binding = FragmentCryptoDetailBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        menu.findItem(R.id.mi_search).isVisible = false
+
+        super.onCreateOptionsMenu(menu, inflater)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,16 +52,26 @@ class CryptoDetailFragment : CoinFragment() {
         val fragment = parentFragmentManager.findFragmentById(R.id.homeFragment)
         for (entry in 0 until parentFragmentManager.getBackStackEntryCount()) {
             //if (parentFragmentManager.getBackStackEntryAt(entry).getId() == R.id.homeFragment){
-                Log.i("Tag", "Found fragment: " + parentFragmentManager.getBackStackEntryAt(entry).getId())
-           // }
+            Log.i(
+                "Tag",
+                "Found fragment: " + parentFragmentManager.getBackStackEntryAt(entry).getId()
+            )
+            // }
 
         }
 
+
+
         binding.viewPager.adapter = FragmentAdapterCrypto(this)
-        TabLayoutMediator(binding.tabLayout,binding.viewPager){ tab, position ->
-            when(position){
-                0-> tab.text = "OverView"
-                1-> tab.text = "Exchanges"
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "OverView"
+                }
+                1 -> {
+                    tab.text = "Exchanges"
+                    setHasOptionsMenu(false)
+                }
             }
         }.attach()
 
@@ -63,7 +81,7 @@ class CryptoDetailFragment : CoinFragment() {
 
     override fun onStop() {
         super.onStop()
-       // setShimmerIndicator(false)
+        // setShimmerIndicator(false)
     }
 
     override fun onDestroyView() {
@@ -72,4 +90,4 @@ class CryptoDetailFragment : CoinFragment() {
     }
 
 
-    }
+}

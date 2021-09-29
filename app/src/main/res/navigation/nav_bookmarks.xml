@@ -14,7 +14,7 @@
             android:id="@+id/home_book_same"
             app:destination="@id/cryptoDetailFragment" />
         <action
-            android:id="@+id/action_bookMarksFragment_to_searchFragment3"
+            android:id="@+id/all_to_search"
             app:destination="@id/searchFragment3" />
         <action
             android:id="@+id/action_homeFragment_to_cryptoDetailChildFragment"
@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/exchangeDetailFragment2" />
+        <action
+            android:id="@+id/all_to_search"
+            app:destination="@id/searchFragment3" />
 
     </fragment>
     <fragment
@@ -40,6 +43,9 @@
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/cryptoDetailFragment" />
+        <action
+            android:id="@+id/all_to_search"
+            app:destination="@id/searchFragment3" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment3"

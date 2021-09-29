@@ -54,9 +54,17 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
 
     private lateinit var configuration: AppBarConfiguration
 
+    /*private lateinit var searchInStack: searchInStackState
+
+    sealed class searchInStackState{
+        class Bookmark():searchInStackState()
+        class Exchange():searchInStackState()
+        class Home():searchInStackState()
+        class OtherDetails():searchInStackState()
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 
@@ -128,14 +136,30 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         menuInflater.inflate(R.menu.menu_toolbar_search, menu)
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mi_search -> {
-                navController.navigate(R.id.action_homeFragment_to_searchFragment)
+                navController.navigate(R.id.all_to_search)
+                /*when(searchInStack){
+                    is searchInStackState.Home ->{
+                        navController.navigate(R.id.all_to_search)
+                    }
+                    is searchInStackState.Bookmark -> {
+                        navController.navigate(R.id.all_to_search)
+                    }
+                    is searchInStackState.Exchange -> {
+                        navController.navigate(R.id.all_to_search)
+                    }
+                    else ->{
+                        navController.navigate(R.id.all_to_search)
+                    }
+                }*/
             }
         }
         return super.onOptionsItemSelected(item)
@@ -146,39 +170,37 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
             when (destination.id) {
 
                 R.id.homeFragment -> {
+                    //searchInStack = searchInStackState.Home()
                     binding.bottomNav.show()
                     supportActionBar?.show()
                     isDetail = false
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }
-                /*R.id.cryptoDetailFragment -> {
-                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                else -> {
                     onChanged(false)
-                }
-                R.id.cryptoDetailFragment2 -> {
-                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                    onChanged(false)
-                }
-                R.id.cryptoDetailFragment3 -> {
-                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                    onChanged(false)
-                }*/
-                R.id.exchangesFragment -> {
                     isDetail = false
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                    onChanged(false)
-                }
-                R.id.bookMarksFragment -> {
-                    isDetail = false
-                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                    onChanged(false)
-                }
-                R.id.searchFragment -> {
-                    isDetail = false
-                    onChanged(false)
+                    when (destination.id) {
+                        R.id.exchangesFragment -> {
+                            //searchInStack = searchInStackState.Exchange()
+                            //todo do sth want to do when <this> fragment is loaded
+                        }
+                        R.id.bookMarksFragment -> {
+                            //searchInStack = searchInStackState.Bookmark()
+                            //todo do sth want to do when <this> fragment is loaded
+                        }
+                        R.id.searchFragment -> {
+                            //todo do sth want to do when <this> fragment is loaded
+                        }
 
+                        else ->{
+                           // searchInStack = searchInStackState.OtherDetails()
+                        }
+                    }
                 }
+
+
             }
         }
     }

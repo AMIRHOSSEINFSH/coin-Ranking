@@ -11,7 +11,7 @@
         android:label="Exchanges"
         tools:layout="@layout/fragment_exchanges" >
         <action
-            android:id="@+id/action_exchangesFragment_to_searchFragment2"
+            android:id="@+id/all_to_search"
             app:destination="@id/searchFragment2" />
         <action
             android:id="@+id/action_exchangesFragment_to_exchangeDetailFragment"
@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/cryptoDetailFragment3" />
+        <action
+            android:id="@+id/all_to_search"
+            app:destination="@id/searchFragment2" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_crypto_detail"
@@ -38,5 +41,8 @@
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/exchangeDetailFragment" />
+        <action
+            android:id="@+id/all_to_search"
+            app:destination="@id/searchFragment2" />
     </fragment>
 </navigation>
