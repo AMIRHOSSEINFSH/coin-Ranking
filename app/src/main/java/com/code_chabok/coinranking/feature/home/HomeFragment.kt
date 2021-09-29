@@ -21,7 +21,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
+
 import com.code_chabok.coinranking.databinding.FragmentHomeBinding
+import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,17 +48,21 @@ class HomeFragment : CoinFragment() {
         return bining!!.root
     }
 
-    private var isDetail = true
-//    fun isInDetail(boolean: Boolean):HomeFragment{
-//        isDetail = boolean
-//        return this
-//    }
+    private var isDetail = false
+    fun isInDetail(boolean: Boolean):HomeFragment{
+        isDetail = boolean
+        return this
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true, coinView = true)
         setUpSpinners()
+        if (!isDetail) {
+            //viewModel.backStackDetecter.value = this
+
+        }
         adapter = BaseCoinAdapter {
 
             Log.i("TAG", "onViewCreated:${isDetail} ")
@@ -64,23 +70,36 @@ class HomeFragment : CoinFragment() {
                 putParcelable("item", it)
             }
 
-            if (isDetail) {
-                findNavController().navigate(
-                    R.id.action_homeFragment_to_cryptoDetailChildFragment,
-                    bundle
-                )
-//                //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
-            } else {
-                findNavController().navigate(
-                    R.id.action_homeFragment_to_cryptoDetailFragment2,
-                    bundle
-                )
-            }
+            /*if (!isDetail)
+            findNavController().navigate(R.id.action_homeFragment_to_cryptoDetailFragment2,bundle)
+            else
+                findNavController().navigate(R.id.action_same_to_same,bundle)*/
+                /*if (baseFragment is baseFragmentHolder.Home){
+                    if (isDetail){
+                        findNavController().navigate(R.id.action_cryptoDetailFragment2_to_exchangeDetailFragment3,bundle)
+                    }
+                    else{
+                        findNavController().navigate(R.id.action_homeFragment_to_cryptoDetailFragment2,bundle)
+                    }
+                }
+                else if(baseFragment is baseFragmentHolder.Exchange){
+                    if (!(baseFragment as baseFragmentHolder.Exchange).isLoop)
+                    findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
+                    else {
+                        findNavController().navigate(
+                            R.id.action_cryptoDetailFragment3_to_exchangeDetailFragment,
+                            bundle
+                        )
+                        (baseFragment as baseFragmentHolder.Exchange).isLoop = false
+                    }
+                }*/
+
         }
 
         adapter.setActivity(requireActivity())
         adapter.apply {
             setActivity(requireActivity())
+            setIsDetail(isDetail)
             showBubble = savedInstanceState == null
         }
         bining?.rvHome?.layoutManager =

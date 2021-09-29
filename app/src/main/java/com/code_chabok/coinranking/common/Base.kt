@@ -17,6 +17,7 @@ import com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragmen
 import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
+import com.code_chabok.coinranking.feature.home.HomeFragment
 
 abstract class CoinFragment : Fragment(), CoinView {
     override var rootView: CoordinatorLayout? = null
@@ -79,6 +80,8 @@ interface CoinView {
 
 
     abstract class CoinViewModel : ViewModel() {
+        val backStackDetecter = MutableLiveData<Fragment>()
+
         val progressBarLiveData = MutableLiveData<Boolean>()
 
         override fun onCleared() {
@@ -111,9 +114,13 @@ class FragmentAdapterExchange(fragment: CoinFragment) : BaseFragmentAdapter(frag
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> ExchangeDetailChildFragment()
-            1 -> BookMarksFragment().isInDetail(true)
+            1 -> HomeFragment().isInDetail(true)
             else -> ExchangeDetailChildFragment()
         }
     }
 
 }
+
+var isDetail = false
+
+//class FragmentAdapterCryptoHomeStack(fra)

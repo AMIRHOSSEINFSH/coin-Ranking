@@ -7,6 +7,7 @@ import android.os.Build
 import com.code_chabok.coinranking.common.CoinActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -41,8 +42,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 
 import android.view.animation.RotateAnimation
-
-
 
 
 @AndroidEntryPoint
@@ -84,7 +83,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     }
 
     private fun showingSplash() {
-       val alphaAnimation = AlphaAnimation(0F,1F)
+        val alphaAnimation = AlphaAnimation(0F, 1F)
         val animationSet = AnimationSet(true)
         animationSet.addAnimation(alphaAnimation)
 
@@ -155,6 +154,18 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }
+                /*R.id.cryptoDetailFragment -> {
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(false)
+                }
+                R.id.cryptoDetailFragment2 -> {
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(false)
+                }
+                R.id.cryptoDetailFragment3 -> {
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                    onChanged(false)
+                }*/
                 R.id.exchangesFragment -> {
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(false)
@@ -177,6 +188,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
     }
 
     override fun onBackPressed() {
+        Log.i("TAG", "onBackPressed: ")
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {

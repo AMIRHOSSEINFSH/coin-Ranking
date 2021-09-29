@@ -1,13 +1,17 @@
 package com.code_chabok.coinranking.common
 
 import android.app.Activity
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
@@ -33,6 +37,11 @@ class BaseCoinAdapter  constructor(
     private lateinit var activity: Activity
     fun setActivity(activity: Activity) {
         this.activity = activity
+    }
+
+    private var isDetail: Boolean = false
+    fun setIsDetail(isDetail: Boolean){
+        this.isDetail = isDetail
     }
 
     fun showBubble() {
@@ -144,7 +153,15 @@ class BaseCoinAdapter  constructor(
             binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             binding.constExpandable.setOnClickListener {
-                onItemClickListener(item)
+                val bundle = Bundle().apply {
+                    putParcelable("item", item)
+                }
+                if (!isDetail)
+                    itemView.findNavController().navigate(R.id.home_book_same,bundle)
+                else
+                    itemView.findNavController().navigate(R.id.action_same_to_same,bundle)
+                //onItemClickListener(item)
+                com.code_chabok.coinranking.common.isDetail = true
             }
         }
 

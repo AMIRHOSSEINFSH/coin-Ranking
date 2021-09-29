@@ -29,10 +29,10 @@ class BaseExchangeAdapter constructor(
     }
 ) {
     private lateinit var activity: Activity
+
     fun setActivity(activity: Activity) {
         this.activity = activity
     }
-
     fun showBubble(){
         BubbleShowCaseSequence()
             .addShowCase(first)

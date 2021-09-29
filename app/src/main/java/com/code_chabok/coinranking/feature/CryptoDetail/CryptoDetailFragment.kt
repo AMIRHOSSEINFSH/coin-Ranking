@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterCrypto
@@ -39,6 +40,14 @@ class CryptoDetailFragment : CoinFragment() {
         //val crypto = CryptoDetailFragmentArgs.fromBundle(requireArguments()).crypto
         val crypto = arguments?.getParcelable<Crypto>("item")
         binding.model = crypto
+
+        val fragment = parentFragmentManager.findFragmentById(R.id.homeFragment)
+        for (entry in 0 until parentFragmentManager.getBackStackEntryCount()) {
+            //if (parentFragmentManager.getBackStackEntryAt(entry).getId() == R.id.homeFragment){
+                Log.i("Tag", "Found fragment: " + parentFragmentManager.getBackStackEntryAt(entry).getId())
+           // }
+
+        }
 
         binding.viewPager.adapter = FragmentAdapterCrypto(this)
         TabLayoutMediator(binding.tabLayout,binding.viewPager){ tab, position ->

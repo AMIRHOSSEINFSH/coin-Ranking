@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseExchangeAdapter
-import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,31 +37,66 @@ class ExchangesFragment : CoinFragment() {
 
 
     private var isDetail = false
+
     fun isInDetail(boolean: Boolean): ExchangesFragment {
         isDetail = boolean
+
         return this
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true)
+        if (!isDetail) {
+            //viewModel.backStackDetecter.value = this
 
+        }
         adapter = BaseExchangeAdapter {
             Log.i("TAG", "onViewCreated:${isDetail} ")
             val bundle = Bundle().apply {
                 putParcelable("item",it)
             }
-            if(isDetail){
-                findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
-                //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
+            if (isDetail)
+            findNavController().navigate(R.id.action_same_to_same,bundle)
+            else{
+                findNavController().navigate(R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle)
             }
-            else
-                findNavController().navigate(
-                    R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle
-                    /*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
-                        it
-                    )*/
-                )
+            //viewModel.backStackDetecter.observe(viewLifecycleOwner,{ backStackFragment->
+                /*if (baseFragment is baseFragmentHolder.Home){*//*action_exchangeDetailFragment_to_cryptoDetailFragment3*//*
+                    if (!(baseFragment as baseFragmentHolder.Home).isLoop)
+                    findNavController().navigate(R.id.action_cryptoDetailFragment2_to_exchangeDetailFragment3,bundle)
+
+                    else {
+                        findNavController().navigate(
+                            R.id.action_exchangeDetailFragment3_to_cryptoDetailFragment2,
+                            bundle
+                        )
+                        (baseFragment as baseFragmentHolder.Home).isLoop = false
+                    }
+                }
+                else if(baseFragment is baseFragmentHolder.Exchange){
+                    if (isDetail){
+                        findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
+                    }
+                    else{*//*action_cryptoDetailFragment2_to_exchangeDetailFragment3*//*
+                        findNavController().navigate(R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle)
+                    }
+                }*/
+            //})
+
+
+                //findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
+                //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
+//            else if (isDetail){
+//                findNavController().navigate(R.id.action_cryptoDetailFragment3_to_exchangeDetailFragment,bundle)
+//            }
+//            else
+//                findNavController().navigate(
+//                    R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle
+//                    /*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
+//                        it
+//                    )*/
+//                )
         }.apply {
             setActivity(requireActivity())
         }
@@ -138,5 +172,7 @@ class ExchangesFragment : CoinFragment() {
         super.onDetach()
         Log.i(TAG, "onDetach: ")
     }
+
+    
 
 }

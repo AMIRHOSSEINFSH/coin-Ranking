@@ -3,6 +3,7 @@ package com.code_chabok.coinranking.feature.bookMarks
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.common.isDetail
 import com.code_chabok.coinranking.databinding.FragmentBookMarksBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +36,7 @@ class BookMarksFragment : CoinFragment() {
 
         return binding.root
     }
-    private var isDetail = false
+    //private var isDetail = false
     fun isInDetail(boolean: Boolean):BookMarksFragment{
         isDetail = boolean
         return this
@@ -52,22 +54,23 @@ class BookMarksFragment : CoinFragment() {
                 putParcelable("item",it)
             }
 
-            if(isDetail){
+            /*if(isDetail){
                 findNavController().navigate(R.id.action_cryptoDetailFragment_to_exchangeDetailFragment2,bundle)
                 //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
             }
             else {
                 findNavController().navigate(
                     R.id.action_bookMarksFragment_to_cryptoDetailFragment, bundle
-                    /*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
+                    *//*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
                         it
-                    )*/
+                    )*//*
                 )
-            }
+            }*/
         }
         //adapter.setActivity(requireActivity())
         adapter.apply {
             setActivity(requireActivity())
+            setIsDetail(isDetail)
             showBubble = savedInstanceState == null
         }
         binding.rec.layoutManager =
@@ -95,6 +98,11 @@ class BookMarksFragment : CoinFragment() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        isInDetail(true)
+    }
+
     override fun onStop() {
         super.onStop()
         setShimmerIndicator(false)
@@ -102,6 +110,7 @@ class BookMarksFragment : CoinFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Toast.makeText(requireContext(), "onDestroyView called", Toast.LENGTH_SHORT).show()
         //rootView?.removeAllViews()
         //setShimmerIndicator(false)
     }

@@ -11,11 +11,14 @@
         android:label="Bookmarks"
         tools:layout="@layout/fragment_book_marks" >
         <action
-            android:id="@+id/action_bookMarksFragment_to_cryptoDetailFragment"
+            android:id="@+id/home_book_same"
             app:destination="@id/cryptoDetailFragment" />
         <action
             android:id="@+id/action_bookMarksFragment_to_searchFragment3"
             app:destination="@id/searchFragment3" />
+        <action
+            android:id="@+id/action_homeFragment_to_cryptoDetailChildFragment"
+            app:destination="@id/cryptoDetailChildFragment2" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_crypto_detail"
@@ -26,16 +29,24 @@
             android:name="crypto"
             app:argType="com.code_chabok.coinranking.data.model.Crypto" />
         <action
-            android:id="@+id/action_cryptoDetailFragment_to_exchangeDetailFragment2"
+            android:id="@+id/action_same_to_same"
             app:destination="@id/exchangeDetailFragment2" />
 
     </fragment>
     <fragment
         android:id="@+id/exchangeDetailFragment2"
         android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
-        android:label="ExchangeDetailFragment" />
+        android:label="ExchangeDetailFragment" >
+        <action
+            android:id="@+id/action_same_to_same"
+            app:destination="@id/cryptoDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment3"
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/cryptoDetailChildFragment2"
+        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment"
+        android:label="CryptoDetailChildFragment" />
 </navigation>
