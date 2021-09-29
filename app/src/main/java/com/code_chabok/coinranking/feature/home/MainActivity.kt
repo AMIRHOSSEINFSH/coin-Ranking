@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import android.graphics.Typeface
 import android.icu.text.Transliterator
 import android.os.Build
-import com.code_chabok.coinranking.common.CoinActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -26,9 +25,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.common.enableFullScreenMode
-import com.code_chabok.coinranking.common.hide
-import com.code_chabok.coinranking.common.show
 import com.code_chabok.coinranking.databinding.ActivityMainBinding
 import com.code_chabok.coinranking.feature.search.SearchFragment
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
@@ -42,6 +38,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 
 import android.view.animation.RotateAnimation
+import com.code_chabok.coinranking.common.*
 
 
 @AndroidEntryPoint
@@ -151,6 +148,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
                 R.id.homeFragment -> {
                     binding.bottomNav.show()
                     supportActionBar?.show()
+                    isDetail = false
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(true)
                 }
@@ -167,14 +165,17 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
                     onChanged(false)
                 }*/
                 R.id.exchangesFragment -> {
+                    isDetail = false
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(false)
                 }
                 R.id.bookMarksFragment -> {
+                    isDetail = false
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     onChanged(false)
                 }
                 R.id.searchFragment -> {
+                    isDetail = false
                     onChanged(false)
 
                 }

@@ -110,7 +110,7 @@ class BookMarksFragment : CoinFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Toast.makeText(requireContext(), "onDestroyView called", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "onDestroyView called", Toast.LENGTH_SHORT).show()
         //rootView?.removeAllViews()
         //setShimmerIndicator(false)
     }
