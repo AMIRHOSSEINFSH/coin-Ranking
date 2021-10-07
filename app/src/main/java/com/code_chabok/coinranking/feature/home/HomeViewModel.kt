@@ -1,30 +1,38 @@
 package com.code_chabok.coinranking.feature.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.CoinView
+import com.code_chabok.coinranking.common.CoinViewModel
 import com.code_chabok.coinranking.data.model.Crypto
-import com.code_chabok.coinranking.data.repo.CryptoRepository
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.repo.CryptoRepository
+import com.code_chabok.coinranking.domain.getCoinDetail
+import com.code_chabok.coinranking.domain.getListOfCoins
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(var repository: CryptoRepository): CoinView.CoinViewModel() {
+class HomeViewModel @Inject constructor(private val getListOfCoins: getListOfCoins,private val getCoin: getCoinDetail): CoinViewModel() {
 
-    private var _cryptoListLiveData = MutableLiveData<List<Crypto>>()
-    val cryptoListLiveData : LiveData<List<Crypto>>
-        get() = _cryptoListLiveData
+    private val _coinDetailObserver = MutableLiveData<CoinDetail>()
+    val coinDetailObserver get() = _coinDetailObserver
 
-    init {
-        viewModelScope.launch {
-            delay(5000)
-            _cryptoListLiveData.postValue(repository.fetchCrypto())
+    fun getSpcificCoinDetail(uuid: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val res = getCoin(uuid).data
+            withContext(Dispatchers.Main){
+                _coinDetailObserver.value = res!!
+            }
         }
+    }
 
+    var listCoins = refreshing.switchMap {
+        getListOfCoins()
     }
 
 }

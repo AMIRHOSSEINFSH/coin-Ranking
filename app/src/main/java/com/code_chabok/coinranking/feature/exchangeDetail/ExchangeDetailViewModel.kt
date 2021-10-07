@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinView
+import com.code_chabok.coinranking.common.CoinViewModel
 
-class ExchangeDetailViewModel : CoinView.CoinViewModel() {
+class ExchangeDetailViewModel : CoinViewModel() {
 
 }

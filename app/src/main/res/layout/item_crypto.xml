@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="model"
-            type="com.code_chabok.coinranking.data.model.Crypto" />
+            name="CoinListModel"
+            type="com.code_chabok.coinranking.data.model.dataClass.CoinListModel" />
+
+     <variable
+         name="CoinDetailModel"
+         type="com.code_chabok.coinranking.data.model.dataClass.CoinDetail" />
 
 
     </data>
@@ -42,7 +46,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="14dp"
                     android:src="@drawable/ic_bitcoin"
-                    app:loadImg="@{model.img_url}" />
+                    app:loadImg="@{CoinListModel.iconUrl}" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -53,7 +57,7 @@
                         android:id="@+id/cryptoNameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.name,default=BitCoin}"
+                        android:text="@{CoinListModel.name,default=BitCoin}"
                         android:textAppearance="?textAppearanceSubtitle2"
                         android:textColor="@color/grey_700" />
 
@@ -61,7 +65,7 @@
                         android:id="@+id/cryptoAbbrTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{model.prev,default = BTC}"
+                        android:text="@{CoinListModel.symbol,default = BTC}"
                         android:textAllCaps="true"
                         android:textAppearance="?textAppearanceCaption"
                         android:textSize="12sp" />
@@ -88,7 +92,8 @@
                         android:id="@+id/cryptoPriceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/dollar_sign(model.price)}"
+                        app:formatPrice="@{CoinListModel.price}"
+                        tools:text="332%"
                         android:textAppearance="?textAppearanceSubtitle1"
                         android:textColor="@color/grey_700" />
 
@@ -97,7 +102,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{@string/upRate(model.changedRate) }"
+                        android:text="@{CoinListModel.change}"
+                        app:rateImpl="@{CoinListModel.change}"
                         android:textAppearance="?textAppearanceSubtitle1"
                         android:textColor="#2BCF31"
                         android:textSize="10sp" />
@@ -129,6 +135,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="15dp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +151,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="BTC value"
+                    android:text="@{@string/symbol_value(CoinDetailModel.symbol)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -165,7 +172,7 @@
 
                     <TextView
                         android:gravity="end"
-                        android:text=" $ 34,412.66 "
+                        app:formatPrice="@{CoinDetailModel.price}"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -195,7 +202,7 @@
 
                     <TextView
                         android:gravity="end"
-                        android:text=" 1.00 BTC "
+                        android:text="@{@string/symbol_value(CoinDetailModel.btcPrice),default=12233}"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -225,7 +232,7 @@
 
                     <TextView
                         android:gravity="end"
-                        android:text="1"
+                        android:text="@{Integer.toString(CoinDetailModel.rank),default=1}"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -255,7 +262,7 @@
 
                     <TextView
                         android:gravity="end"
-                        android:text="$ 18.05 billion"
+                        app:bindVolume="@{CoinDetailModel.hVolume}"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -285,7 +292,7 @@
 
                     <TextView
                         android:gravity="end"
-                        android:text=" $ 645.66 billion  "
+                        app:bindVolume="@{CoinDetailModel.marketCap}"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

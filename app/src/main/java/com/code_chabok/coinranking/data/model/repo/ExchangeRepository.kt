@@ -1,4 +1,4 @@
-package com.code_chabok.coinranking.data.repo
+package com.code_chabok.coinranking.data.model.repo
 
 import com.code_chabok.coinranking.data.model.Exchange
 

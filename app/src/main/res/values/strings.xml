@@ -9,11 +9,14 @@
     <string name="action_open_drawer">Open</string>
     <string name="action_close_drawer">Close</string>
 
-    <string name="dollar_sign">%s $</string>
+
     <string name="upRate">%s</string>
     <string name="downRate">- %s %</string>
     <string name="mi_night_mode">Dark Mode</string>
     <string name="Introdution">Statistics showing an overview of Binance exchange, such as its 24h trading volume, market share and cryptocurrency listings.</string>
     <string name="about_binance"><![CDATA[Binance is a blockchain ecosystem comprising a cryptocurrency exchange, startup incubator, startup investor, and coin information provider. Binance is a highly popular exchange and allows its users to trade hundreds of cryptocurrencies, including Dogecoin, Bitcoin, and Ethereum. The exchange was founded in July 2017, by Changpeng Zhao (CZ), and was initially based in China, but was later moved out of China due to China\'s increasing regulation of cryptocurrency. The name ‘Binance’ comes from the two words ‘binary’ and ‘finance’. Binance exchange requires KYC (know-your-customer), which is the process that banks gather identifying data and contact information from current and potential customers, to prevent fraud. Binance is capable of processing 1,400,000 orders per second and supports many cryptocurrencies. Binance serves more than 15,000,000 users worldwide, operates in over 40 countries, and is based in over 180 countries & regions.]]></string>
     <string name="cryptocurrency_title">Cryptocurrency</string>
+
+    <string name="symbol_value">%s value statistics</string>
+
 </resources>

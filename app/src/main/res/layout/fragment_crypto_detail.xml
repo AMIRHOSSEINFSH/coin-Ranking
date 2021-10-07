@@ -90,7 +90,8 @@
                             android:id="@+id/cryptoPriceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{@string/dollar_sign(model.price),default=text}"
+                            app:formatPrice="@{model.price}"
+                            tools:text="12311$"
                             android:textAppearance="?textAppearanceSubtitle1"
                             android:textColor="@color/grey_700" />
 
@@ -99,9 +100,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="@{@string/upRate(model.changedRate),default=text }"
+                            tools:text="text"
                             android:textAppearance="?textAppearanceSubtitle1"
-                            android:textColor="#2BCF31"
+                            app:rateImpl="@{model.changedRate}"
                             android:textSize="10sp" />
 
                     </LinearLayout>

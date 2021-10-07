@@ -78,17 +78,40 @@ interface CoinView {
         }
     }
 
-
-    abstract class CoinViewModel : ViewModel() {
-        val backStackDetecter = MutableLiveData<Fragment>()
-
-        val progressBarLiveData = MutableLiveData<Boolean>()
-
-        override fun onCleared() {
-            super.onCleared()
+    fun <T> checkResponseForView(resource: Resource<T>, onSuccess: () -> Unit) {
+        when (resource) {
+            is Resource.Success -> {
+                setShimmerIndicator(false)
+                onSuccess()
+            }
+            is Resource.Error -> {
+                setShimmerIndicator(false)
+            }
+            is Resource.Loading -> {
+                setShimmerIndicator(true)
+            }
         }
-
     }
+
+}
+
+abstract class CoinViewModel : ViewModel() {
+
+    protected val refreshing = MutableLiveData<Boolean>(true)
+
+    fun refresh() {
+        refreshing.value = true
+    }
+
+
+    val backStackDetecter = MutableLiveData<Fragment>()
+
+    val progressBarLiveData = MutableLiveData<Boolean>()
+
+    override fun onCleared() {
+        super.onCleared()
+    }
+
 }
 
 abstract class BaseFragmentAdapter(fragment: CoinFragment) : FragmentStateAdapter(fragment) {
@@ -123,4 +146,16 @@ class FragmentAdapterExchange(fragment: CoinFragment) : BaseFragmentAdapter(frag
 
 var isDetail = false
 
-//class FragmentAdapterCryptoHomeStack(fra)
+sealed class Resource<T>(
+    val data: T? = null,
+    val message: String? = null
+) {
+    class Success<T>(data: T) : Resource<T>(data)
+    class Loading<T>(data: T? = null) : Resource<T>(data)
+    class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
+}
+
+
+
+
+

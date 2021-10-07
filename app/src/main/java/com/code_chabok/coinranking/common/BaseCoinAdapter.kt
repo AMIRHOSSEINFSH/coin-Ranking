@@ -6,29 +6,38 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.data.model.Crypto
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
+import com.code_chabok.coinranking.feature.home.MainActivity
+import com.elconfidencial.bubbleshowcase.BubbleShowCase
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter  constructor(
-    private val onItemClickListener: (Crypto) -> Unit,
+    private val onItemClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
     /*private val onLockRec: (Boolean) -> Unit,*/
     //private val activity: Activity
-) : ListAdapter<Crypto, BaseCoinAdapter.MyViewHolder>(
-    object : DiffUtil.ItemCallback<Crypto>() {
+) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
+    object : DiffUtil.ItemCallback<CoinListModel>() {
 
-        override fun areItemsTheSame(oldItem: Crypto, newItem: Crypto): Boolean {
-            return oldItem.Id == newItem.Id
+        override fun areItemsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
+            return oldItem.uuid == newItem.uuid
         }
 
-        override fun areContentsTheSame(oldItem: Crypto, newItem: Crypto): Boolean {
+        override fun areContentsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -58,20 +67,18 @@ class BaseCoinAdapter  constructor(
 
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Crypto) {
+        fun bind(item: CoinListModel) {
             binding.constExpandable.implementSpringAnimationTrait()
 
-            binding.model = item
+            binding.coinListModel = item
+
             //binding.callback = this
 
-            if (adapterPosition == 1 && tof) {
-                item.isExpanded = true
-                binding.cryptoDivider.visibility = View.GONE
+            if (adapterPosition == 0 && tof) {
+                /*item.isExpanded = true*/
+                /*binding.cryptoDivider.visibility = View.GONE
                 binding.expandableLayout.visibility = View.VISIBLE
-                tof = false
-
-
-
+                tof = false*/
                 first = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.constExpandable).showOnce("BUBBLE_SHOW_CASE_ID_0")
@@ -81,8 +88,30 @@ class BaseCoinAdapter  constructor(
                     .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
 
                 if (showBubble) {
-                    showBubble()
+                   // showBubble()
                 }
+
+                first.listener(object : BubbleShowCaseListener {
+                    override fun onBackgroundDimClick(bubbleShowCase: BubbleShowCase) {
+
+                    }
+
+                    override fun onBubbleClick(bubbleShowCase: BubbleShowCase) {
+
+                    }
+
+                    override fun onCloseActionImageClick(bubbleShowCase: BubbleShowCase) {
+
+                    }
+
+                    override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
+                        item.isExpanded = true
+                        binding.cryptoDivider.visibility = View.GONE
+                        binding.expandableLayout.visibility = View.VISIBLE
+                        tof = false
+                    }
+
+                })
 
             }
 
@@ -126,9 +155,16 @@ class BaseCoinAdapter  constructor(
                     false
                 }*/
 
-            val isExpanded = item.isExpanded
+
+            var isExpanded = item.isExpanded
             if (isExpanded) {
 
+                (activity as MainActivity).lifecycleScope.launchWhenResumed {
+                    onItemClickListener(item).observe(activity as MainActivity){coinDetail ->
+                        binding.coinDetailModel = coinDetail
+                        //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
+                    }
+                }
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
                     binding.cryptoDivider.visibility = View.GONE
@@ -136,14 +172,16 @@ class BaseCoinAdapter  constructor(
                     notifyItemChanged(adapterPosition)
                     true
                 }
+                //item.isExpanded = false
             } else {
 
                 binding.constExpandable.setOnLongClickListener {
+
                     if (scanList()) {
                         item.isExpanded = true
                         binding.cryptoDivider.visibility = View.VISIBLE
                         binding.expandableLayout.visibility = View.VISIBLE
-                        Log.i("TAGAAB", "bind: ${item.Id}")
+                        Log.i("TAGAAB", "bind: ${item.uuid}")
                         notifyItemChanged(adapterPosition)
                     }
 
@@ -154,7 +192,8 @@ class BaseCoinAdapter  constructor(
 
             binding.constExpandable.setOnClickListener {
                 val bundle = Bundle().apply {
-                    putParcelable("item", item)
+                    //putParcelable("item", item)
+                    putString("uuid",item.uuid)
                 }
                 if (!isDetail)
                     itemView.findNavController().navigate(R.id.home_book_same,bundle)

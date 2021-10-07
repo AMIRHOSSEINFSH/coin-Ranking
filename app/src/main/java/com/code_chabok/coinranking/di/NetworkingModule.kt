@@ -17,8 +17,9 @@ object NetworkingModule {
     fun provideRetrofitInstance():Retrofit{
        return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https:google.com")
+            .baseUrl("https://api.coinranking.com/v2/")
             .build()
-
     }
+
+
 }

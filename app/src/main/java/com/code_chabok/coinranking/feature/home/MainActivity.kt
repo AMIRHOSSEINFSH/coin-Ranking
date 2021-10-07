@@ -38,7 +38,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 
 import android.view.animation.RotateAnimation
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.code_chabok.coinranking.common.*
+import com.code_chabok.coinranking.feature.bookMarks.BookMarksViewModel
 
 
 @AndroidEntryPoint
@@ -76,6 +79,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         setupNavigationUiState()
         setupDrawerLayout()
 
+
         BubbleShowCaseBuilder(this)
             .title("You can Switch Between Tabs for more Detail")
             .targetView(binding.bottomNav)
@@ -85,6 +89,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
+
     }
 
     private fun showingSplash() {

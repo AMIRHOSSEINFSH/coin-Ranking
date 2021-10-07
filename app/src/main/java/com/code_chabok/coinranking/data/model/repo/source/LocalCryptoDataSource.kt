@@ -1,8 +1,8 @@
-package com.code_chabok.coinranking.data.repo.source
+package com.code_chabok.coinranking.data.model.repo.source
 
 import com.code_chabok.coinranking.data.model.Crypto
 
-class LocalCryptoDataSource:CryptoDataSource {
+class LocalCryptoDataSource: CryptoDataSource {
 
     override fun getAllCryptos():List<Crypto> {
          return arrayListOf<Crypto>(

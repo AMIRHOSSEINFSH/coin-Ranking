@@ -37,6 +37,7 @@
 
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_exchange_detail"
         android:id="@+id/exchangeDetailFragment2"
         android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
         android:label="ExchangeDetailFragment" >
@@ -48,10 +49,12 @@
             app:destination="@id/searchFragment3" />
     </fragment>
     <fragment
+       tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment3"
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="SearchFragment" />
     <fragment
+        tools:layout="@layout/fragment_exchange_detail_child"
         android:id="@+id/cryptoDetailChildFragment2"
         android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment"
         android:label="CryptoDetailChildFragment" />

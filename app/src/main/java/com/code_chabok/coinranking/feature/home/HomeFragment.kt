@@ -2,28 +2,27 @@ package com.code_chabok.coinranking.feature.home
 
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 
 import com.code_chabok.coinranking.databinding.FragmentHomeBinding
-import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
+import com.code_chabok.coinranking.domain.getCoinDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,14 +60,13 @@ class HomeFragment : CoinFragment() {
         setUpSpinners()
         if (!isDetail) {
             //viewModel.backStackDetecter.value = this
-
         }
         adapter = BaseCoinAdapter {
-
-            Log.i("TAG", "onViewCreated:${isDetail} ")
-            val bundle = Bundle().apply {
+            viewModel.getSpcificCoinDetail(it.uuid)
+            viewModel.coinDetailObserver
+            /*val bundle = Bundle().apply {
                 putParcelable("item", it)
-            }
+            }*/
 
             /*if (!isDetail)
             findNavController().navigate(R.id.action_homeFragment_to_cryptoDetailFragment2,bundle)
@@ -109,10 +107,36 @@ class HomeFragment : CoinFragment() {
                 }
             }
 
-        viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
+       /* viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             setShimmerIndicator(false, coinView = false)
             bining?.constParent?.visibility = View.VISIBLE
+        })*/
+        //viewModel.refresh()
+        viewModel.listCoins.observe(viewLifecycleOwner,{
+            checkResponseForView(it){
+                val coinListModel: List<CoinListModel> = it.data!!
+                //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
+                adapter.submitList(coinListModel)
+                bining?.constParent?.visibility = View.VISIBLE
+            }
+            /*when(it){
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Loading -> {
+                    setShimmerIndicator(true)
+                    Toast.makeText(requireContext(), "Is Loading", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Success -> {
+                    val coinListModel: List<CoinListModel> = it.data!!
+                    Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
+                    adapter.submitList(coinListModel)
+                    setShimmerIndicator(false, coinView = false)
+                    bining?.constParent?.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), "${it.data}", Toast.LENGTH_SHORT).show()
+                }
+            }*/
         })
 
 

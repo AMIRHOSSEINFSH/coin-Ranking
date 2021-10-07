@@ -49,10 +49,12 @@ class BookMarksFragment : CoinFragment() {
 
         adapter = BaseCoinAdapter {
 
-            Log.i("TAG", "onViewCreated:${isDetail} ")
-            val bundle = Bundle().apply {
+            viewModel.getSpcificCoinDetail(it.uuid)
+            viewModel.coinDetailObserver
+            //Log.i("TAG", "onViewCreated:${isDetail} ")
+            /*val bundle = Bundle().apply {
                 putParcelable("item",it)
-            }
+            }*/
 
             /*if(isDetail){
                 findNavController().navigate(R.id.action_cryptoDetailFragment_to_exchangeDetailFragment2,bundle)
@@ -80,11 +82,11 @@ class BookMarksFragment : CoinFragment() {
                 }
             }
 
-        viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
+        /*viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
+            //adapter.submitList(it)
             setShimmerIndicator(false)
             binding.rec.visibility = View.VISIBLE
-        })
+        })*/
 
 
         binding.rec.addItemDecoration(

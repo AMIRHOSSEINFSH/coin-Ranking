@@ -18,6 +18,7 @@
             app:destination="@id/exchangeDetailFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment2"
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="Search" />

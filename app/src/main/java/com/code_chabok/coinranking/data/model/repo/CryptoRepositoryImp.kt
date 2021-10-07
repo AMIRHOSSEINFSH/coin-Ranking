@@ -1,8 +1,8 @@
-package com.code_chabok.coinranking.data.repo
+package com.code_chabok.coinranking.data.model.repo
 
 import com.code_chabok.coinranking.data.model.Crypto
-import com.code_chabok.coinranking.data.repo.source.LocalCryptoDataSource
-import com.code_chabok.coinranking.data.repo.source.RemoteCryptoDataSource
+import com.code_chabok.coinranking.data.model.repo.source.LocalCryptoDataSource
+import com.code_chabok.coinranking.data.model.repo.source.RemoteCryptoDataSource
 
 class CryptoRepositoryImp
 constructor(
