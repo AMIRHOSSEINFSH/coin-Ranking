@@ -46,7 +46,8 @@ class CryptoDetailFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //val crypto = CryptoDetailFragmentArgs.fromBundle(requireArguments()).crypto
-        val crypto = arguments?.getParcelable<Crypto>("item")
+        //val crypto = arguments?.getParcelable<Crypto>("item")
+        val crypto = Crypto("","","","",false,"","",false,"","")
         binding.model = crypto
 
         val fragment = parentFragmentManager.findFragmentById(R.id.homeFragment)

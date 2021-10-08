@@ -48,7 +48,7 @@ class HomeFragment : CoinFragment() {
     }
 
     private var isDetail = false
-    fun isInDetail(boolean: Boolean):HomeFragment{
+    fun isInDetail(boolean: Boolean): HomeFragment {
         isDetail = boolean
         return this
     }
@@ -61,38 +61,13 @@ class HomeFragment : CoinFragment() {
         if (!isDetail) {
             //viewModel.backStackDetecter.value = this
         }
-        adapter = BaseCoinAdapter {
-            viewModel.getSpcificCoinDetail(it.uuid)
-            viewModel.coinDetailObserver
-            /*val bundle = Bundle().apply {
-                putParcelable("item", it)
-            }*/
-
-            /*if (!isDetail)
-            findNavController().navigate(R.id.action_homeFragment_to_cryptoDetailFragment2,bundle)
-            else
-                findNavController().navigate(R.id.action_same_to_same,bundle)*/
-                /*if (baseFragment is baseFragmentHolder.Home){
-                    if (isDetail){
-                        findNavController().navigate(R.id.action_cryptoDetailFragment2_to_exchangeDetailFragment3,bundle)
-                    }
-                    else{
-                        findNavController().navigate(R.id.action_homeFragment_to_cryptoDetailFragment2,bundle)
-                    }
-                }
-                else if(baseFragment is baseFragmentHolder.Exchange){
-                    if (!(baseFragment as baseFragmentHolder.Exchange).isLoop)
-                    findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
-                    else {
-                        findNavController().navigate(
-                            R.id.action_cryptoDetailFragment3_to_exchangeDetailFragment,
-                            bundle
-                        )
-                        (baseFragment as baseFragmentHolder.Exchange).isLoop = false
-                    }
-                }*/
-
-        }
+        adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
+            viewModel.updateNewBookmark(uuid, isBookmark)
+        },
+            onItemClickListener = { coinListModel ->
+                viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                viewModel.coinDetailObserver
+            })
 
         adapter.setActivity(requireActivity())
         adapter.apply {
@@ -107,14 +82,14 @@ class HomeFragment : CoinFragment() {
                 }
             }
 
-       /* viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-            setShimmerIndicator(false, coinView = false)
-            bining?.constParent?.visibility = View.VISIBLE
-        })*/
+        /* viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
+             adapter.submitList(it)
+             setShimmerIndicator(false, coinView = false)
+             bining?.constParent?.visibility = View.VISIBLE
+         })*/
         //viewModel.refresh()
-        viewModel.listCoins.observe(viewLifecycleOwner,{
-            checkResponseForView(it){
+        viewModel.listCoins.observe(viewLifecycleOwner, {
+            checkResponseForView(it) {
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
                 adapter.submitList(coinListModel)
@@ -162,10 +137,10 @@ class HomeFragment : CoinFragment() {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                   /* ((p0?.getChildAt(0)) as TextView).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
-                        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }*/
+                    /* ((p0?.getChildAt(0)) as TextView).apply {
+                         setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
+                         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
+                     }*/
                     if (!isUp) {
                         _binding?.ivPriceArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {

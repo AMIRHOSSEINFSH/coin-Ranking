@@ -229,7 +229,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -329,7 +329,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -429,7 +429,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -529,7 +529,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -629,7 +629,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -729,7 +729,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -829,7 +829,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -929,7 +929,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -1029,7 +1029,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -1129,7 +1129,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 
@@ -1229,7 +1229,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="14dp"
-                            tools:src="@drawable/ic_bookmarks" />
+                            tools:src="@drawable/ic_bookmarks_empty" />
 
                     </LinearLayout>
 

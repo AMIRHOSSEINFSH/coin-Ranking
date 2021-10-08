@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
 @Parcelize
@@ -25,7 +26,9 @@ data class CoinListModel(
     val symbol: String,
     val tier: Int,
     val uuid: String,
-    var isExpanded: Boolean = false
+    var isExpanded: Boolean = false,
+    @Ignore
+    var isBookmarked: Boolean? =null
 ): Parcelable {
     fun convertToCoin(): Coin {
         return Coin(
@@ -43,7 +46,7 @@ data class CoinListModel(
             rank = rank,
             symbol = symbol,
             tier = tier,
-            uuid = uuid
+            uuid = uuid,
         )
     }
 }

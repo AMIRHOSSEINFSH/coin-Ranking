@@ -24,6 +24,8 @@ data class Coin(
     val rank: Int,
     val symbol: String,
     val tier: Int,
+    var isBookmarked: Boolean = false,
+
     //val allTimeHigh: AllTimeHigh? = null,
     val description: String?= null,
     val numberOfExchanges: Int? = null,
@@ -47,7 +49,8 @@ data class Coin(
             rank,
             symbol,
             tier,
-            uuid
+            uuid,
+            isBookmarked = isBookmarked
         )
     }
 }

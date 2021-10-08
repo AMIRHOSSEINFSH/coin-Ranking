@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/ClickContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
@@ -116,7 +117,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="14dp"
-                    android:src="@drawable/ic_bookmarks" />
+                    android:src="@drawable/ic_bookmarks_empty" />
 
             </LinearLayout>
 

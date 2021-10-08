@@ -10,9 +10,11 @@ import java.util.*
 
 @BindingAdapter("app:formatPrice")
 fun formatPrice(tv: TextView, number: String?) {
-    number?.apply {
-        val str = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(this.toDouble())
-        tv.text = str
+    if (number?.length!=0) {
+        number?.apply {
+            val str = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(this.toDouble())
+            tv.text = str
+        }
     }
 
 
@@ -30,9 +32,11 @@ fun formatVolume(tv: TextView, numbert: String?) {
 @BindingAdapter("app:rateImpl")
 fun implRate(tv: TextView, number: String) {
 
-    if (number.substring(0, 1).equals("-")) {
-        tv.setTextColor(Color.parseColor("#eb5e2c"))
-    } else {
-        tv.setTextColor(Color.parseColor("#2BCF31"))
+    if (number.length!=0) {
+        if (number.substring(0, 1).equals("-")) {
+            tv.setTextColor(Color.parseColor("#eb5e2c"))
+        } else {
+            tv.setTextColor(Color.parseColor("#2BCF31"))
+        }
     }
 }

@@ -15,6 +15,11 @@ import javax.inject.Inject
 
 class CoinListRepository @Inject constructor(private val apiService: ApiService,private val coinDao: CoinDao) {
 
+
+    suspend fun updateBookmark(uuid: String,isBookmark: Boolean):Int{
+        return coinDao.updateBookmark(uuid,isBookmark)
+    }
+
     suspend fun getDetailCoin(uuid: String):Resource<CoinDetail> {
         Log.i("TAGAAAAA", "getDetailCoin: ${uuid}")
         val resource = asApiResponse { apiService.getDetailedCoin(uuid.trim()) }

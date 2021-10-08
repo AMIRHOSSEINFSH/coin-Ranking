@@ -113,7 +113,7 @@
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="14dp"
-                        android:src="@drawable/ic_bookmarks" />
+                        android:src="@drawable/ic_bookmarks_empty" />
 
                 </LinearLayout>
 

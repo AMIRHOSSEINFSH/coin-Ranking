@@ -6,6 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -26,10 +29,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BaseCoinAdapter  constructor(
-    private val onItemClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
-    /*private val onLockRec: (Boolean) -> Unit,*/
-    //private val activity: Activity
+class BaseCoinAdapter constructor(
+    private val onUpdateClickListener: (String, Boolean,Int) -> Unit,
+    private val onItemClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>
+
 ) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<CoinListModel>() {
 
@@ -49,7 +52,7 @@ class BaseCoinAdapter  constructor(
     }
 
     private var isDetail: Boolean = false
-    fun setIsDetail(isDetail: Boolean){
+    fun setIsDetail(isDetail: Boolean) {
         this.isDetail = isDetail
     }
 
@@ -72,7 +75,31 @@ class BaseCoinAdapter  constructor(
 
             binding.coinListModel = item
 
-            //binding.callback = this
+            binding.cryptoBookmarkIv.also {
+                if (item.isBookmarked == true) {
+                    it.setTag(R.drawable.ic_bookmarks_fill)
+                    it.setImageResource(R.drawable.ic_bookmarks_fill)
+                } else {
+                    it.setTag(R.drawable.ic_bookmarks_empty)
+                    it.setImageResource(R.drawable.ic_bookmarks_empty)
+                }
+                //DrawableCompat.setTint(it.getDrawable(), ContextCompat.getColor(activity, R.color.black_200));
+            }
+
+
+            binding.cryptoBookmarkIv.setOnClickListener {
+                onUpdateClickListener(item.uuid, !item.isBookmarked!!,adapterPosition)
+                if (it.tag == R.drawable.ic_bookmarks_fill) {
+                    item.isBookmarked = false
+                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
+                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
+                } else if (it.tag == R.drawable.ic_bookmarks_empty) {
+                    item.isBookmarked = true
+                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
+                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
+                }
+
+            }
 
             if (adapterPosition == 0 && tof) {
                 /*item.isExpanded = true*/
@@ -88,7 +115,7 @@ class BaseCoinAdapter  constructor(
                     .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
 
                 if (showBubble) {
-                   // showBubble()
+                    // showBubble()
                 }
 
                 first.listener(object : BubbleShowCaseListener {
@@ -160,7 +187,7 @@ class BaseCoinAdapter  constructor(
             if (isExpanded) {
 
                 (activity as MainActivity).lifecycleScope.launchWhenResumed {
-                    onItemClickListener(item).observe(activity as MainActivity){coinDetail ->
+                    onItemClickListener(item).observe(activity as MainActivity) { coinDetail ->
                         binding.coinDetailModel = coinDetail
                         //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
                     }
@@ -190,15 +217,15 @@ class BaseCoinAdapter  constructor(
             }
             binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
-            binding.constExpandable.setOnClickListener {
+            binding.ClickContainer.setOnClickListener {
                 val bundle = Bundle().apply {
                     //putParcelable("item", item)
-                    putString("uuid",item.uuid)
+                    putString("uuid", item.uuid)
                 }
                 if (!isDetail)
-                    itemView.findNavController().navigate(R.id.home_book_same,bundle)
+                    itemView.findNavController().navigate(R.id.home_book_same, bundle)
                 else
-                    itemView.findNavController().navigate(R.id.action_same_to_same,bundle)
+                    itemView.findNavController().navigate(R.id.action_same_to_same, bundle)
                 //onItemClickListener(item)
                 com.code_chabok.coinranking.common.isDetail = true
             }

@@ -36,8 +36,9 @@ class BookMarksFragment : CoinFragment() {
 
         return binding.root
     }
+
     //private var isDetail = false
-    fun isInDetail(boolean: Boolean):BookMarksFragment{
+    fun isInDetail(boolean: Boolean): BookMarksFragment {
         isDetail = boolean
         return this
     }
@@ -47,28 +48,16 @@ class BookMarksFragment : CoinFragment() {
 
         setShimmerIndicator(true)
 
-        adapter = BaseCoinAdapter {
-
-            viewModel.getSpcificCoinDetail(it.uuid)
-            viewModel.coinDetailObserver
-            //Log.i("TAG", "onViewCreated:${isDetail} ")
-            /*val bundle = Bundle().apply {
-                putParcelable("item",it)
-            }*/
-
-            /*if(isDetail){
-                findNavController().navigate(R.id.action_cryptoDetailFragment_to_exchangeDetailFragment2,bundle)
-                //BookMarksFragmentDirections.action_cryptoDetailFragment_self(it)
-            }
-            else {
-                findNavController().navigate(
-                    R.id.action_bookMarksFragment_to_cryptoDetailFragment, bundle
-                    *//*BookMarksFragmentDirections.actionBookMarksFragmentToCryptoDetailFragment(
-                        it
-                    )*//*
-                )
-            }*/
-        }
+        adapter =
+            BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, position: Int ->
+                viewModel.updateNewBookmark(uuid, isBookmark)
+                adapter.currentList.removeAt(position)
+                adapter.notifyItemRemoved(position)
+            },
+                onItemClickListener = { coinListModel ->
+                    viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    viewModel.coinDetailObserver
+                })
         //adapter.setActivity(requireActivity())
         adapter.apply {
             setActivity(requireActivity())
@@ -87,6 +76,16 @@ class BookMarksFragment : CoinFragment() {
             setShimmerIndicator(false)
             binding.rec.visibility = View.VISIBLE
         })*/
+        viewModel.listCoin.observe(viewLifecycleOwner) { list ->
+            if (list.isNotEmpty()) {
+                adapter.submitList(list)
+                setShimmerIndicator(false)
+                binding.rec.visibility = View.VISIBLE
+            }
+            else{
+
+            }
+        }
 
 
         binding.rec.addItemDecoration(

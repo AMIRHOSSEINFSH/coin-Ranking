@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.code_chabok.coinranking.feature.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/all_to_search"
             app:destination="@id/searchFragment" />
@@ -27,10 +27,10 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        tools:layout="@layout/fragment_crypto_detail"
         android:id="@+id/cryptoDetailFragment2"
         android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
-        android:label="CryptoDetailFragment" >
+        android:label="CryptoDetailFragment"
+        tools:layout="@layout/fragment_crypto_detail">
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/exchangeDetailFragment3" />
@@ -44,10 +44,10 @@
         android:label="fragment_crypto_detail_child"
         tools:layout="@layout/fragment_crypto_detail_child" />
     <fragment
-        tools:layout="@layout/fragment_exchange_detail"
         android:id="@+id/exchangeDetailFragment3"
         android:name="com.code_chabok.coinranking.feature.exchangeDetail.ExchangeDetailFragment"
-        android:label="ExchangeDetailFragment" >
+        android:label="ExchangeDetailFragment"
+        tools:layout="@layout/fragment_exchange_detail">
         <action
             android:id="@+id/action_same_to_same"
             app:destination="@id/cryptoDetailFragment2" />
