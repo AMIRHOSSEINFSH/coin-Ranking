@@ -13,7 +13,7 @@ class BookmarkRepository @Inject constructor(
     private val coinDao: CoinDao
 ) {
 
-    suspend fun getListOfBookmarks(): LiveData<List<CoinListModel>> {
+     fun getListOfBookmarks(): LiveData<List<CoinListModel>> {
         return Transformations.map(coinDao.getCoinsOfBookmarks()) { list ->
             val coinList = ArrayList<CoinListModel>()
             list.forEach {

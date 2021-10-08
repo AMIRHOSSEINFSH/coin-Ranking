@@ -51,7 +51,6 @@ class BookMarksFragment : CoinFragment() {
         adapter =
             BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, position: Int ->
                 viewModel.updateNewBookmark(uuid, isBookmark)
-                adapter.currentList.removeAt(position)
                 adapter.notifyItemRemoved(position)
             },
                 onItemClickListener = { coinListModel ->
@@ -71,19 +70,15 @@ class BookMarksFragment : CoinFragment() {
                 }
             }
 
-        /*viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
-            //adapter.submitList(it)
-            setShimmerIndicator(false)
-            binding.rec.visibility = View.VISIBLE
-        })*/
         viewModel.listCoin.observe(viewLifecycleOwner) { list ->
+            setShimmerIndicator(false)
             if (list.isNotEmpty()) {
                 adapter.submitList(list)
-                setShimmerIndicator(false)
                 binding.rec.visibility = View.VISIBLE
             }
             else{
-
+                binding.lottieAnimation.visibility = View.VISIBLE
+                binding.rec.visibility = View.GONE
             }
         }
 

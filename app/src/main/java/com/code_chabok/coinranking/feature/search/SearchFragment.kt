@@ -2,27 +2,38 @@ package com.code_chabok.coinranking.feature.search
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
+import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.data.model.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.databinding.FragmentSearchBinding
+import com.code_chabok.coinranking.feature.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class SearchFragment : CoinFragment() {
 
     private lateinit var binding: FragmentSearchBinding
+
+    private val viewModel: SearchViewModel by viewModels()
+    private lateinit var adapter: BaseCoinAdapter
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.mi_search).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
-
     }
 
 
@@ -40,19 +51,61 @@ class SearchFragment : CoinFragment() {
 
     }
 
-    val crypto = mutableListOf<Crypto>()
-    val exchange = mutableListOf<Exchange>()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
+            //viewModel.updateNewBookmark(uuid, isBookmark)
+        },
+            onItemClickListener = { coinListModel ->
+                viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                viewModel.coinDetailObserver
+            })
+
+
+        adapter.setActivity(requireActivity())
+        adapter.apply {
+            setActivity(requireActivity())
+            //setIsDetail(isDetail)
+            showBubble = savedInstanceState == null
+        }
+        binding.rvCoinSearch.layoutManager =
+            object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
+                override fun canScrollVertically(): Boolean {
+                    return true
+                }
+            }
+        binding.rvCoinSearch.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                (binding.rvCoinSearch.layoutManager as LinearLayoutManager).orientation
+            )
+        )
+        binding.rvCoinSearch.adapter = adapter
+        search()
+
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        setShimmerIndicator(false)
+    }
+
     fun search() {
-        try {
-            val contact = "${binding.etSearch.text}"
-            val search = crypto.first { it.name == contact }
+        binding.etSearch.doOnTextChanged { text, start, before, count ->
+            viewModel.search(text.toString().trim())
+        }
 
-            binding.rvFirstSearch.adapter
-
-
-        } catch (e: Exception) {
-
-
+        viewModel.resultSearchResource.observe(viewLifecycleOwner){
+            checkResponseForView(it){
+                val coinListModel: List<CoinListModel> = it.data?.data?.coins!!
+                if (binding.etSearch.text.isEmpty()){
+                    adapter.submitList(null)
+                }else {
+                    adapter.submitList(coinListModel)
+                }
+                binding.constParent.visibility = View.VISIBLE
+            }
         }
     }
 }

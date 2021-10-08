@@ -56,7 +56,7 @@ class HomeFragment : CoinFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setShimmerIndicator(true, coinView = true)
+        setShimmerIndicator(true, HomeShimmer = true)
         setUpSpinners()
         if (!isDetail) {
             //viewModel.backStackDetecter.value = this
@@ -234,7 +234,7 @@ class HomeFragment : CoinFragment() {
 
     override fun onStop() {
         super.onStop()
-        setShimmerIndicator(false, coinView = true)
+        setShimmerIndicator(false, HomeShimmer = true)
     }
 
     override fun onDestroyView() {

@@ -53,7 +53,7 @@ interface CoinView {
     var rootView: CoordinatorLayout?
     val viewContext: Context?
 
-    fun setShimmerIndicator(mustShow: Boolean, coinView: Boolean = false) {
+    fun setShimmerIndicator(mustShow: Boolean, HomeShimmer: Boolean = false) {
         rootView?.let {
             viewContext?.let { context ->
 
@@ -63,7 +63,7 @@ interface CoinView {
                     loadingView =
                         LayoutInflater.from(context)
                             .inflate(
-                                if (coinView) R.layout.shimmer_coin_page_place_holder
+                                if (HomeShimmer) R.layout.shimmer_coin_page_place_holder
                                 else R.layout.shimmer_placeholder_layout,
                                 it,
                                 false
@@ -94,6 +94,7 @@ interface CoinView {
     }
 
 }
+
 
 abstract class CoinViewModel : ViewModel() {
 

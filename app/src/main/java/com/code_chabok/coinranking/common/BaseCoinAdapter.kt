@@ -83,7 +83,6 @@ class BaseCoinAdapter constructor(
                     it.setTag(R.drawable.ic_bookmarks_empty)
                     it.setImageResource(R.drawable.ic_bookmarks_empty)
                 }
-                //DrawableCompat.setTint(it.getDrawable(), ContextCompat.getColor(activity, R.color.black_200));
             }
 
 

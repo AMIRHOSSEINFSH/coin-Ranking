@@ -1,6 +1,7 @@
 package com.code_chabok.coinranking.services.http
 
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinDetailResource.CoinDetailResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
 import retrofit2.Call
@@ -16,5 +17,8 @@ interface ApiService {
 
     @GET("coin/{uuid}")
     suspend fun getDetailedCoin(@Path(value = "uuid") uuid: String): Response<CoinDetailResource>
+
+    @GET("search-suggestions")
+    suspend fun getSearchResult(@Query("query") query: String): Response<SearchResource>
 
 }

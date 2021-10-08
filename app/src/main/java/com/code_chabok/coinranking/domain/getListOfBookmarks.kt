@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class getListOfBookmarks @Inject constructor(private val repo: BookmarkRepository) {
 
-    operator fun invoke() = repo.getListOfBookmarks()
+     operator fun invoke() = repo.getListOfBookmarks()
 
 }

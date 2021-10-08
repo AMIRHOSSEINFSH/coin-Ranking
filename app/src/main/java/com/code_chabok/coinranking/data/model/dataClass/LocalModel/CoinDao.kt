@@ -17,8 +17,8 @@ interface CoinDao {
     @Query("UPDATE Coin SET isBookmarked =:newIsBookmark WHERE uuid =:uuid ")
     suspend fun updateBookmark(uuid: String,newIsBookmark: Boolean): Int
 
-    @Query("SELECT * FROM coin WHERE isBookmarked =1")
-    suspend fun getCoinsOfBookmarks(): LiveData<List<Coin>>
+    @Query("SELECT * FROM coin WHERE isBookmarked =1 ")
+     fun getCoinsOfBookmarks(): LiveData<List<Coin>>
     /*@Query("SELECT * FROM coin WHERE id = :sendingId")
     suspend fun getCoin(sendingId: Int): LiveData<Coin>*/
 
