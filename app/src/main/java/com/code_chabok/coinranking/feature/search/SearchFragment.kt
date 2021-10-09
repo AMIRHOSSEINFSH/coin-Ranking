@@ -54,7 +54,7 @@ class SearchFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
-            //viewModel.updateNewBookmark(uuid, isBookmark)
+            viewModel.updateNewBookmark(uuid, isBookmark)
         },
             onItemClickListener = { coinListModel ->
                 viewModel.getSpcificCoinDetail(coinListModel.uuid)

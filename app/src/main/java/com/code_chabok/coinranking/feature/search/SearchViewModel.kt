@@ -11,6 +11,7 @@ import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
 import com.code_chabok.coinranking.domain.Search
 import com.code_chabok.coinranking.domain.getCoinDetail
+import com.code_chabok.coinranking.domain.updateBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -18,8 +19,15 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchDomain: Search,
-    private val getCoin: getCoinDetail
+    private val getCoin: getCoinDetail,
+    private val updateBookmark: updateBookmark
 ) : CoinViewModel() {
+
+    fun updateNewBookmark(uuid: String,isBookmark: Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            updateBookmark(uuid,isBookmark)
+        }
+    }
 
     private var searchJob: Job = Job()
 
