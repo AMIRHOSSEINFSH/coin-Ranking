@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterCrypto
+import com.code_chabok.coinranking.components.pageTransformer
+import com.code_chabok.coinranking.components.zoomOutTransformer
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.databinding.FragmentCryptoDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -64,6 +66,7 @@ class CryptoDetailFragment : CoinFragment() {
 
 
         binding.viewPager.adapter = FragmentAdapterCrypto(this)
+        binding.viewPager.setPageTransformer(zoomOutTransformer())
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> {

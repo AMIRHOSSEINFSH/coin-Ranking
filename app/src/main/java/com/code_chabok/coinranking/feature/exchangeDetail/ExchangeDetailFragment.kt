@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterExchange
+import com.code_chabok.coinranking.components.zoomOutTransformer
 import com.code_chabok.coinranking.databinding.FragmentExchangeDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,6 +27,7 @@ class ExchangeDetailFragment : CoinFragment() {
 
         super.onViewCreated(view, savedInstanceState)
         binding.pager.adapter = FragmentAdapterExchange(this)
+        binding.pager.setPageTransformer(zoomOutTransformer())
         setup()
     }
 
