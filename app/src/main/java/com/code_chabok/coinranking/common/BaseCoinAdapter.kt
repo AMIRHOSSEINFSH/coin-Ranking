@@ -41,7 +41,7 @@ class BaseCoinAdapter constructor(
         }
 
         override fun areContentsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.uuid == newItem.uuid
         }
     }
 
