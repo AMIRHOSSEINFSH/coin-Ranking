@@ -8,22 +8,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.code_chabok.coinranking.data.model.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.databinding.ItemExchangeBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
 class BaseExchangeAdapter constructor(
-    private val onItemClickListener: (Exchange) -> Unit,
+    private val onItemClickListener: (ExchangeListModel) -> Unit,
 
-    ) : ListAdapter<Exchange, BaseExchangeAdapter.MyViewHolder>(
-    object : DiffUtil.ItemCallback<Exchange>() {
+    ) : ListAdapter<ExchangeListModel, BaseExchangeAdapter.MyViewHolder>(
+    object : DiffUtil.ItemCallback<ExchangeListModel>() {
 
-        override fun areItemsTheSame(oldItem: Exchange, newItem: Exchange): Boolean {
-            return oldItem.Id == newItem.Id
+        override fun areItemsTheSame(oldItem: ExchangeListModel, newItem: ExchangeListModel): Boolean {
+            return oldItem.uuid == newItem.uuid
         }
 
-        override fun areContentsTheSame(oldItem: Exchange, newItem: Exchange): Boolean {
+        override fun areContentsTheSame(oldItem: ExchangeListModel, newItem: ExchangeListModel): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -45,7 +45,7 @@ class BaseExchangeAdapter constructor(
     var showBubble = true
     inner class MyViewHolder(val binding: ItemExchangeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Exchange) {
+        fun bind(item: ExchangeListModel) {
             binding.constExpandable.implementSpringAnimationTrait()
 
             //binding.model = item
@@ -90,7 +90,7 @@ class BaseExchangeAdapter constructor(
                         item.isExpanded = true
                         binding.exchangeDivider.visibility = View.VISIBLE
                         binding.expandableLayout.visibility = View.VISIBLE
-                        Log.i("TAGAAB", "bind: ${item.Id}")
+                        Log.i("TAGAAB", "bind: ${item.uuid}")
                         notifyItemChanged(adapterPosition)
                     }
 

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.data.model.Crypto
+import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment
 import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
@@ -161,7 +162,6 @@ class FragmentAdapterExchange(fragment: CoinFragment) : BaseFragmentAdapter(frag
 }
 
 var isDetail = false
-
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

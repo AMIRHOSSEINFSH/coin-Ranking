@@ -1,8 +1,13 @@
 package com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource
 
 
+import android.os.Parcelable
+import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Exchange
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class ExchangeListModel(
     @SerializedName("coinrankingUrl")
     val coinrankingUrl: String,
@@ -25,5 +30,22 @@ data class ExchangeListModel(
     @SerializedName("uuid")
     val uuid: String,
     @SerializedName("verified")
-    val verified: Boolean
-)
+    val verified: Boolean,
+    var isExpanded: Boolean = false,
+    ) : Parcelable {
+    fun exchangeConvert(): Exchange {
+        return Exchange(
+            hVolume = hVolume,
+            coinrankingUrl = coinrankingUrl,
+            iconUrl = iconUrl,
+            marketShare = marketShare,
+            name = name,
+            numberOfCoins = numberOfCoins,
+            numberOfMarkets = numberOfMarkets,
+            rank = rank,
+            recommended = recommended,
+            uuid = uuid,
+            verified = verified
+        )
+      }
+    }

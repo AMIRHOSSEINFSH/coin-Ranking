@@ -6,15 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.code_chabok.coinranking.common.CoinFragment
-import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseExchangeAdapter
+import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +27,7 @@ class ExchangesFragment : CoinFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentExchangesBinding.inflate(inflater,container,false)
         return binding.root
@@ -47,11 +47,9 @@ class ExchangesFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true)
-        if (!isDetail) {
-            //viewModel.backStackDetecter.value = this
+        if (!isDetail)
 
-        }
-        adapter = BaseExchangeAdapter {
+            adapter = BaseExchangeAdapter {
             Log.i("TAG", "onViewCreated:${isDetail} ")
             val bundle = Bundle().apply {
                 putParcelable("item",it)
@@ -107,7 +105,8 @@ class ExchangesFragment : CoinFragment() {
                 }
             }
 
-        viewModel.exchangeListLiveData.observe(viewLifecycleOwner){
+        viewModel.exchangeResource.observe(viewLifecycleOwner){
+            val it = null
             adapter.submitList(it)
             setShimmerIndicator(false)
             binding.rec.visibility = View.VISIBLE

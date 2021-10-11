@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Exchange(
+data class Exchanges (
     val Id: String,
     val name: String,
     val url: String,
