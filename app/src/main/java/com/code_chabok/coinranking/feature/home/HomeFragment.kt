@@ -203,6 +203,10 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    /*((p0?.getChildAt(0)) as TextView).apply {
+                        setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
+                        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
+                    }*/
                     if (!isUp) {
                         if (!isFirstTime) {
                             isSet = isSortOn.TIME
