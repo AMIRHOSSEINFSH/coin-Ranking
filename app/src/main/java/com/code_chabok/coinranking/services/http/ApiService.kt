@@ -1,10 +1,9 @@
 package com.code_chabok.coinranking.services.http
 
-import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinDetailResource.CoinDetailResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
-import retrofit2.Call
+import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,5 +26,8 @@ interface ApiService {
         @Query("timePeriod") timePeriod: String? = null
     ): Response<CoinListResource>
 
+
+    @GET("exchanges")
+    suspend fun getExchangeList() : Response<ExchangeResource>
 
 }

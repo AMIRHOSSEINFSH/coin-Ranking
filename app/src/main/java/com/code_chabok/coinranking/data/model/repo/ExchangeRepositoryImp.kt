@@ -1,9 +1,7 @@
 package com.code_chabok.coinranking.data.model.repo
 
 import com.code_chabok.coinranking.data.model.Exchange
-import com.code_chabok.coinranking.data.model.repo.source.LocalCryptoDataSource
 import com.code_chabok.coinranking.data.model.repo.source.LocalExchangeDataSource
-import com.code_chabok.coinranking.data.model.repo.source.RemoteCryptoDataSource
 import com.code_chabok.coinranking.data.model.repo.source.RemoteExchangeDataSource
 
 class ExchangeRepositoryImp
@@ -12,9 +10,14 @@ class ExchangeRepositoryImp
         private val remoteCryptoDataSource: RemoteExchangeDataSource
 ): ExchangeRepository {
 
-    override fun fetch(): List<Exchange> {
-        val list = remoteCryptoDataSource.getAllCryptos()
+    /*override fun fetch(): List<Exchange> {
+        val list = remoteCryptoDataSource.getAllExchange()
         localCryptoDataSource.insertList(list)
-        return localCryptoDataSource.getAllCryptos()
-    }
+        return localCryptoDataSource.getAllExchange()
+    }*/
+
+
+
+
+
 }

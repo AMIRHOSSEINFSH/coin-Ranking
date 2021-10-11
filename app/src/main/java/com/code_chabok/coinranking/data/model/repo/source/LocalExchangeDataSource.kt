@@ -6,7 +6,7 @@ import com.code_chabok.coinranking.data.model.Exchange
 
 class LocalExchangeDataSource: ExchangeDataSource {
 
-    override fun getAllCryptos():List<Exchange> {
+    override suspend fun getAllExchange():List<Exchange> {
         return arrayListOf(
             Exchange("1","Binance","https:example.com","23.20 billion",false),
             Exchange("1","Binance","https:example.com","23.20 billion",false),

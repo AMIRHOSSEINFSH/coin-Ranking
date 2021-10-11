@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.di
 
+import com.code_chabok.coinranking.services.http.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +39,11 @@ object NetworkingModule {
            .client(okHttpClient)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideWebService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 
 
 }

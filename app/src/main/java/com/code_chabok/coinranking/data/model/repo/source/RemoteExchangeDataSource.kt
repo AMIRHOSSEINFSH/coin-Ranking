@@ -1,15 +1,18 @@
 package com.code_chabok.coinranking.data.model.repo.source
 
 import com.code_chabok.coinranking.data.model.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
 import com.code_chabok.coinranking.services.http.ApiService
+import retrofit2.Response
 
-class RemoteExchangeDataSource(apiService: ApiService): ExchangeDataSource {
+class RemoteExchangeDataSource constructor(val apiService: ApiService) : ExchangeDataSource {
 
-    override fun getAllCryptos(): List<Exchange> {
-        return emptyList()
-    }
+
+    override suspend fun getAllExchange(): Response<ExchangeResource> = apiService.getExchangeList()
 
     override fun insertList(list: List<Exchange>) {
 
     }
+
+
 }
