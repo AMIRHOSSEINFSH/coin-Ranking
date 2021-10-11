@@ -85,6 +85,9 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:4.2.0'
 
+    //Retrofit interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
+    implementation "io.coil-kt:coil:1.4.0"
 
 }

@@ -32,9 +32,7 @@ class HomeFragment : CoinFragment() {
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: BaseCoinAdapter
-    private val priceList = arrayListOf("2000", "3000", "4000")
-    private val timeList = arrayListOf("1h", "24h", "7d", "1m", "1y")
-    private val marketList = arrayListOf("marketCap", "C++")
+    private val timeList = arrayListOf("24h", "7h", "30d")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,23 +93,6 @@ class HomeFragment : CoinFragment() {
                 adapter.submitList(coinListModel)
                 bining?.constParent?.visibility = View.VISIBLE
             }
-            /*when(it){
-                is Resource.Error -> {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Loading -> {
-                    setShimmerIndicator(true)
-                    Toast.makeText(requireContext(), "Is Loading", Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Success -> {
-                    val coinListModel: List<CoinListModel> = it.data!!
-                    Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
-                    adapter.submitList(coinListModel)
-                    setShimmerIndicator(false, coinView = false)
-                    bining?.constParent?.visibility = View.VISIBLE
-                    Toast.makeText(requireContext(), "${it.data}", Toast.LENGTH_SHORT).show()
-                }
-            }*/
         })
 
 
@@ -123,45 +104,40 @@ class HomeFragment : CoinFragment() {
         )
         bining?.rvHome?.adapter = adapter
 
+        bining?.priceSort?.setOnClickListener {
+            setShimmerIndicator(true)
+            bining?.constParent?.visibility = View.GONE
+            viewModel.onChangeSort(HomeViewModel.SortType.Price("price"))
+        }
+        _binding?.MarketCapSort?.setOnClickListener {
+            setShimmerIndicator(true)
+            bining?.constParent?.visibility = View.GONE
+            viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap"))
+        }
+
+        viewModel.coinListLiveData.observe(viewLifecycleOwner){value->
+            setShimmerIndicator(false)
+            bining?.constParent?.visibility = View.VISIBLE
+            adapter.submitList(value)
+        }
+
     }
 
     fun setUpSpinners() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             _binding?.apply {
-                priceSpinner.alpha = 0.5F
                 timeSpinner.alpha = 0.5F
-                marketCapSpinner.alpha = 0.5F
             }
         }
-        _binding?.priceSpinner?.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                var isUp = false
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    /* ((p0?.getChildAt(0)) as TextView).apply {
-                         setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
-                         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                     }*/
-                    if (!isUp) {
-                        _binding?.ivPriceArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
-                    } else {
-                        _binding?.ivPriceArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
-                        isUp = true
-                    }
-                }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
-
-            }
         _binding?.timeSpinner?.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    /*((p0?.getChildAt(0)) as TextView).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
-                        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }*/
                     if (!isUp) {
+                        setShimmerIndicator(true)
+                       bining?.constParent?.visibility = View.GONE
+                        viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
@@ -173,60 +149,19 @@ class HomeFragment : CoinFragment() {
                 }
 
             }
-        _binding?.marketCapSpinner?.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                var isUp = false
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    /*((p0?.getChildAt(0)) as TextView).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
-                        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }*/
-                    if (!isUp) {
-                        _binding?.ivMarketCapArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
-                    } else {
-                        _binding?.ivMarketCapArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
-                        isUp = true
-                    }
-                }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
-
-            }
-
-        var priceListAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priceList)
         var timeListAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeList)
-        var marketCapAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, marketList)
 
         _binding?.apply {
-            priceSpinner.adapter = priceListAdapter
             timeSpinner.adapter = timeListAdapter
-            marketCapSpinner.adapter = marketCapAdapter
         }
 
-        _binding?.priceSpinner?.setOnTouchListener { view, motionEvent ->
-
-            if (MotionEvent.ACTION_DOWN == motionEvent.action) {
-                _binding?.ivPriceArrow?.setImageResource(R.drawable.ic_arrow_down_spinner)
-            }
-            view.performClick()
-        }
 
         _binding?.timeSpinner?.setOnTouchListener { view, motionEvent ->
 
             if (MotionEvent.ACTION_DOWN == motionEvent.action) {
                 _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_down_spinner)
-            }
-            view.performClick()
-        }
-
-        _binding?.timeSpinner?.setOnTouchListener { view, motionEvent ->
-
-            if (MotionEvent.ACTION_DOWN == motionEvent.action) {
-                _binding?.ivMarketCapArrow?.setImageResource(R.drawable.ic_arrow_down_spinner)
             }
             view.performClick()
         }
@@ -241,5 +176,10 @@ class HomeFragment : CoinFragment() {
         super.onDestroyView()
         _binding = null
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        bining?.constParent?.visibility = View.VISIBLE
     }
 }

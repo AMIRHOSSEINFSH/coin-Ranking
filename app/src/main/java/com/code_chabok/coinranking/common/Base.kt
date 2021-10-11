@@ -18,6 +18,7 @@ import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
 import com.code_chabok.coinranking.feature.home.HomeFragment
+import com.google.android.material.snackbar.Snackbar
 
 abstract class CoinFragment : Fragment(), CoinView {
     override var rootView: CoordinatorLayout? = null
@@ -85,12 +86,25 @@ interface CoinView {
                 onSuccess()
             }
             is Resource.Error -> {
+                showSnackBar(resource.message!!)
                 setShimmerIndicator(false)
             }
             is Resource.Loading -> {
                 setShimmerIndicator(true)
             }
         }
+    }
+
+    fun showSnackBar(
+        message: String,
+        duration: Int = Snackbar.LENGTH_SHORT,
+    ): Snackbar? {
+        rootView?.let { coordinatorLayout ->
+            val snackbar = Snackbar.make(coordinatorLayout, message, duration)
+            snackbar.show()
+            return snackbar
+        }
+        return null
     }
 
 }

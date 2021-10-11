@@ -10,6 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constParent"
+            tools:visibility="visible"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -37,7 +38,6 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_spinner_framelayout"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -45,22 +45,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <Spinner
-                        android:id="@+id/priceSpinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="56dp"
+                    <TextView
+                        android:id="@+id/priceSort"
+                        android:drawablePadding="12dp"
+                        android:drawableEnd="@drawable/ic_arrow_up_spinner"
+                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:background="@null"
-                        android:dropDownVerticalOffset="40dp"
-                        android:spinnerMode="dropdown" />
-
-                    <ImageView
-                        android:id="@+id/iv_price_arrow"
+                        android:text="Price"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="12dp"
-                        app:srcCompat="@drawable/ic_arrow_up_spinner" />
+                        android:layout_height="56dp" />
 
                 </FrameLayout>
 
@@ -105,22 +98,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <Spinner
-                        android:id="@+id/marketCapSpinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="56dp"
+                    <TextView
+                        android:id="@+id/MarketCapSort"
+                        android:drawablePadding="12dp"
+                        android:drawableEnd="@drawable/ic_arrow_up_spinner"
+                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:background="@null"
-                        android:dropDownVerticalOffset="40dp"
-                        android:spinnerMode="dropdown" />
-
-                    <ImageView
-                        android:id="@+id/iv_marketCap_arrow"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="12dp"
-                        app:srcCompat="@drawable/ic_arrow_up_spinner" />
+                        android:text="MarketCap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="56dp" />
 
                 </FrameLayout>
             </LinearLayout>
