@@ -28,7 +28,7 @@ data class CoinListModel(
     val uuid: String,
     var isExpanded: Boolean = false,
     @Ignore
-    var isBookmarked: Boolean? =null
+    var isBookmarked: Boolean =false
 ): Parcelable {
     fun convertToCoin(): Coin {
         return Coin(

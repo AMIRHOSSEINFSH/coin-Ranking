@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.data.model.repo
 
+import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
@@ -14,6 +15,15 @@ class SearchRepository @Inject constructor(private val apiService: ApiService,pr
         val response = asApiResponse { apiService.getSearchResult(query) }
         return when(response){
             is ApiSuccessResponse ->{
+                response.body.data.coins.forEach { coinListModel ->
+                    coinDao.getCoinsOfBookmarks().map { list->
+                        list.forEach { coin ->
+                            if (coinListModel.uuid == coin.uuid){
+                                coinListModel.isBookmarked = true
+                            }
+                        }
+                    }
+                }
                 Resource.Success(response.body)
             }
             is ApiEmptyResponse ->{

@@ -8,11 +8,15 @@ import java.util.*
 @Dao
 interface CoinDao {
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insetCoins(coinList: List<Coin>)
 
     @Query("SELECT * FROM coin")
     fun getCoins(): LiveData<List<Coin>>
+
+    @Query("SELECT * FROM coin")
+    fun getCoinsWithoutLiveData(): List<Coin>
 
     @Query("UPDATE Coin SET isBookmarked =:newIsBookmark WHERE uuid =:uuid ")
     suspend fun updateBookmark(uuid: String,newIsBookmark: Boolean): Int

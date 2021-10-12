@@ -3,6 +3,7 @@ package com.code_chabok.coinranking.feature.home
 import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.CoinView
 import com.code_chabok.coinranking.common.CoinViewModel
+import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
@@ -23,29 +24,10 @@ class HomeViewModel @Inject constructor(
     private val getSortedList: getSortedList
 ) : CoinViewModel() {
 
-    private var _priceSortLiveData = MutableLiveData<List<CoinListModel>>()
-    var priceSortLiveData: LiveData<List<CoinListModel>> = _priceSortLiveData
 
-    private val _timeSortLiveData = MutableLiveData<List<CoinListModel>>()
-    val timeSortLiveData: LiveData<List<CoinListModel>> get() = _timeSortLiveData
 
-    private val _marketCapLiveData = MutableLiveData<List<CoinListModel>>()
-    val marketCapLiveData: LiveData<List<CoinListModel>> get() = _marketCapLiveData
-
-    private val _coinListLiveData = MediatorLiveData<List<CoinListModel>>()
-    val coinListLiveData: LiveData<List<CoinListModel>> get() = _coinListLiveData
-
-    init {
-        _coinListLiveData.addSource(priceSortLiveData) { value ->
-            _coinListLiveData.value = value
-        }
-        _coinListLiveData.addSource(timeSortLiveData) { value ->
-            _coinListLiveData.value = value
-        }
-        _coinListLiveData.addSource(marketCapLiveData) { value ->
-            _coinListLiveData.value = value
-        }
-    }
+    private val _listLiveData = MutableLiveData<List<CoinListModel>>()
+    val listLiveData: LiveData<List<CoinListModel>> get() = _listLiveData
 
     sealed class SortType(val body: String) {
         class Time(endingRequestBody: String) : SortType(endingRequestBody)
@@ -53,17 +35,16 @@ class HomeViewModel @Inject constructor(
         class MarketCap(Order: String) : SortType(Order)
     }
 
+
+
     fun onChangeSort(type: SortType) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (type) {
-                is SortType.Time -> {
-                    _timeSortLiveData.postValue(getSortedList(type)!!)
-                }
-                is SortType.Price -> {
-                    _priceSortLiveData.postValue(getSortedList(type)!!)
-                }
-                is SortType.MarketCap -> {
-                    _marketCapLiveData.postValue(getSortedList(type)!!)
+            val result = getSortedList(type)
+            if (result.isEmpty()){
+                errorLiveData.postValue(true)
+            }else{
+                withContext(Dispatchers.Main){
+                    _listLiveData.value = result
                 }
             }
         }

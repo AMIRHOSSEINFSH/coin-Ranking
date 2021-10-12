@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
@@ -23,23 +24,42 @@ class CoinListRepository @Inject constructor(
 ) {
 
 
-
-
     suspend fun getSortedList(type: HomeViewModel.SortType): List<CoinListModel> {
 
-         return when(type){
+        var respone: ApiResponse<CoinListResource>
+        when(type){
             is HomeViewModel.SortType.Time->{
-                Log.i("TAGAAAA", "getSortedList: ${type.body}")
-                apiService.getListAs(timePeriod = type.body!!).body()?.data?.coinListModels!!
+                respone = asApiResponse { apiService.getListAs(timePeriod = type.body!!) }
             }
-            is HomeViewModel.SortType.Price->{
-                val value = apiService.getListAs(kindOfOrder = type.body!!).body()?.data?.coinListModels!!
-                value
+            is HomeViewModel.SortType.Price ->{
+                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body!!) }
             }
-            is HomeViewModel.SortType.MarketCap->{
-                apiService.getListAs(kindOfOrder = type.body!!).body()?.data?.coinListModels!!
+            is HomeViewModel.SortType.MarketCap ->{
+                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body!!) }
             }
         }
+        val result: List<CoinListModel>
+        when(respone){
+            is ApiSuccessResponse ->{
+                result = respone.body.data.coinListModels
+                val prevList = coinDao.getCoinsWithoutLiveData()
+                prevList.forEach { coin ->
+                    result.forEach { coinListModel ->
+                        if (coin.uuid == coinListModel.uuid && coin.isBookmarked) {
+                            coinListModel.isBookmarked = true
+                        }
+                    }
+                }
+            }
+            is ApiErrorResponse -> {
+                result = emptyList()
+            }
+            is ApiEmptyResponse ->{
+                result = emptyList()
+            }
+        }
+
+        return result
     }
 
     suspend fun updateBookmark(uuid: String, isBookmark: Boolean): Int {

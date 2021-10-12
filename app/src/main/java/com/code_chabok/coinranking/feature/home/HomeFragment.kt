@@ -56,6 +56,10 @@ class HomeFragment : CoinFragment() {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true, HomeShimmer = true)
         setUpSpinners()
+        viewModel.errorLiveData.observe(viewLifecycleOwner){ isError ->
+            if (isError)
+                showSnackBar("List is Empty !")
+        }
         if (!isDetail) {
             //viewModel.backStackDetecter.value = this
         }
@@ -80,18 +84,14 @@ class HomeFragment : CoinFragment() {
                 }
             }
 
-        /* viewModel.cryptoListLiveData.observe(viewLifecycleOwner, {
-             adapter.submitList(it)
-             setShimmerIndicator(false, coinView = false)
-             bining?.constParent?.visibility = View.VISIBLE
-         })*/
+
         //viewModel.refresh()
         viewModel.listCoins.observe(viewLifecycleOwner, {
             checkResponseForView(it) {
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
-                adapter.submitList(coinListModel)
                 bining?.constParent?.visibility = View.VISIBLE
+                adapter.submitList(coinListModel)
             }
         })
 
@@ -115,10 +115,11 @@ class HomeFragment : CoinFragment() {
             viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap"))
         }
 
-        viewModel.coinListLiveData.observe(viewLifecycleOwner){value->
+        viewModel.listLiveData.observe(viewLifecycleOwner){list->
             setShimmerIndicator(false)
             bining?.constParent?.visibility = View.VISIBLE
-            adapter.submitList(value)
+                adapter.submitList(list)
+
         }
 
     }
@@ -135,8 +136,8 @@ class HomeFragment : CoinFragment() {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
-                        setShimmerIndicator(true)
-                       bining?.constParent?.visibility = View.GONE
+                        //setShimmerIndicator(true)
+                       //bining?.constParent?.visibility = View.GONE
                         viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
