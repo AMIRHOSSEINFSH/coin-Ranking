@@ -1,6 +1,7 @@
 package com.code_chabok.coinranking.data.model.dataClass.LocalModel
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
 import com.google.gson.annotations.SerializedName
 
@@ -17,8 +18,10 @@ data class Exchange(
     val numberOfMarkets: Int,
     val rank: Int,
     val recommended: Boolean,
-    val uuid: String,
+    @PrimaryKey val uuid: String,
     val verified: Boolean,
+    val description: String= "",
+    val lastTickerCreatedAt: Long = 1L,
     var isExpanded: Boolean = false,
     ) {
     fun convertExchangeListModel(): ExchangeListModel {

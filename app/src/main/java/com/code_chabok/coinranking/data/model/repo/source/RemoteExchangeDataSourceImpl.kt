@@ -4,10 +4,10 @@ import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeList
 import com.code_chabok.coinranking.services.http.ApiService
 import retrofit2.Response
 
-class RemoteExchangeDataSource constructor(val apiService: ApiService) : ExchangeRemoteDataSource {
+class RemoteExchangeDataSourceImpl constructor(val apiService: ApiService) : ExchangeRemoteDataSource {
 
 
-    override suspend fun getAllExchange(): Response<ExchangeResource> = apiService.getExchangeList()
+    override suspend fun getExchangeList(): Response<ExchangeResource> = apiService.getExchangeList()
 
 
 }

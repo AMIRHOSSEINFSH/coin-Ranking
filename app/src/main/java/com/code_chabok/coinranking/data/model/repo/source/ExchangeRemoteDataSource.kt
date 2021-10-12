@@ -5,6 +5,6 @@ import retrofit2.Response
 
 interface ExchangeRemoteDataSource {
 
-    suspend fun getAllExchange(): Response<ExchangeResource>
+    suspend fun getExchangeList(): Response<ExchangeResource>
 
 }

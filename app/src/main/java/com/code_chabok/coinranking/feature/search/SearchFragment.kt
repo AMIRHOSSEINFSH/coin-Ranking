@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
-import com.code_chabok.coinranking.data.model.Crypto
-import com.code_chabok.coinranking.data.model.Exchange
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.databinding.FragmentSearchBinding
-import com.code_chabok.coinranking.feature.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

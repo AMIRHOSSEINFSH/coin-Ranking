@@ -4,6 +4,7 @@
 
     <data>
 
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,31 +38,33 @@
                     android:weightSum="7">
 
                     <ImageView
+                        android:id="@+id/iv_pic"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_bitcoin" />
 
                     <TextView
+                        android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:text="Binance" />
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="84dp"
                         android:layout_weight="1"
-                        android:text="$ 23.20 billion" />
+                         />
 
                     <TextView
+                        android:id="@+id/tv_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="39dp"
-                        android:layout_weight="1"
-                        android:text="987" />
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 

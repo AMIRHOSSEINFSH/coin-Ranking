@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.domain
 
+import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
 import com.code_chabok.coinranking.data.model.repo.SearchRepository
 import javax.inject.Inject

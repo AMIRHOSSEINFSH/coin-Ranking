@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseExchangeAdapter
 import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.databinding.FragmentExchangesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +30,7 @@ class ExchangesFragment : CoinFragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentExchangesBinding.inflate(inflater,container,false)
+        binding = FragmentExchangesBinding.inflate(inflater, container, false)
         return binding.root
 
 
@@ -50,16 +51,20 @@ class ExchangesFragment : CoinFragment() {
         if (!isDetail)
 
             adapter = BaseExchangeAdapter {
-            Log.i("TAG", "onViewCreated:${isDetail} ")
-            val bundle = Bundle().apply {
-                putParcelable("item",it)
-            }
-            if (isDetail)
-            findNavController().navigate(R.id.action_same_to_same,bundle)
-            else{
-                findNavController().navigate(R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle)
-            }
-            //viewModel.backStackDetecter.observe(viewLifecycleOwner,{ backStackFragment->
+                Log.i("TAG", "onViewCreated:${isDetail} ")
+                val bundle = Bundle().apply {
+                    putParcelable("item", it)
+                }
+                if (isDetail)
+                    findNavController().navigate(R.id.action_same_to_same, bundle)
+                else {
+                    findNavController().navigate(
+                        ExchangesFragmentDirections.actionExchangesFragmentToExchangeDetailFragment(
+                            it.uuid
+                        )
+                    )
+                }
+                //viewModel.backStackDetecter.observe(viewLifecycleOwner,{ backStackFragment->
                 /*if (baseFragment is baseFragmentHolder.Home){*//*action_exchangeDetailFragment_to_cryptoDetailFragment3*//*
                     if (!(baseFragment as baseFragmentHolder.Home).isLoop)
                     findNavController().navigate(R.id.action_cryptoDetailFragment2_to_exchangeDetailFragment3,bundle)
@@ -80,7 +85,7 @@ class ExchangesFragment : CoinFragment() {
                         findNavController().navigate(R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle)
                     }
                 }*/
-            //})
+                //})
 
 
                 //findNavController().navigate(R.id.action_exchangeDetailFragment_to_cryptoDetailFragment3,bundle)
@@ -95,9 +100,9 @@ class ExchangesFragment : CoinFragment() {
 //                        it
 //                    )*/
 //                )
-        }.apply {
-            setActivity(requireActivity())
-        }
+            }.apply {
+                setActivity(requireActivity())
+            }
         binding.rec.layoutManager =
             object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
@@ -105,11 +110,13 @@ class ExchangesFragment : CoinFragment() {
                 }
             }
 
-        viewModel.exchangeResource.observe(viewLifecycleOwner){
-            val it = null
-            adapter.submitList(it)
-            setShimmerIndicator(false)
-            binding.rec.visibility = View.VISIBLE
+        viewModel.exchangeResource.observe(viewLifecycleOwner) {
+            if (it is Resource.Success) {
+                adapter.submitList(it.data)
+                setShimmerIndicator(false)
+                binding.rec.visibility = View.VISIBLE
+
+            }
 
         }
 
@@ -128,9 +135,10 @@ class ExchangesFragment : CoinFragment() {
     }
 
 
-    companion object{
-        val TAG = "TAGFRAGMENT"
+    companion object {
+        const val TAG = "TAGFRAGMENT"
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.i(TAG, "onAttach: ")
@@ -172,6 +180,5 @@ class ExchangesFragment : CoinFragment() {
         Log.i(TAG, "onDetach: ")
     }
 
-    
 
 }

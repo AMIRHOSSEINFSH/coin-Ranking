@@ -112,7 +112,7 @@ interface CoinView {
 
 abstract class CoinViewModel : ViewModel() {
 
-    protected val refreshing = MutableLiveData<Boolean>(true)
+    protected val refreshing = MutableLiveData(true)
 
      val errorLiveData = MutableLiveData<String>()
 

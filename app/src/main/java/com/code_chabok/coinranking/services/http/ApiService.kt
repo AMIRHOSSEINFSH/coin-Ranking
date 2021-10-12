@@ -3,6 +3,7 @@ package com.code_chabok.coinranking.services.http
 import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinDetailResource.CoinDetailResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
+import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeDetailResource.ExchangeDetailResource
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
 import retrofit2.Response
 import retrofit2.http.GET
@@ -28,6 +29,9 @@ interface ApiService {
 
 
     @GET("exchanges")
-    suspend fun getExchangeList() : Response<ExchangeResource>
+    suspend fun getExchangeList(): Response<ExchangeResource>
+
+    @GET("exchange/{uuid}")
+    suspend fun getExchangeDetail(@Path(value = "uuid") uuid: String): Response<ExchangeDetailResource>
 
 }

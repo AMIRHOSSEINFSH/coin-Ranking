@@ -20,7 +20,6 @@ class CoinListRepository @Inject constructor(
     private val coinDao: CoinDao
 ) {
 
-
     suspend fun getSortedList(type: HomeViewModel.SortType): Resource<List<CoinListModel>> {
 
         var respone: ApiResponse<CoinListResource>

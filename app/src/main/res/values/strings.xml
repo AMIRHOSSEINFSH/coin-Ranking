@@ -20,5 +20,7 @@
     <string name="symbol_value">%s value statistics</string>
     <string name="Desc">صعودی</string>
     <string name="Asc">نزولی</string>
+    <string name="What_is_Bitcoin">Bitcoin is the first digital currency that allows users to send and receive money, without the interference of a central bank or government. Instead, a network of thousands of peers is controlling the transactions; a decentralized system.</string>
+    <string name="why_btc">Bitcoin’s useful qualities (decentralized, borderless, secure) aren’t the only reason the coin is worth so much. Due to its scarcity (and it’s hard to produce), Bitcoin is often nicknamed ‘Digital Gold’, in reference to ‘classic’ physical gold. Like gold, Bitcoin also has a finite supply of coins available; there will only ever be 21 million bitcoin. And now you know why the creation of new bitcoins is also called mining.</string>
 
 </resources>

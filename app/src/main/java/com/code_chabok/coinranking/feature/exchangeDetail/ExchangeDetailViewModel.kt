@@ -1,14 +1,25 @@
 package com.code_chabok.coinranking.feature.exchangeDetail
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.common.CoinView
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.switchMap
 import com.code_chabok.coinranking.common.CoinViewModel
+import com.code_chabok.coinranking.domain.GetExchangeDetailUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ExchangeDetailViewModel : CoinViewModel() {
+@HiltViewModel
+class ExchangeDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    getExchangeDetailUseCase: GetExchangeDetailUseCase
+) : CoinViewModel() {
+
+    private var id:String = savedStateHandle.get<String>("id")
+       ?: throw IllegalArgumentException("id must not be null")
+
+
+    val exchangeResource = refreshing.switchMap {
+        getExchangeDetailUseCase(id)
+    }
+
 
 }

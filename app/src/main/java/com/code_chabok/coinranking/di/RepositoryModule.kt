@@ -1,11 +1,9 @@
 package com.code_chabok.coinranking.data.db
 
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.LocalModel.ExchangeDao
 import com.code_chabok.coinranking.data.model.repo.*
-import com.code_chabok.coinranking.data.model.repo.source.LocalCryptoDataSource
-import com.code_chabok.coinranking.data.model.repo.source.LocalExchangeDataSource
-import com.code_chabok.coinranking.data.model.repo.source.RemoteCryptoDataSource
-import com.code_chabok.coinranking.data.model.repo.source.RemoteExchangeDataSource
+import com.code_chabok.coinranking.data.model.repo.source.*
 import com.code_chabok.coinranking.services.http.ApiService
 import dagger.Module
 import dagger.Provides
@@ -38,21 +36,34 @@ object RepositoryModule {
         apiService: ApiService
     ): CoinListRepository {
         return CoinListRepository(
-            apiService,coinDao
+            apiService, coinDao
         )
 
     }
 
     @Provides
     @Singleton
-    fun provideExchangeRepoImp(
-        //todo
+    fun provideExchangeRepoLocalDataSource(
+        exchangeDao: ExchangeDao
+    ): ExchangeLocalDataSource {
+        return LocalExchangeDataSourceImpl(exchangeDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExchangeRepoRemoteDataSource(
         apiService: ApiService
+    ): ExchangeRemoteDataSource {
+        return RemoteExchangeDataSourceImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExchangeRepoImp(
+        localDataSource: ExchangeLocalDataSource,
+        remoteDataSource: ExchangeRemoteDataSource
     ): ExchangeRepository {
-        return ExchangeRepositoryImp(
-            LocalExchangeDataSource(),
-            RemoteExchangeDataSource(apiService)
-        )
+        return ExchangeRepositoryImp(localDataSource,remoteDataSource)
     }
 
 }

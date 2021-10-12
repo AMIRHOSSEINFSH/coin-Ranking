@@ -12,7 +12,10 @@ interface ExchangeDao {
     suspend fun insertExchange(Exchanges: List<Exchange>)
 
     @Query("SELECT * FROM Exchange")
-    fun getExchange(): LiveData<List<Exchange>>
+    fun getExchanges(): LiveData<List<Exchange>>
+
+//    @Query("SELECT * FROM Exchange WHERE uuid = :_uuid")
+//    fun getExchange(_uuid: String): LiveData<Exchange>
 
 
 }
