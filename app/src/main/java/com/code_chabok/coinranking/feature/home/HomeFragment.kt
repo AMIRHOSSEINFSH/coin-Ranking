@@ -128,7 +128,6 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 // adapter.submitList(null)
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
-                setShimmerIndicator(false)
                 bining?.constParent?.visibility = View.VISIBLE
                 adapter.submitList(coinListModel)
             }
