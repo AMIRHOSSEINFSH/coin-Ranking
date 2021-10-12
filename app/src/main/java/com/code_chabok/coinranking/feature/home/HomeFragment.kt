@@ -135,8 +135,8 @@ class HomeFragment : CoinFragment() {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
-                        setShimmerIndicator(true)
-                        bining?.constParent?.visibility = View.GONE
+                        //setShimmerIndicator(true)
+                        //bining?.constParent?.visibility = View.GONE
                         //viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
