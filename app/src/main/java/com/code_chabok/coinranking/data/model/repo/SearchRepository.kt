@@ -1,7 +1,5 @@
 package com.code_chabok.coinranking.data.model.repo
 
-import android.util.Log
-import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel

@@ -1,6 +1,5 @@
 package com.code_chabok.coinranking.feature.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.CoinView
 import com.code_chabok.coinranking.common.CoinViewModel
