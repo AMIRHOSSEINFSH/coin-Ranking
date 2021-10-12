@@ -53,7 +53,7 @@ class BookMarksFragment : CoinFragment() {
                 viewModel.updateNewBookmark(uuid, isBookmark)
                 adapter.notifyItemRemoved(position)
             },
-                onItemClickListener = { coinListModel ->
+                onItemLongClickListener = { coinListModel ->
                     viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
                 })

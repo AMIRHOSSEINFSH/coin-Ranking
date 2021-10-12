@@ -47,6 +47,7 @@ data class CoinListModel(
             symbol = symbol,
             tier = tier,
             uuid = uuid,
+            isBookmarked = isBookmarked
         )
     }
 }

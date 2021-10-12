@@ -31,17 +31,15 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job = Job()
 
-    private val _resultSearchResource = MutableLiveData<Resource<SearchResource>>()
-    val resultSearchResource: LiveData<Resource<SearchResource>> get() = _resultSearchResource
+    private val _resultSearchResource = MutableLiveData<List<CoinListModel>>()
+    val resultSearchResource: LiveData<List<CoinListModel>> get() = _resultSearchResource
 
     fun search(query: String) {
         searchJob.cancel()
-        searchJob = viewModelScope.launch {
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
             delay(500)
             val resource = searchDomain(query)
-            withContext(Dispatchers.Main) {
-                _resultSearchResource.value = resource
-            }
+            _resultSearchResource.postValue(resource)
         }
     }
 
@@ -56,5 +54,6 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
+
 
 }

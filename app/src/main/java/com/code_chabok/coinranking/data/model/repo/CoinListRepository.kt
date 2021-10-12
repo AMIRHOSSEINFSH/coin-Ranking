@@ -1,10 +1,7 @@
 package com.code_chabok.coinranking.data.model.repo
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
@@ -27,39 +24,40 @@ class CoinListRepository @Inject constructor(
     suspend fun getSortedList(type: HomeViewModel.SortType): List<CoinListModel> {
 
         var respone: ApiResponse<CoinListResource>
-        when(type){
-            is HomeViewModel.SortType.Time->{
-                respone = asApiResponse { apiService.getListAs(timePeriod = type.body!!) }
+        when (type) {
+            is HomeViewModel.SortType.Time -> {
+                respone = asApiResponse { apiService.getListAs(timePeriod = type.body) }
             }
-            is HomeViewModel.SortType.Price ->{
-                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body!!) }
+            is HomeViewModel.SortType.Price -> {
+                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body) }
             }
-            is HomeViewModel.SortType.MarketCap ->{
-                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body!!) }
+            is HomeViewModel.SortType.MarketCap -> {
+                respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body) }
             }
         }
-        val result: List<CoinListModel>
-        when(respone){
-            is ApiSuccessResponse ->{
-                result = respone.body.data.coinListModels
-                val prevList = coinDao.getCoinsWithoutLiveData()
-                prevList.forEach { coin ->
-                    result.forEach { coinListModel ->
-                        if (coin.uuid == coinListModel.uuid && coin.isBookmarked) {
-                            coinListModel.isBookmarked = true
-                        }
+        val serverList: List<CoinListModel>
+        val serverCoinList = ArrayList<Coin>()
+        when (respone) {
+            is ApiSuccessResponse -> {
+                val bookmarkIds: List<String> = coinDao.getBookmarksUuid()
+                serverList = respone.body.data.coinListModels
+                serverList.forEach { coinListModel ->
+                    if (bookmarkIds.contains(coinListModel.uuid)) {
+                        coinListModel.isBookmarked = true
                     }
+                    serverCoinList.add(coinListModel.convertToCoin())
                 }
+                coinDao.deleteAll()
+                coinDao.insetCoins(serverCoinList)
             }
             is ApiErrorResponse -> {
-                result = emptyList()
+                serverList = emptyList()
             }
-            is ApiEmptyResponse ->{
-                result = emptyList()
+            is ApiEmptyResponse -> {
+                serverList = emptyList()
             }
         }
-
-        return result
+        return serverList
     }
 
     suspend fun updateBookmark(uuid: String, isBookmark: Boolean): Int {
@@ -88,9 +86,13 @@ class CoinListRepository @Inject constructor(
         object : NetworkBoundResource<List<CoinListModel>, CoinListResource>() {
             override suspend fun saveCallResult(response: CoinListResource) {
 
+                val bookmarkIds: List<String> = coinDao.getBookmarksUuid()
                 val list = ArrayList<Coin>()
-                response.data.coinListModels.forEach {
-                    list.add(it.convertToCoin())
+                response.data.coinListModels.forEach { coinListModel ->
+                    if (bookmarkIds.contains(coinListModel.uuid)) {
+                        coinListModel.isBookmarked = true
+                    }
+                    list.add(coinListModel.convertToCoin())
                 }
                 coinDao.insetCoins(list)
 

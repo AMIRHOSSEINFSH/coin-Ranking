@@ -56,7 +56,7 @@ class SearchFragment : CoinFragment() {
         adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
             viewModel.updateNewBookmark(uuid, isBookmark)
         },
-            onItemClickListener = { coinListModel ->
+            onItemLongClickListener = { coinListModel ->
                 viewModel.getSpcificCoinDetail(coinListModel.uuid)
                 viewModel.coinDetailObserver
             })
@@ -97,15 +97,15 @@ class SearchFragment : CoinFragment() {
         }
 
         viewModel.resultSearchResource.observe(viewLifecycleOwner){
-            checkResponseForView(it){
-                val coinListModel: List<CoinListModel> = it.data?.data?.coins!!
+
+                val coinListModel: List<CoinListModel> = it
                 if (binding.etSearch.text.isEmpty()){
                     adapter.submitList(null)
                 }else {
                     adapter.submitList(coinListModel)
                 }
                 binding.constParent.visibility = View.VISIBLE
-            }
+
         }
     }
 }

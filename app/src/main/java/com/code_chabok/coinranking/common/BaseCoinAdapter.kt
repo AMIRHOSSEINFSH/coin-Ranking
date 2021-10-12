@@ -6,9 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -24,14 +22,10 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCase
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
     private val onUpdateClickListener: (String, Boolean,Int) -> Unit,
-    private val onItemClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>
+    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>
 
 ) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<CoinListModel>() {
@@ -41,7 +35,7 @@ class BaseCoinAdapter constructor(
         }
 
         override fun areContentsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.uuid == newItem.uuid
         }
     }
 
@@ -141,11 +135,52 @@ class BaseCoinAdapter constructor(
 
             }
 
+            /*val dialog = AlertDialog.Builder(itemView.context).create()
+            *//*dialog.setTitle("Hello")
+            dialog.setMessage("This is Sample")*//*
+            val view = LayoutInflater.from(itemView.context)
+                .inflate(R.layout.custom_prev_dialog, null, false)
+            dialog.setView(view)*/
+
+
+            /* binding.cryptoIv.setOnTouchListener OnTouchListener@{ view, motionEvent ->
+                 var x = motionEvent.x
+                 var y = motionEvent.y
+                 when (motionEvent.action) {
+                     MotionEvent.ACTION_DOWN -> { // RELEASED
+                         dialog.show()
+                         //oast.makeText(this.context, "Action Up", Toast.LENGTH_SHORT).show()
+                         //Log.i("TAGAA", "onViewCreated: ")
+                         Toast.makeText(view.context, "Down", Toast.LENGTH_SHORT).show()
+
+                         return@OnTouchListener true
+
+                     }
+                     MotionEvent.ACTION_UP -> {
+                         dialog.dismiss()
+
+                         Toast.makeText(view.context, "Up", Toast.LENGTH_SHORT).show()
+                         return@OnTouchListener true
+                     } // if you want to handle the touch event
+
+                     MotionEvent.ACTION_MOVE -> {
+                         if (y > view.context.resources.displayMetrics.heightPixels*//*view.pivotY*//* *//*+ 200*//* || y < view.context.resources.displayMetrics.heightPixels*//* - 200*//*)
+                            //view.pivotY = y
+                                Toast.makeText(view.context, "reached", Toast.LENGTH_SHORT).show()
+                                Log.i("TAGAAA", "Move $y form ${view.pivotY}")
+                            //Toast.makeText(v.context, "Move $y", Toast.LENGTH_SHORT).show()
+                            return@OnTouchListener true
+                        }
+                    }
+                    false
+                }*/
+
+
             var isExpanded = item.isExpanded
             if (isExpanded) {
 
                 (activity as MainActivity).lifecycleScope.launchWhenResumed {
-                    onItemClickListener(item).observe(activity as MainActivity) { coinDetail ->
+                    onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
                         binding.coinDetailModel = coinDetail
                         //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
                     }
@@ -184,7 +219,7 @@ class BaseCoinAdapter constructor(
                     itemView.findNavController().navigate(R.id.home_book_same, bundle)
                 else
                     itemView.findNavController().navigate(R.id.action_same_to_same, bundle)
-                //onItemClickListener(item)
+                //onItemLongClickListener(item)
                 com.code_chabok.coinranking.common.isDetail = true
             }
         }

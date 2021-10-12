@@ -58,7 +58,6 @@ interface CoinView {
         rootView?.let {
             viewContext?.let { context ->
 
-
                 var loadingView = it.findViewById<View>(R.id.shimmerFrameLayout)
                 if (loadingView == null && mustShow) {
                     loadingView =
@@ -114,7 +113,7 @@ abstract class CoinViewModel : ViewModel() {
 
     protected val refreshing = MutableLiveData<Boolean>(true)
 
-     val errorLiveData = MutableLiveData<Boolean>(false)
+     val errorLiveData = MutableLiveData<String>()
 
     fun refresh() {
         refreshing.value = true

@@ -8,5 +8,5 @@ import javax.inject.Inject
 
 class Search @Inject constructor(val repo: SearchRepository) {
 
-    suspend operator fun invoke(query: String): Resource<SearchResource> = repo.search(query)
+    suspend operator fun invoke(query: String): List<CoinListModel> = repo.search(query)
 }

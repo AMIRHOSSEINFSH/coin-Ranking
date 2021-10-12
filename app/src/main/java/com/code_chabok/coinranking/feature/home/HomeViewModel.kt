@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.feature.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.CoinView
 import com.code_chabok.coinranking.common.CoinViewModel
@@ -20,14 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getListOfCoins: getListOfCoins,
-    private val getCoin: getCoinDetail, private val updateBookmark: updateBookmark,
+    private val getCoin: getCoinDetail,
+    private val updateBookmark: updateBookmark,
     private val getSortedList: getSortedList
 ) : CoinViewModel() {
-
-
-
-    private val _listLiveData = MutableLiveData<List<CoinListModel>>()
-    val listLiveData: LiveData<List<CoinListModel>> get() = _listLiveData
 
     sealed class SortType(val body: String) {
         class Time(endingRequestBody: String) : SortType(endingRequestBody)
@@ -36,17 +33,19 @@ class HomeViewModel @Inject constructor(
     }
 
 
-
     fun onChangeSort(type: SortType) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = getSortedList(type)
             if (result.isEmpty()){
+                errorLiveData.postValue("Sort is Not Compatible")
+            }
+            /*if (result.isEmpty()) {
                 errorLiveData.postValue(true)
-            }else{
-                withContext(Dispatchers.Main){
+            } else {
+                withContext(Dispatchers.Main) {
                     _listLiveData.value = result
                 }
-            }
+            }*/
         }
 
     }
@@ -71,6 +70,7 @@ class HomeViewModel @Inject constructor(
 
 
     var listCoins = refreshing.switchMap {
+        Log.i("TAG", "refreshing: ")
         getListOfCoins()
     }
 

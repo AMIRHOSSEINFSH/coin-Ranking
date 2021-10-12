@@ -28,11 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : CoinFragment() {
 
+
     private var _binding: FragmentHomeBinding? = null
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: BaseCoinAdapter
-    private val timeList = arrayListOf("24h", "7h", "30d")
+    private val timeList = arrayListOf("3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,20 +57,22 @@ class HomeFragment : CoinFragment() {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true, HomeShimmer = true)
         setUpSpinners()
-        viewModel.errorLiveData.observe(viewLifecycleOwner){ isError ->
-            if (isError)
-                showSnackBar("List is Empty !")
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
+            showSnackBar(errorMessage)
+            setShimmerIndicator(false)
+            bining?.constParent?.visibility = View.VISIBLE
         }
         if (!isDetail) {
             //viewModel.backStackDetecter.value = this
         }
-        adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
-            viewModel.updateNewBookmark(uuid, isBookmark)
-        },
-            onItemClickListener = { coinListModel ->
-                viewModel.getSpcificCoinDetail(coinListModel.uuid)
-                viewModel.coinDetailObserver
-            })
+        adapter =
+            BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, _: Int ->
+                viewModel.updateNewBookmark(uuid, isBookmark)
+            },
+                onItemLongClickListener = { coinListModel ->
+                    viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    viewModel.coinDetailObserver
+                })
 
         adapter.setActivity(requireActivity())
         adapter.apply {
@@ -88,8 +91,11 @@ class HomeFragment : CoinFragment() {
         //viewModel.refresh()
         viewModel.listCoins.observe(viewLifecycleOwner, {
             checkResponseForView(it) {
+                Log.i("TAG", "refreshing: ")
+                adapter.submitList(null)
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
+                setShimmerIndicator(false)
                 bining?.constParent?.visibility = View.VISIBLE
                 adapter.submitList(coinListModel)
             }
@@ -115,13 +121,6 @@ class HomeFragment : CoinFragment() {
             viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap"))
         }
 
-        viewModel.listLiveData.observe(viewLifecycleOwner){list->
-            setShimmerIndicator(false)
-            bining?.constParent?.visibility = View.VISIBLE
-                adapter.submitList(list)
-
-        }
-
     }
 
     fun setUpSpinners() {
@@ -136,9 +135,9 @@ class HomeFragment : CoinFragment() {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
-                        //setShimmerIndicator(true)
-                       //bining?.constParent?.visibility = View.GONE
-                        viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
+                        setShimmerIndicator(true)
+                        bining?.constParent?.visibility = View.GONE
+                        //viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
