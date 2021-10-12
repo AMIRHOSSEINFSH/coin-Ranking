@@ -22,8 +22,11 @@ interface CoinDao {
     @Query("SELECT * FROM coin")
     fun getCoinsWithoutLiveData(): List<Coin>
 
-    @Query("SELECT * FROM coin ORDER BY price")
+    @Query("SELECT * FROM coin ORDER BY price DESC")
     fun getPriceOrdered(): List<Coin>
+
+    @Query("SELECT * FROM coin ORDER BY marketCap DESC")
+    fun getMarketCapOrdered(): List<Coin>
 
     @Query("UPDATE Coin SET isBookmarked =:newIsBookmark WHERE uuid =:uuid ")
     suspend fun updateBookmark(uuid: String,newIsBookmark: Boolean): Int

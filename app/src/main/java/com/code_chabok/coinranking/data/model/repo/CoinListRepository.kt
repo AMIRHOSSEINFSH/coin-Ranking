@@ -21,9 +21,10 @@ class CoinListRepository @Inject constructor(
 ) {
 
 
-    suspend fun getSortedList(type: HomeViewModel.SortType): List<CoinListModel> {
+    suspend fun getSortedList(type: HomeViewModel.SortType): Resource<List<CoinListModel>> {
 
         var respone: ApiResponse<CoinListResource>
+        var sortedLocalList : List<Coin>
         when (type) {
             is HomeViewModel.SortType.Time -> {
                 respone = asApiResponse { apiService.getListAs(timePeriod = type.body) }
@@ -37,7 +38,7 @@ class CoinListRepository @Inject constructor(
         }
         val serverList: List<CoinListModel>
         val serverCoinList = ArrayList<Coin>()
-        when (respone) {
+        return when (respone) {
             is ApiSuccessResponse -> {
                 val bookmarkIds: List<String> = coinDao.getBookmarksUuid()
                 serverList = respone.body.data.coinListModels
@@ -47,17 +48,37 @@ class CoinListRepository @Inject constructor(
                     }
                     serverCoinList.add(coinListModel.convertToCoin())
                 }
-                coinDao.deleteAll()
+                //coinDao.deleteAll()
                 coinDao.insetCoins(serverCoinList)
+                when (type) {
+                    is HomeViewModel.SortType.Time -> {
+                        sortedLocalList = coinDao.getPriceOrdered()
+                    }
+                    is HomeViewModel.SortType.Price -> {
+                        sortedLocalList = coinDao.getPriceOrdered()
+                    }
+                    is HomeViewModel.SortType.MarketCap -> {
+                        sortedLocalList = coinDao.getMarketCapOrdered()
+                    }
+                }
+
+                val list= ArrayList<CoinListModel>()
+                sortedLocalList.forEach { coin ->
+                    list.add(coin.convertToCoinList())
+                }
+                Resource.Success(list)
+
             }
             is ApiErrorResponse -> {
                 serverList = emptyList()
+                Resource.Error<List<CoinListModel>>("Error Found in request !!")
             }
             is ApiEmptyResponse -> {
                 serverList = emptyList()
+                Resource.Error<List<CoinListModel>>("Empty List Found !!")
             }
         }
-        return serverList
+        //return serverList
     }
 
     suspend fun updateBookmark(uuid: String, isBookmark: Boolean): Int {

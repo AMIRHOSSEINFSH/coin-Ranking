@@ -22,9 +22,10 @@ interface ApiService {
     suspend fun getSearchResult(@Query("query") query: String): Response<SearchResource>
 
     @GET("coins")
-    suspend fun getListAs(@Query("orderBy") kindOfOrder: String?=null ,@Query("timePeriod") timePeriod: String?=null): Response<CoinListResource>
-
-
+    suspend fun getListAs(
+        @Query("orderBy") kindOfOrder: String? = null,
+        @Query("timePeriod") timePeriod: String? = null
+    ): Response<CoinListResource>
 
 
 }

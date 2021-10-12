@@ -15,7 +15,8 @@
     <color name="color_et_hint_search">@color/gray_400</color>
     <color name="et_bg_color">@color/white</color>
     <color name="headLineColor">@color/grey_700</color>
-    <color name="spinnerbgColor">@color/titan_white</color>
+    <color name="spinnerbgColorUnSelected">@color/titan_white</color>
+    <color name="spinnerbgColorSelected">#4257BC</color>
 
     <color name="french_blue_200">#4557aa</color>
     <color name="gray_50">#14212121</color>

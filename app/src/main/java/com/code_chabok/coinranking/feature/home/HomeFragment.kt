@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : CoinFragment() {
 
-
+    private var isFirstTime = true
     private var _binding: FragmentHomeBinding? = null
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
@@ -66,7 +66,8 @@ class HomeFragment : CoinFragment() {
             //viewModel.backStackDetecter.value = this
         }
         adapter =
-            BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, _: Int ->
+            BaseCoinAdapter(
+                onUpdateClickListener = { uuid: String, isBookmark: Boolean, _: Int ->
                 viewModel.updateNewBookmark(uuid, isBookmark)
             },
                 onItemLongClickListener = { coinListModel ->
@@ -87,12 +88,22 @@ class HomeFragment : CoinFragment() {
                 }
             }
 
+        viewModel.sortListLiveData.observe(viewLifecycleOwner){
+            checkResponseForView(it){
+                setShimmerIndicator(false)
+                bining?.constParent?.visibility = View.VISIBLE
+                val coinListModel: List<CoinListModel> = it.data!!
+                adapter.submitList(coinListModel)
+            }
+        }
+
 
         //viewModel.refresh()
         viewModel.listCoins.observe(viewLifecycleOwner, {
             checkResponseForView(it) {
+                viewModel.refresh(false)
                 Log.i("TAG", "refreshing: ")
-                adapter.submitList(null)
+               // adapter.submitList(null)
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
                 setShimmerIndicator(false)
@@ -135,9 +146,12 @@ class HomeFragment : CoinFragment() {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
-                        //setShimmerIndicator(true)
-                        //bining?.constParent?.visibility = View.GONE
-                        //viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
+                        if (!isFirstTime){
+                            setShimmerIndicator(true)
+                            bining?.constParent?.visibility = View.GONE
+                            viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
+                            isFirstTime = true
+                        }
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)

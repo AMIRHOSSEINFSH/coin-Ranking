@@ -39,13 +39,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout"
+                    android:background="@drawable/bg_spinner_framelayout_unselected"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:textColor="@color/spinnerBlack"
                         android:id="@+id/priceSort"
                         android:drawablePadding="12dp"
                         android:drawableEnd="@drawable/ic_arrow_up_spinner"
@@ -62,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout"
+                    android:background="@drawable/bg_spinner_framelayout_unselected"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -92,13 +93,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout"
+                    android:background="@drawable/bg_spinner_framelayout_unselected"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:textColor="@color/spinnerBlack"
                         android:id="@+id/MarketCapSort"
                         android:drawablePadding="12dp"
                         android:drawableEnd="@drawable/ic_arrow_up_spinner"

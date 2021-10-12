@@ -25,7 +25,7 @@ data class CoinDetail(
     //@SerializedName("lowVolume")
     val lowVolume: Boolean,
     //@SerializedName("marketCap")
-    val marketCap: String,
+    val marketCap: Double,
     //@SerializedName("name")
     val name: String,
     //@SerializedName("numberOfExchanges")
@@ -33,7 +33,7 @@ data class CoinDetail(
     //@SerializedName("numberOfMarkets")
     val numberOfMarkets: Int,
     //@SerializedName("price")
-    val price: String,
+    val price: Double,
     //@SerializedName("rank")
     val rank: Int,
     //val sparkline: List<String>,
