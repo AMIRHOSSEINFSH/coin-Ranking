@@ -69,5 +69,5 @@ fun View.implementSpringAnimationTrait() {
 }
 
 interface OnChangeSort{
-    fun onResult()
+    fun onResult(isDesc: Boolean)
 }

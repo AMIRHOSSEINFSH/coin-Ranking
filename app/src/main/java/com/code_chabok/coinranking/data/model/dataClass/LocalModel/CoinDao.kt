@@ -22,20 +22,20 @@ interface CoinDao {
     @Query("SELECT * FROM coin")
     fun getCoinsWithoutLiveData(): List<Coin>
 
-    @Query("SELECT * FROM coin ORDER BY price DESC")
-    fun getPriceOrdered(): List<Coin>
+    @Query("SELECT * FROM coin ORDER BY CASE WHEN :isDesc = 1 THEN price END DESC , CASE WHEN :isDesc = 0 THEN price END ASC")
+    fun getPriceOrdered(isDesc: Boolean): List<Coin>
 
-    @Query("SELECT * FROM coin ORDER BY marketCap DESC")
-    fun getMarketCapOrdered(): List<Coin>
+    @Query("SELECT * FROM coin ORDER BY CASE WHEN :isDesc = 1 THEN marketCap END DESC , CASE WHEN :isDesc = 0 THEN marketCap END ASC")
+    fun getMarketCapOrdered(isDesc: Boolean): List<Coin>
 
     @Query("UPDATE Coin SET isBookmarked =:newIsBookmark WHERE uuid =:uuid ")
-    suspend fun updateBookmark(uuid: String,newIsBookmark: Boolean): Int
+    suspend fun updateBookmark(uuid: String, newIsBookmark: Boolean): Int
 
     @Query("SELECT * FROM coin WHERE isBookmarked =1 ")
-     fun getCoinsOfBookmarks(): LiveData<List<Coin>>
+    fun getCoinsOfBookmarks(): LiveData<List<Coin>>
 
-     @Query("SELECT uuid FROM coin WHERE isBookmarked =1 ")
-     fun getBookmarksUuid(): List<String>
+    @Query("SELECT uuid FROM coin WHERE isBookmarked =1 ")
+    fun getBookmarksUuid(): List<String>
     /*@Query("SELECT * FROM coin WHERE id = :sendingId")
     suspend fun getCoin(sendingId: Int): LiveData<Coin>*/
 

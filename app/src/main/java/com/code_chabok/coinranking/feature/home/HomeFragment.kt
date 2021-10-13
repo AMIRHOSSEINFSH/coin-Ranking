@@ -40,6 +40,8 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: BaseCoinAdapter
+    private val dialog = MySortDialog()
+
     private val timeList = arrayListOf("3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y")
 
     override fun onCreateView(
@@ -63,6 +65,9 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true, HomeShimmer = true)
+        dialog.isCancelable = true
+        dialog.isCancelable = false
+        viewModel.refresh(true)
         setUpSpinners()
         viewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
             showSnackBar(errorMessage)
@@ -80,7 +85,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 onItemLongClickListener = { coinListModel ->
                     viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
-                },onChangeDir = {isDetail: Boolean, position: Int ->
+                }, onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
                         //putParcelable("item", item)
                         putString("uuid", adapter.currentList[position].uuid)
@@ -139,36 +144,50 @@ class HomeFragment : CoinFragment(), OnChangeSort {
         bining?.rvHome?.adapter = adapter
 
         bining?.priceSort?.setOnClickListener {
-            if (isSet == isSortOn.PRICE) {
+            isSet = isSortOn.PRICE
 
-            }
-            if (isSet == isSortOn.TIME) {
-                _binding?.apply {
-                    /*priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
-                    marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
-                    timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)*/
-                }
+            /*setShimmerIndicator(true)
+            bining?.constParent?.visibility = View.GONE
+            viewModel.onChangeSort(HomeViewModel.SortType.Price("price"))*/
 
-            }
-            if (isSet == isSortOn.MARKETCAP) {
-                _binding?.apply {
-                    /*marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+            _binding?.apply {
+                if (priceFrame.tag == "R.drawable.bg_spinner_framelayout_unselected") {
+                    dialog.show(childFragmentManager,null)
+                    setShimmerIndicator(true)
+                    constParent.visibility = View.GONE
+                    priceFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
+                    priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+                    priceSort.setTextColor(resources.getColor(R.color.white))
+                } else {
+                    priceSort.setTextColor(resources.getColor(R.color.spinnerBlack))
+                    viewModel.refresh(true)
+                    priceFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
                     priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
-                    timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)*/
                 }
+                marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
             }
 
-            //val dialog = MySortDialog()
-            //dialog.isCancelable = true
-            //dialog.show(parentFragmentManager,null)
-            setShimmerIndicator(true)
-            bining?.constParent?.visibility = View.GONE
-            viewModel.onChangeSort(HomeViewModel.SortType.Price("price"))
         }
-        _binding?.MarketCapSort?.setOnClickListener {
-            setShimmerIndicator(true)
-            bining?.constParent?.visibility = View.GONE
-            viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap"))
+        _binding?.marketCapFrame?.setOnClickListener {
+            isSet = isSortOn.MARKETCAP
+            _binding?.apply {
+                if (marketCapFrame.tag == "R.drawable.bg_spinner_framelayout_unselected") {
+                    setShimmerIndicator(true)
+                    constParent.visibility = View.GONE
+                    marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
+                    marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+                    MarketCapSort.setTextColor(resources.getColor(R.color.white))
+                    dialog.show(childFragmentManager,null)
+                } else {
+                    viewModel.refresh(true)
+                    marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
+                    marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                    MarketCapSort.setTextColor(resources.getColor(R.color.spinnerBlack))
+                }
+                priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+            }
         }
 
     }
@@ -186,10 +205,22 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
                         if (!isFirstTime) {
+                            isSet = isSortOn.TIME
+                            _binding?.apply {
+                                timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+                                priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                                marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                            }
                             setShimmerIndicator(true)
                             bining?.constParent?.visibility = View.GONE
                             viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
-                            isFirstTime = true
+                        } else {
+                            _binding?.apply {
+                                timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                                priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                                marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                            }
+                            isFirstTime = false
                         }
                         _binding?.ivTimeArrow?.setImageResource(R.drawable.ic_arrow_up_spinner)
                     } else {
@@ -236,8 +267,12 @@ class HomeFragment : CoinFragment(), OnChangeSort {
         bining?.constParent?.visibility = View.VISIBLE
     }
 
-    override fun onResult() {
-
+    override fun onResult(isDesc: Boolean) {
+        when(isSet){
+             isSortOn.PRICE->{viewModel.onChangeSort(HomeViewModel.SortType.Price("price",isDesc))}
+            isSortOn.TIME ->{}
+            isSortOn.MARKETCAP->{viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap",isDesc))}
+        }
     }
 
 }

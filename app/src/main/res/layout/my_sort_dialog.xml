@@ -7,6 +7,7 @@
         android:orientation="vertical">
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -75,30 +76,42 @@
 
         </RadioGroup>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+       <LinearLayout
+           android:weightSum="2"
+           android:layout_width="match_parent"
+           android:layout_height="112dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/Desc" />
-        </androidx.cardview.widget.CardView>
+           <com.google.android.material.card.MaterialCardView
+               android:id="@+id/desc"
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/asc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+               <TextView
+                   android:textSize="24sp"
+                   android:gravity="center"
+                   android:text="@string/Desc"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/Asc" />
-        </androidx.cardview.widget.CardView>
+           </com.google.android.material.card.MaterialCardView>
+
+           <com.google.android.material.card.MaterialCardView
+               android:id="@+id/asc"
+               android:layout_weight="1"
+               android:layout_width="0dp"
+               android:layout_height="match_parent">
+
+               <TextView
+                   android:textSize="24sp"
+                   android:gravity="center"
+                   android:text="@string/Asc"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent" />
+
+           </com.google.android.material.card.MaterialCardView>
+
+       </LinearLayout>
 
 
     </LinearLayout>
