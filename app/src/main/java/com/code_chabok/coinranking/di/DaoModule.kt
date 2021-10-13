@@ -1,9 +1,8 @@
 package com.code_chabok.coinranking.di
 
 import com.code_chabok.coinranking.data.model.dataBase.CoinRankingDataBase
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Exchange
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

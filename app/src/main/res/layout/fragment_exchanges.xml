@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".feature.exchanges.ExchangesFragment">
-
-        <!--<FrameLayout
-            android:padding="8dp"
-            android:orientation="horizontal"
-            android:background="@drawable/bg_spinner_framelayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Spinner
-                android:dropDownVerticalOffset="40dp"
-                android:spinnerMode="dropdown"
-
-                android:id="@+id/coursesspinner"
-                android:layout_width="128dp"
-                android:layout_height="40dp"
-                android:background="@null"
-                android:gravity="center" />
-
-            <ImageView
-                app:tint="@color/white"
-                android:id="@+id/iv"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="end|center_vertical"
-                app:srcCompat="@drawable/ic_arrow_up_spinner" />
-
-        </FrameLayout>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec"

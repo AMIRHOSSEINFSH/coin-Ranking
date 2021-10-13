@@ -12,10 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.data.model.Crypto
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
-import com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment
-import com.code_chabok.coinranking.feature.bookMarks.BookMarksFragment
+import com.code_chabok.coinranking.feature.cryptoDetail.CryptoDetailChildFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangeDetailChildFragment
 import com.code_chabok.coinranking.feature.exchanges.ExchangesFragment
 import com.code_chabok.coinranking.feature.home.HomeFragment

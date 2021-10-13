@@ -53,11 +53,7 @@ class SearchFragment : CoinFragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean,_: Int ->
             viewModel.updateNewBookmark(uuid, isBookmark)
-        },
-            onItemLongClickListener = { coinListModel ->
-                viewModel.getSpcificCoinDetail(coinListModel.uuid)
-                viewModel.coinDetailObserver
-            },onChangeDir = {isDetail: Boolean, position: Int ->
+        },onChangeDir = {isDetail: Boolean, position: Int ->
                 val bundle = Bundle().apply {
                     //putParcelable("item", item)
                     putString("uuid", adapter.currentList[position].uuid)

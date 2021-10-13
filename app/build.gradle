@@ -94,4 +94,6 @@ dependencies {
     //material library
     implementation 'com.google.android.material:material:1.4.0'
 
+    implementation("io.coil-kt:coil:0.9.1")
+
 }

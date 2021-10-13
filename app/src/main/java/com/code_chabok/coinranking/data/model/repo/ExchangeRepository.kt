@@ -2,10 +2,7 @@ package com.code_chabok.coinranking.data.model.repo
 
 import androidx.lifecycle.LiveData
 import com.code_chabok.coinranking.common.Resource
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Exchange
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
-import retrofit2.Response
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
 
 interface ExchangeRepository {
 

@@ -38,6 +38,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 
 import android.view.animation.RotateAnimation
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.code_chabok.coinranking.common.*
@@ -70,7 +71,10 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-
+        /*ConnectionLiveData(this).observe(this){
+            Log.i("Logging", "onCreate: $it")
+            Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
+        }*/
         showingSplash()
         initUiComponents()
         enableFullScreenMode()

@@ -1,6 +1,5 @@
 package com.code_chabok.coinranking.common
 
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
 import retrofit2.Response
 
 @Suppress("unused") // T is used in extending classes

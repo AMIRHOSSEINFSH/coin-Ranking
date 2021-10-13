@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/cryptoDetailFragment2"
-        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
+        android:name="com.code_chabok.coinranking.feature.cryptoDetail.CryptoDetailFragment"
         android:label="CryptoDetailFragment"
         tools:layout="@layout/fragment_crypto_detail">
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/cryptoDetailChildFragment"
-        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment"
+        android:name="com.code_chabok.coinranking.feature.cryptoDetail.CryptoDetailChildFragment"
         android:label="fragment_crypto_detail_child"
         tools:layout="@layout/fragment_crypto_detail_child" />
     <fragment

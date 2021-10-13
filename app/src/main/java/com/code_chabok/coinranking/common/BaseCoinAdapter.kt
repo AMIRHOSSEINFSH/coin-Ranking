@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
     private val onUpdateClickListener: (String, Boolean, Int) -> Unit,
-    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
+    //private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
     private val onChangeDir: (Boolean,Int) -> Unit
 
 ) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
@@ -75,7 +75,7 @@ class BaseCoinAdapter constructor(
             binding.coinListModel = item
 
             binding.cryptoBookmarkIv.also {
-                if (item.isBookmarked == true) {
+                if (item.isBookmarked) {
                     it.tag = R.drawable.ic_bookmarks_fill
                     it.setImageResource(R.drawable.ic_bookmarks_fill)
                 } else {
@@ -143,12 +143,12 @@ class BaseCoinAdapter constructor(
             var isExpanded = item.isExpanded
             if (isExpanded) {
 
-                (activity as MainActivity).lifecycleScope.launchWhenResumed {
+                /*(activity as MainActivity).lifecycleScope.launchWhenResumed {
                     onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
                         binding.coinDetailModel = coinDetail
                         //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
                     }
-                }
+                }*/
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
                     binding.cryptoDivider.visibility = View.GONE

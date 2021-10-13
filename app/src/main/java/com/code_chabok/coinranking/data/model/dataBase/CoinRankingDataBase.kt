@@ -2,10 +2,10 @@ package com.code_chabok.coinranking.data.model.dataBase
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Exchange
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
+import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 
 @Database(
     entities =

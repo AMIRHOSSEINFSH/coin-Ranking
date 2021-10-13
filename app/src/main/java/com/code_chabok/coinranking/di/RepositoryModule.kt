@@ -1,7 +1,7 @@
 package com.code_chabok.coinranking.data.db
 
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import com.code_chabok.coinranking.data.model.repo.*
 import com.code_chabok.coinranking.data.model.repo.source.*
 import com.code_chabok.coinranking.services.http.ApiService

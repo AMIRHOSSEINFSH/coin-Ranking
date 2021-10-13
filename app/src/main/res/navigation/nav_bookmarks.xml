@@ -23,7 +23,7 @@
     <fragment
         tools:layout="@layout/fragment_crypto_detail"
         android:id="@+id/cryptoDetailFragment"
-        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailFragment"
+        android:name="com.code_chabok.coinranking.feature.cryptoDetail.CryptoDetailFragment"
         android:label="CryptoDetailFragment" >
         <argument
             android:name="crypto"
@@ -56,6 +56,6 @@
     <fragment
         tools:layout="@layout/fragment_exchange_detail_child"
         android:id="@+id/cryptoDetailChildFragment2"
-        android:name="com.code_chabok.coinranking.feature.CryptoDetail.CryptoDetailChildFragment"
+        android:name="com.code_chabok.coinranking.feature.cryptoDetail.CryptoDetailChildFragment"
         android:label="CryptoDetailChildFragment" />
 </navigation>

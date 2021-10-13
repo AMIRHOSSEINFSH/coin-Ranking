@@ -1,8 +1,8 @@
 package com.code_chabok.coinranking.data.model.repo.source
 
 import androidx.lifecycle.LiveData
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Exchange
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import javax.inject.Inject
 
 

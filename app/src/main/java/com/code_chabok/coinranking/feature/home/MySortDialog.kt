@@ -1,6 +1,7 @@
 package com.code_chabok.coinranking.feature.home
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,11 @@ class MySortDialog: BottomSheetDialogFragment() {
             dismiss()
         }
 
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        onChangeListener.onCancel()
     }
 
 

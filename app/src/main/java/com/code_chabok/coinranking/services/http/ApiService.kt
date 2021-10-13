@@ -1,10 +1,10 @@
 package com.code_chabok.coinranking.services.http
 
-import com.code_chabok.coinranking.data.model.dataClass.SearchModel.SearchResource
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinDetailResource.CoinDetailResource
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeDetailResource.ExchangeDetailResource
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
+import com.code_chabok.coinranking.data.model.dataClass.searchModel.SearchResource
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinDetailResource.CoinDetailResource
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinListResource.CoinListResource
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeDetailResource.ExchangeDetailResource
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeResource
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

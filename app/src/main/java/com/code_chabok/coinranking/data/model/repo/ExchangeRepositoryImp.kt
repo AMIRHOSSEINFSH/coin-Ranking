@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.NetworkBoundResource
 import com.code_chabok.coinranking.common.Resource
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeListModel
-import com.code_chabok.coinranking.data.model.dataClass.ServerModel.ExchangeListResource.ExchangeResource
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
+import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeResource
 import com.code_chabok.coinranking.data.model.repo.source.ExchangeLocalDataSource
 import com.code_chabok.coinranking.data.model.repo.source.ExchangeRemoteDataSource
 import retrofit2.Response

@@ -4,10 +4,8 @@ package com.code_chabok.coinranking.data.model.dataClass
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
 @Parcelize
 data class CoinListModel(
     @SerializedName("24hVolume")
