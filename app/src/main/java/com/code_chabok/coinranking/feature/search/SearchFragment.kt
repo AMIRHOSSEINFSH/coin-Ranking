@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,6 +60,16 @@ class SearchFragment : CoinFragment() {
             onItemLongClickListener = { coinListModel ->
                 viewModel.getSpcificCoinDetail(coinListModel.uuid)
                 viewModel.coinDetailObserver
+            },onChangeDir = {isDetail: Boolean, position: Int ->
+                val bundle = Bundle().apply {
+                    //putParcelable("item", item)
+                    putString("uuid", adapter.currentList[position].uuid)
+                }
+                if (!isDetail)
+                    findNavController().navigate(R.id.home_book_same, bundle)
+                else
+                    findNavController().navigate(R.id.action_same_to_same, bundle)
+
             })
 
 

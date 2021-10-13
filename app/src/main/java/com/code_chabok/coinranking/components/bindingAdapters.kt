@@ -23,7 +23,10 @@ fun formatVolume(tv: TextView, numbert: Double?) {
     if (numbert!=0.0)
     numbert?.apply {
         val split = this.toString().split(".")
+        if (split[0].length >= 2)
         tv.text = "${split[0].substring(0, 2)}.${split[1].substring(0, 2)} billion"
+        else
+            tv.text = "${split[0]}.${split[1].substring(0, 2)} billion"
     }
 
 }

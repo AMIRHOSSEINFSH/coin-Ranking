@@ -18,5 +18,7 @@
     <string name="cryptocurrency_title">Cryptocurrency</string>
 
     <string name="symbol_value">%s value statistics</string>
+    <string name="Desc">صعودی</string>
+    <string name="Asc">نزولی</string>
 
 </resources>

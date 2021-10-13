@@ -24,8 +24,9 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
 class BaseCoinAdapter constructor(
-    private val onUpdateClickListener: (String, Boolean,Int) -> Unit,
-    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>
+    private val onUpdateClickListener: (String, Boolean, Int) -> Unit,
+    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
+    private val onChangeDir: (Boolean,Int) -> Unit
 
 ) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<CoinListModel>() {
@@ -79,9 +80,8 @@ class BaseCoinAdapter constructor(
                 }
             }
 
-
             binding.cryptoBookmarkIv.setOnClickListener {
-                onUpdateClickListener(item.uuid, !item.isBookmarked!!,adapterPosition)
+                onUpdateClickListener(item.uuid, !item.isBookmarked!!, adapterPosition)
                 if (it.tag == R.drawable.ic_bookmarks_fill) {
                     item.isBookmarked = false
                     binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
@@ -135,56 +135,16 @@ class BaseCoinAdapter constructor(
 
             }
 
-            /*val dialog = AlertDialog.Builder(itemView.context).create()
-            *//*dialog.setTitle("Hello")
-            dialog.setMessage("This is Sample")*//*
-            val view = LayoutInflater.from(itemView.context)
-                .inflate(R.layout.custom_prev_dialog, null, false)
-            dialog.setView(view)*/
-
-
-            /* binding.cryptoIv.setOnTouchListener OnTouchListener@{ view, motionEvent ->
-                 var x = motionEvent.x
-                 var y = motionEvent.y
-                 when (motionEvent.action) {
-                     MotionEvent.ACTION_DOWN -> { // RELEASED
-                         dialog.show()
-                         //oast.makeText(this.context, "Action Up", Toast.LENGTH_SHORT).show()
-                         //Log.i("TAGAA", "onViewCreated: ")
-                         Toast.makeText(view.context, "Down", Toast.LENGTH_SHORT).show()
-
-                         return@OnTouchListener true
-
-                     }
-                     MotionEvent.ACTION_UP -> {
-                         dialog.dismiss()
-
-                         Toast.makeText(view.context, "Up", Toast.LENGTH_SHORT).show()
-                         return@OnTouchListener true
-                     } // if you want to handle the touch event
-
-                     MotionEvent.ACTION_MOVE -> {
-                         if (y > view.context.resources.displayMetrics.heightPixels*//*view.pivotY*//* *//*+ 200*//* || y < view.context.resources.displayMetrics.heightPixels*//* - 200*//*)
-                            //view.pivotY = y
-                                Toast.makeText(view.context, "reached", Toast.LENGTH_SHORT).show()
-                                Log.i("TAGAAA", "Move $y form ${view.pivotY}")
-                            //Toast.makeText(v.context, "Move $y", Toast.LENGTH_SHORT).show()
-                            return@OnTouchListener true
-                        }
-                    }
-                    false
-                }*/
-
+            /*(activity as MainActivity).lifecycleScope.launchWhenResumed {
+                onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
+                    binding.coinDetailModel = coinDetail
+                    //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
+                }
+            }
 
             var isExpanded = item.isExpanded
             if (isExpanded) {
 
-                (activity as MainActivity).lifecycleScope.launchWhenResumed {
-                    onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
-                        binding.coinDetailModel = coinDetail
-                        //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
-                    }
-                }
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
                     binding.cryptoDivider.visibility = View.GONE
@@ -208,7 +168,7 @@ class BaseCoinAdapter constructor(
                     true
                 }
             }
-            binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE*/
 
             binding.ClickContainer.setOnClickListener {
                 val bundle = Bundle().apply {
@@ -229,6 +189,8 @@ class BaseCoinAdapter constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+
 
         return MyViewHolder(binding)
     }

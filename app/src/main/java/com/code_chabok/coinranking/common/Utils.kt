@@ -67,3 +67,7 @@ fun View.implementSpringAnimationTrait() {
         false
     }
 }
+
+interface OnChangeSort{
+    fun onResult()
+}

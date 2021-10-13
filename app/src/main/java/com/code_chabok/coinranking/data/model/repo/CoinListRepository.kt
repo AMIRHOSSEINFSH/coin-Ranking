@@ -24,7 +24,7 @@ class CoinListRepository @Inject constructor(
     suspend fun getSortedList(type: HomeViewModel.SortType): Resource<List<CoinListModel>> {
 
         var respone: ApiResponse<CoinListResource>
-        var sortedLocalList : List<Coin>
+        var sortedLocalList: List<Coin>
         when (type) {
             is HomeViewModel.SortType.Time -> {
                 respone = asApiResponse { apiService.getListAs(timePeriod = type.body) }
@@ -59,10 +59,11 @@ class CoinListRepository @Inject constructor(
                     }
                     is HomeViewModel.SortType.MarketCap -> {
                         sortedLocalList = coinDao.getMarketCapOrdered()
+
                     }
                 }
 
-                val list= ArrayList<CoinListModel>()
+                val list = ArrayList<CoinListModel>()
                 sortedLocalList.forEach { coin ->
                     list.add(coin.convertToCoinList())
                 }

@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.CoinFragment
+import com.code_chabok.coinranking.common.OnChangeSort
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 
@@ -26,8 +28,13 @@ import com.code_chabok.coinranking.domain.getCoinDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : CoinFragment() {
+class HomeFragment : CoinFragment(), OnChangeSort {
 
+    enum class isSortOn {
+        PRICE, TIME, MARKETCAP, NOTHING
+    }
+
+    private var isSet = isSortOn.NOTHING
     private var isFirstTime = true
     private var _binding: FragmentHomeBinding? = null
     private val bining: FragmentHomeBinding? get() = _binding
@@ -68,11 +75,21 @@ class HomeFragment : CoinFragment() {
         adapter =
             BaseCoinAdapter(
                 onUpdateClickListener = { uuid: String, isBookmark: Boolean, _: Int ->
-                viewModel.updateNewBookmark(uuid, isBookmark)
-            },
+                    viewModel.updateNewBookmark(uuid, isBookmark)
+                },
                 onItemLongClickListener = { coinListModel ->
                     viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
+                },onChangeDir = {isDetail: Boolean, position: Int ->
+                    val bundle = Bundle().apply {
+                        //putParcelable("item", item)
+                        putString("uuid", adapter.currentList[position].uuid)
+                    }
+                    if (!isDetail)
+                        findNavController().navigate(R.id.home_book_same, bundle)
+                    else
+                        findNavController().navigate(R.id.action_same_to_same, bundle)
+
                 })
 
         adapter.setActivity(requireActivity())
@@ -88,8 +105,8 @@ class HomeFragment : CoinFragment() {
                 }
             }
 
-        viewModel.sortListLiveData.observe(viewLifecycleOwner){
-            checkResponseForView(it){
+        viewModel.sortListLiveData.observe(viewLifecycleOwner) {
+            checkResponseForView(it) {
                 setShimmerIndicator(false)
                 bining?.constParent?.visibility = View.VISIBLE
                 val coinListModel: List<CoinListModel> = it.data!!
@@ -103,7 +120,7 @@ class HomeFragment : CoinFragment() {
             checkResponseForView(it) {
                 viewModel.refresh(false)
                 Log.i("TAG", "refreshing: ")
-               // adapter.submitList(null)
+                // adapter.submitList(null)
                 val coinListModel: List<CoinListModel> = it.data!!
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
                 setShimmerIndicator(false)
@@ -122,6 +139,28 @@ class HomeFragment : CoinFragment() {
         bining?.rvHome?.adapter = adapter
 
         bining?.priceSort?.setOnClickListener {
+            if (isSet == isSortOn.PRICE) {
+
+            }
+            if (isSet == isSortOn.TIME) {
+                _binding?.apply {
+                    /*priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+                    marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                    timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)*/
+                }
+
+            }
+            if (isSet == isSortOn.MARKETCAP) {
+                _binding?.apply {
+                    /*marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
+                    priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
+                    timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)*/
+                }
+            }
+
+            //val dialog = MySortDialog()
+            //dialog.isCancelable = true
+            //dialog.show(parentFragmentManager,null)
             setShimmerIndicator(true)
             bining?.constParent?.visibility = View.GONE
             viewModel.onChangeSort(HomeViewModel.SortType.Price("price"))
@@ -146,7 +185,7 @@ class HomeFragment : CoinFragment() {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     if (!isUp) {
-                        if (!isFirstTime){
+                        if (!isFirstTime) {
                             setShimmerIndicator(true)
                             bining?.constParent?.visibility = View.GONE
                             viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
@@ -196,4 +235,9 @@ class HomeFragment : CoinFragment() {
         super.onStart()
         bining?.constParent?.visibility = View.VISIBLE
     }
+
+    override fun onResult() {
+
+    }
+
 }
