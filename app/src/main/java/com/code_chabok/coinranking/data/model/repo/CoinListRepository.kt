@@ -8,6 +8,7 @@ import com.code_chabok.coinranking.data.model.dataClass.LocalModel.Coin
 import com.code_chabok.coinranking.data.model.dataClass.LocalModel.CoinDao
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.data.model.dataClass.ServerModel.CoinListResource.CoinListResource
+import com.code_chabok.coinranking.feature.home.HomeViewModel
 import com.code_chabok.coinranking.services.http.ApiService
 import retrofit2.Response
 import javax.inject.Inject

@@ -48,7 +48,7 @@ class ExchangesFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true)
-        if (!isDetail)
+        //if (!isDetail)
 
             adapter = BaseExchangeAdapter {
                 Log.i("TAG", "onViewCreated:${isDetail} ")
