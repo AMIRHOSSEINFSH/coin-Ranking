@@ -26,10 +26,10 @@ class HomeViewModel @Inject constructor(
     private val getSortedList: getSortedList
 ) : CoinViewModel() {
 
-    sealed class SortType(val body: String) {
+    sealed class SortType(val body: String,val orderArrow: Boolean?=null) {
         class Time(endingRequestBody: String) : SortType(endingRequestBody)
-        class Price(Order: String) : SortType(Order)
-        class MarketCap(Order: String) : SortType(Order)
+        class Price(Order: String,orderArrow: Boolean) : SortType(Order,orderArrow)
+        class MarketCap(Order: String,orderArrow: Boolean) : SortType(Order,orderArrow)
     }
 
     private val _sortListLiveData = MutableLiveData<Resource<List<CoinListModel>>>()

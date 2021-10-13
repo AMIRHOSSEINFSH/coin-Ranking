@@ -72,15 +72,15 @@ class BaseCoinAdapter constructor(
 
             binding.cryptoBookmarkIv.also {
                 if (item.isBookmarked == true) {
-                    it.setTag(R.drawable.ic_bookmarks_fill)
+                    it.tag = R.drawable.ic_bookmarks_fill
                     it.setImageResource(R.drawable.ic_bookmarks_fill)
                 } else {
-                    it.setTag(R.drawable.ic_bookmarks_empty)
+                    it.tag = R.drawable.ic_bookmarks_empty
                     it.setImageResource(R.drawable.ic_bookmarks_empty)
                 }
             }
 
-            binding.cryptoBookmarkIv.setOnClickListener {
+            /*binding.cryptoBookmarkIv.setOnClickListener {
                 onUpdateClickListener(item.uuid, !item.isBookmarked!!, adapterPosition)
                 if (it.tag == R.drawable.ic_bookmarks_fill) {
                     item.isBookmarked = false
@@ -92,7 +92,7 @@ class BaseCoinAdapter constructor(
                     binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
                 }
 
-            }
+            }*/
 
             if (adapterPosition == 0 && tof) {
                 /*item.isExpanded = true*/
@@ -170,18 +170,6 @@ class BaseCoinAdapter constructor(
             }
             binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE*/
 
-            binding.ClickContainer.setOnClickListener {
-                val bundle = Bundle().apply {
-                    //putParcelable("item", item)
-                    putString("uuid", item.uuid)
-                }
-                if (!isDetail)
-                    itemView.findNavController().navigate(R.id.home_book_same, bundle)
-                else
-                    itemView.findNavController().navigate(R.id.action_same_to_same, bundle)
-                //onItemLongClickListener(item)
-                com.code_chabok.coinranking.common.isDetail = true
-            }
         }
 
 
@@ -189,10 +177,28 @@ class BaseCoinAdapter constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val myViewHolder = MyViewHolder(binding)
 
+        binding.ClickContainer.setOnClickListener {
+            onChangeDir(isDetail,myViewHolder.layoutPosition)
+            com.code_chabok.coinranking.common.isDetail = true
+        }
 
+        binding.cryptoBookmarkIv.setOnClickListener {
+            val item = currentList[myViewHolder.layoutPosition]
+            onUpdateClickListener(item.uuid, !item.isBookmarked, myViewHolder.layoutPosition)
+            if (it.tag == R.drawable.ic_bookmarks_fill) {
+                item.isBookmarked = false
+                binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
+                binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
+            } else if (it.tag == R.drawable.ic_bookmarks_empty) {
+                item.isBookmarked = true
+                binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
+                binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
+            }
 
-        return MyViewHolder(binding)
+        }
+        return myViewHolder
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

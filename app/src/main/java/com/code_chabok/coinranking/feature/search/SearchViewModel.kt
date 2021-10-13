@@ -50,7 +50,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val res = getCoin(uuid).data
             withContext(Dispatchers.Main) {
-                _coinDetailObserver.value = res!!
+                //_coinDetailObserver.value = res!!
             }
         }
     }
