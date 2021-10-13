@@ -90,7 +90,7 @@ dependencies {
 
     implementation "io.coil-kt:coil:1.4.0"
 
-    //material library
-    implementation 'com.google.android.material:material:1.4.0'
+    //glide
+    implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
 
 }
