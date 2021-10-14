@@ -52,7 +52,12 @@ class BookMarksFragment : CoinFragment() {
             BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, position: Int ->
                 viewModel.updateNewBookmark(uuid, isBookmark)
                 adapter.notifyItemRemoved(position)
-            },onChangeDir = {isDetail: Boolean, position: Int ->
+            },
+                onItemLongClickListener = { coinListModel ->
+                    viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    viewModel.coinDetailObserver
+                }
+                ,onChangeDir = {isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
                         //putParcelable("item", item)
                         putString("uuid", adapter.currentList[position].uuid)

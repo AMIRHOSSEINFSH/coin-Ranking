@@ -70,11 +70,17 @@ class CoinListRepository @Inject constructor(
             }
             is ApiErrorResponse -> {
                 serverList = emptyList()
-                Resource.Error<List<CoinListModel>>("Error Found in request !!")
+                val coinListmodel = coinDao.getCoinsWithoutLiveData().map {
+                    it.convertToCoinList()
+                }
+                Resource.Error<List<CoinListModel>>("Error Found in request !!",coinListmodel)
             }
             is ApiEmptyResponse -> {
                 serverList = emptyList()
-                Resource.Error<List<CoinListModel>>("Empty List Found !!")
+                val coinListmodel = coinDao.getCoinsWithoutLiveData().map {
+                    it.convertToCoinList()
+                }
+                Resource.Error<List<CoinListModel>>("Empty List Found !!",coinListmodel)
             }
         }
         //return serverList

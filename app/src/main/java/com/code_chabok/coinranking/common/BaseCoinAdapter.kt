@@ -30,7 +30,7 @@ import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
     private val onUpdateClickListener: (String, Boolean, Int) -> Unit,
-    //private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
+    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
     private val onChangeDir: (Boolean,Int) -> Unit
 
 ) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
@@ -46,7 +46,6 @@ class BaseCoinAdapter constructor(
     }
 
 ) {
-    private lateinit var item: CoinListModel
     private lateinit var activity: Activity
     fun setActivity(activity: Activity) {
         this.activity = activity
@@ -94,25 +93,13 @@ class BaseCoinAdapter constructor(
 
 
             binding.constExpandable.setOnLongClickListener {
-                item?.let { item ->
 
+                item?.let { item ->
+                    Log.d("Logging ...", ": item-> ${item} itemPosition -> ${itemPosition}")
+                    //binding.cryptoNameTv.text = "Bit"
                     this.item?.isExpanded = !item.isExpanded
                     binding.expandableLayout.isVisible = item.isExpanded
                     notifyItemChanged(itemPosition)
-//                    if (item.isExpanded) {
-//                        item.isExpanded = false
-//                        binding.cryptoDivider.visibility = View.GONE
-//                        binding.expandableLayout.visibility = View.GONE
-////                        notifyItemChanged(itemPosition)
-//                    }
-//                    else {
-//                        item.isExpanded = true
-//                        binding.cryptoDivider.visibility = View.VISIBLE
-//                        binding.expandableLayout.visibility = View.VISIBLE
-////                        notifyItemChanged(itemPosition)
-//                        Log.i("TAG", ": ${itemPosition}")
-//                    }
-//                    binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
                     true
                 } ?: false
             }
@@ -139,117 +126,6 @@ class BaseCoinAdapter constructor(
                 }
             }
 
-/*            if (adapterPosition == 0 && tof) {
-                */
-        /*item.isExpanded = true*//*
-                */
-        /*binding.cryptoDivider.visibility = View.GONE
-                binding.expandableLayout.visibility = View.VISIBLE
-                tof = false*/
-        /*
-                first = BubbleShowCaseBuilder(activity)
-                    .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.constExpandable).showOnce("BUBBLE_SHOW_CASE_ID_0")
-
-                second = BubbleShowCaseBuilder(activity)
-                    .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
-
-                if (showBubble) {
-                    // showBubble()
-                }
-
-                first.listener(object : BubbleShowCaseListener {
-                    override fun onBackgroundDimClick(bubbleShowCase: BubbleShowCase) {
-
-                    }
-
-                    override fun onBubbleClick(bubbleShowCase: BubbleShowCase) {
-
-                    }
-
-                    override fun onCloseActionImageClick(bubbleShowCase: BubbleShowCase) {
-
-                    }
-
-                    override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
-                        item.isExpanded = true
-                        binding.cryptoDivider.visibility = View.GONE
-                        binding.expandableLayout.visibility = View.VISIBLE
-                        tof = false
-                    }
-
-                })
-
-            }*/
-
-
-            //binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
-            /*if (item.isExpanded){
-                binding.expandableLayout.setOnLongClickListener {
-                    item.isExpanded = false
-                    binding.cryptoDivider.visibility = View.GONE
-                    binding.expandableLayout.visibility = View.GONE
-                    notifyItemChanged(layoutPosition)
-                    true
-                }
-            }else{
-                binding.expandableLayout.setOnLongClickListener {
-                    item.isExpanded = true
-                    binding.cryptoDivider.visibility = View.VISIBLE
-                    binding.expandableLayout.visibility = View.VISIBLE
-                    notifyItemChanged(layoutPosition)
-                    true
-                }
-            }
-            binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE*/
-            /*var isExpanded = item.isExpanded
-            if (isExpanded) {
-
-                *//*(activity as MainActivity).lifecycleScope.launchWhenResumed {
-                    onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
-                        binding.coinDetailModel = coinDetail
-                        //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
-                    }
-                }*/
-        /*
-                binding.constExpandable.setOnLongClickListener {
-                    item.isExpanded = false
-                    binding.cryptoDivider.visibility = View.GONE
-                    binding.expandableLayout.visibility = View.GONE
-                    notifyItemChanged(adapterPosition)
-                    true
-                }
-                //item.isExpanded = false
-            } else {
-
-                binding.constExpandable.setOnLongClickListener {
-
-                    if (scanList()) {
-                        item.isExpanded = true
-                        binding.cryptoDivider.visibility = View.VISIBLE
-                        binding.expandableLayout.visibility = View.VISIBLE
-                        Log.i("TAGAAB", "bind: ${item.uuid}")
-                        notifyItemChanged(adapterPosition)
-                    }
-
-                    true
-                }
-            }
-            binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
-
-            binding.ClickContainer.setOnClickListener {
-                val bundle = Bundle().apply {
-                    //putParcelable("item", item)
-                    putString("uuid", item.uuid)
-                }
-                if (!isDetail)
-                    itemView.findNavController().navigate(R.id.home_book_same, bundle)
-                else
-                    itemView.findNavController().navigate(R.id.action_same_to_same, bundle)
-                //onItemClickListener(item)
-                com.code_chabok.coinranking.common.isDetail = true
-            }*/
 
         }
 
@@ -258,8 +134,10 @@ class BaseCoinAdapter constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val myViewHolder = MyViewHolder(binding)
 
+        val myViewHolder = MyViewHolder(binding)
+        //if (myViewHolder.layoutPosition!=-1)
+        //binding.expandableLayout.isVisible = currentList[myViewHolder.layoutPosition].isExpanded
         /*if (myViewHolder.layoutPosition!=-1){
             //var item = currentList[myViewHolder.layoutPosition]
             if (item.isExpanded){
