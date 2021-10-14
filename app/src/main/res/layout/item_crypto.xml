@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="CoinListModel"
             type="com.code_chabok.coinranking.data.model.dataClass.CoinListModel" />
@@ -103,7 +104,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{CoinListModel.change}"
                         app:rateImpl="@{CoinListModel.change}"
                         android:textAppearance="?textAppearanceSubtitle1"
                         android:textColor="#2BCF31"
@@ -136,7 +136,6 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="15dp"
             android:visibility="gone"
-            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

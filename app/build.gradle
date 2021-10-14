@@ -96,4 +96,6 @@ dependencies {
 
     implementation("io.coil-kt:coil:0.9.1")
 
+    implementation 'com.github.nabil6391:LottieSwipeRefreshLayout:1.0.0'
+
 }

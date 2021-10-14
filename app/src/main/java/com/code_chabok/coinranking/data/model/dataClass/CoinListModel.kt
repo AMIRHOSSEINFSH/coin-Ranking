@@ -11,7 +11,7 @@ data class CoinListModel(
     @SerializedName("24hVolume")
     val hVolume: String,
     val btcPrice: String,
-    val change: String,
+    val change: String? =null,
     val coinrankingUrl: String,
     val color: String?,
     val iconUrl: String,

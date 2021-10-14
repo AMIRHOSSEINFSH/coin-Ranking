@@ -8,128 +8,138 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constParent"
+        <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
+            app:lottie_rawRes="@raw/crypto_refresh"
+            android:id="@+id/swipe_Refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_Cryptocurrency"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constParent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="@string/cryptocurrency_title"
-                android:textAppearance="?textAppearanceHeadline5"
-                android:textColor="@color/headLineColor"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:weightSum="3"
-                app:layout_constraintTop_toBottomOf="@id/tv_Cryptocurrency">
-
-                <FrameLayout
-                    android:id="@+id/priceFrame"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_Cryptocurrency"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout_unselected"
-                    android:tag="R.drawable.bg_spinner_framelayout_unselected"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/cryptocurrency_title"
+                    android:textAppearance="?textAppearanceHeadline5"
+                    android:textColor="@color/headLineColor"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/priceSort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center"
-                        android:drawableEnd="@drawable/ic_arrow_up_spinner"
-                        android:drawablePadding="12dp"
-                        android:gravity="center"
-                        android:text="Price"
-                        android:textColor="@color/spinnerBlack" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/timeFrame"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout_unselected"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_marginTop="15dp"
+                    android:weightSum="3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_Cryptocurrency">
 
-                    <Spinner
-                        android:id="@+id/timeSpinner"
+                    <FrameLayout
+                        android:id="@+id/priceFrame"
                         android:layout_width="wrap_content"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:dropDownVerticalOffset="40dp"
-                        android:spinnerMode="dropdown" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_framelayout_unselected"
+                        android:tag="R.drawable.bg_spinner_framelayout_unselected"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/iv_time_arrow"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="12dp"
-                        app:srcCompat="@drawable/ic_arrow_up_spinner" />
+                        <TextView
+                            android:id="@+id/priceSort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:drawableEnd="@drawable/ic_arrow_up_spinner"
+                            android:drawablePadding="12dp"
+                            android:gravity="center"
+                            android:text="Price"
+                            android:textColor="@color/spinnerBlack" />
 
-                </FrameLayout>
+                    </FrameLayout>
 
-                <FrameLayout
-                    android:id="@+id/marketCapFrame"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_spinner_framelayout_unselected"
-                    android:tag="R.drawable.bg_spinner_framelayout_unselected"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/MarketCapSort"
+                    <FrameLayout
+                        android:id="@+id/timeFrame"
                         android:layout_width="wrap_content"
-                        android:layout_height="56dp"
-                        android:layout_gravity="center"
-                        android:drawableEnd="@drawable/ic_arrow_up_spinner"
-                        android:drawablePadding="12dp"
-                        android:gravity="center"
-                        android:text="MarketCap"
-                        android:textColor="@color/spinnerBlack" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_framelayout_unselected"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </FrameLayout>
-            </LinearLayout>
+                        <Spinner
+                            android:id="@+id/timeSpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:dropDownVerticalOffset="40dp"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:id="@+id/iv_time_arrow"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="12dp"
+                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/marketCapFrame"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_framelayout_unselected"
+                        android:tag="R.drawable.bg_spinner_framelayout_unselected"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/MarketCapSort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:drawableEnd="@drawable/ic_arrow_up_spinner"
+                            android:drawablePadding="12dp"
+                            android:gravity="center"
+                            android:text="MarketCap"
+                            android:textColor="@color/spinnerBlack" />
+
+                    </FrameLayout>
+                </LinearLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="27dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                tools:layout_editor_absoluteX="16dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="27dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    tools:layout_editor_absoluteX="16dp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

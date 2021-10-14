@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -45,6 +46,7 @@ class BaseCoinAdapter constructor(
     }
 
 ) {
+    private lateinit var item: CoinListModel
     private lateinit var activity: Activity
     fun setActivity(activity: Activity) {
         this.activity = activity
@@ -69,10 +71,63 @@ class BaseCoinAdapter constructor(
 
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CoinListModel) {
+        var item: CoinListModel? = null
+        var itemPosition: Int = -1
+
+        init {
             binding.constExpandable.implementSpringAnimationTrait()
 
+            binding.cryptoBookmarkIv.setOnClickListener {
+                item?.let { item ->
+                    onUpdateClickListener(item.uuid, !item.isBookmarked, adapterPosition)
+                    if (it.tag == R.drawable.ic_bookmarks_fill) {
+                        item.isBookmarked = false
+                        binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
+                        binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
+                    } else if (it.tag == R.drawable.ic_bookmarks_empty) {
+                        item.isBookmarked = true
+                        binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
+                        binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
+                    }
+                }
+            }
+
+
+            binding.constExpandable.setOnLongClickListener {
+                item?.let { item ->
+
+                    this.item?.isExpanded = !item.isExpanded
+                    binding.expandableLayout.isVisible = item.isExpanded
+                    notifyItemChanged(itemPosition)
+//                    if (item.isExpanded) {
+//                        item.isExpanded = false
+//                        binding.cryptoDivider.visibility = View.GONE
+//                        binding.expandableLayout.visibility = View.GONE
+////                        notifyItemChanged(itemPosition)
+//                    }
+//                    else {
+//                        item.isExpanded = true
+//                        binding.cryptoDivider.visibility = View.VISIBLE
+//                        binding.expandableLayout.visibility = View.VISIBLE
+////                        notifyItemChanged(itemPosition)
+//                        Log.i("TAG", ": ${itemPosition}")
+//                    }
+//                    binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+                    true
+                } ?: false
+            }
+
+            binding.ClickContainer.setOnClickListener {
+                onChangeDir(isDetail,itemPosition)
+                com.code_chabok.coinranking.common.isDetail = true
+            }
+
+        }
+
+        fun bind(item: CoinListModel) {
+//            this@BaseCoinAdapter.item = item
             binding.coinListModel = item
+            binding.expandableLayout.isVisible = item.isExpanded
 
             binding.cryptoBookmarkIv.also {
                 if (item.isBookmarked) {
@@ -84,26 +139,14 @@ class BaseCoinAdapter constructor(
                 }
             }
 
-
-            binding.cryptoBookmarkIv.setOnClickListener {
-                onUpdateClickListener(item.uuid, !item.isBookmarked!!,adapterPosition)
-                if (it.tag == R.drawable.ic_bookmarks_fill) {
-                    item.isBookmarked = false
-                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
-                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
-                } else if (it.tag == R.drawable.ic_bookmarks_empty) {
-                    item.isBookmarked = true
-                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
-                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
-                }
-
-            }
-
-            if (adapterPosition == 0 && tof) {
-                /*item.isExpanded = true*/
-                /*binding.cryptoDivider.visibility = View.GONE
+/*            if (adapterPosition == 0 && tof) {
+                */
+        /*item.isExpanded = true*//*
+                */
+        /*binding.cryptoDivider.visibility = View.GONE
                 binding.expandableLayout.visibility = View.VISIBLE
                 tof = false*/
+        /*
                 first = BubbleShowCaseBuilder(activity)
                     .title("You can watch more Details here!\n by Long Click")
                     .targetView(binding.constExpandable).showOnce("BUBBLE_SHOW_CASE_ID_0")
@@ -138,17 +181,38 @@ class BaseCoinAdapter constructor(
 
                 })
 
-            }
+            }*/
 
-            var isExpanded = item.isExpanded
+
+            //binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+            /*if (item.isExpanded){
+                binding.expandableLayout.setOnLongClickListener {
+                    item.isExpanded = false
+                    binding.cryptoDivider.visibility = View.GONE
+                    binding.expandableLayout.visibility = View.GONE
+                    notifyItemChanged(layoutPosition)
+                    true
+                }
+            }else{
+                binding.expandableLayout.setOnLongClickListener {
+                    item.isExpanded = true
+                    binding.cryptoDivider.visibility = View.VISIBLE
+                    binding.expandableLayout.visibility = View.VISIBLE
+                    notifyItemChanged(layoutPosition)
+                    true
+                }
+            }
+            binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE*/
+            /*var isExpanded = item.isExpanded
             if (isExpanded) {
 
-                /*(activity as MainActivity).lifecycleScope.launchWhenResumed {
+                *//*(activity as MainActivity).lifecycleScope.launchWhenResumed {
                     onItemLongClickListener(item).observe(activity as MainActivity) { coinDetail ->
                         binding.coinDetailModel = coinDetail
                         //Log.i("AAAAAA", "bind: ${coinDetail.btcPrice}")
                     }
                 }*/
+        /*
                 binding.constExpandable.setOnLongClickListener {
                     item.isExpanded = false
                     binding.cryptoDivider.visibility = View.GONE
@@ -185,7 +249,8 @@ class BaseCoinAdapter constructor(
                     itemView.findNavController().navigate(R.id.action_same_to_same, bundle)
                 //onItemClickListener(item)
                 com.code_chabok.coinranking.common.isDetail = true
-            }
+            }*/
+
         }
 
 
@@ -195,12 +260,47 @@ class BaseCoinAdapter constructor(
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val myViewHolder = MyViewHolder(binding)
 
-        binding.ClickContainer.setOnClickListener {
+        /*if (myViewHolder.layoutPosition!=-1){
+            //var item = currentList[myViewHolder.layoutPosition]
+            if (item.isExpanded){
+
+                */
+        /*binding.constExpandable.setOnTouchListener { view, motionEvent ->
+
+                    when(motionEvent.action){
+                        MotionEvent.ACTION_UP ->{
+                            binding.cryptoDivider.visibility = View.GONE
+                            binding.expandableLayout.visibility = View.GONE
+                            notifyItemChanged(myViewHolder.layoutPosition)
+                        }
+                    }
+
+                    false
+                }*//*
+                *//*binding.cryptoDivider.visibility = View.GONE
+                binding.expandableLayout.visibility = View.GONE*//*
+            }
+            else{
+                binding.constExpandable.setOnLongClickListener {
+                    item.isExpanded = true
+                    binding.cryptoDivider.visibility = View.VISIBLE
+                    binding.expandableLayout.visibility = View.VISIBLE
+                    notifyItemChanged(myViewHolder.layoutPosition)
+                    true
+                }
+                */
+        /*binding.cryptoDivider.visibility = View.VISIBLE
+                binding.expandableLayout.visibility = View.VISIBLE*//*
+            }
+            binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+        }*/
+
+        /*binding.ClickContainer.setOnClickListener {
             onChangeDir(isDetail,myViewHolder.layoutPosition)
             com.code_chabok.coinranking.common.isDetail = true
-        }
+        }*/
 
-        binding.cryptoBookmarkIv.setOnClickListener {
+        /*binding.cryptoBookmarkIv.setOnClickListener {
             val item = currentList[myViewHolder.layoutPosition]
             onUpdateClickListener(item.uuid, !item.isBookmarked, myViewHolder.layoutPosition)
             if (it.tag == R.drawable.ic_bookmarks_fill) {
@@ -213,11 +313,14 @@ class BaseCoinAdapter constructor(
                 binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
             }
 
-        }
+        }*/
         return myViewHolder
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        Log.d("ExpandableTAG", getItem(position).isExpanded.toString())
+        holder.item = getItem(position)
+        holder.itemPosition = position
         holder.bind(getItem(position))
     }
 

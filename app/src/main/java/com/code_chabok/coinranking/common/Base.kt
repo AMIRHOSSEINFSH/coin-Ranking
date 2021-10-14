@@ -76,7 +76,11 @@ interface CoinView {
         }
     }
 
-    fun <T> checkResponseForView(resource: Resource<T>, onSuccess: () -> Unit) {
+    fun <T> checkResponseForView(
+        resource: Resource<T>,
+        onSuccess: () -> Unit,
+        onError: () -> Unit?
+    ) {
         when (resource) {
             is Resource.Success -> {
                 setShimmerIndicator(false)
@@ -85,6 +89,9 @@ interface CoinView {
             is Resource.Error -> {
                 showSnackBar(resource.message!!)
                 setShimmerIndicator(false)
+                if (resource.message != "refreshing is Lock!!"){
+                    onError()
+                }
             }
             is Resource.Loading -> {
                 setShimmerIndicator(true)
@@ -111,7 +118,7 @@ abstract class CoinViewModel : ViewModel() {
 
     protected val refreshing = MutableLiveData(true)
 
-     val errorLiveData = MutableLiveData<String>()
+    val errorLiveData = MutableLiveData<String>()
 
     fun refresh(isLock: Boolean) {
         refreshing.value = isLock
@@ -159,6 +166,7 @@ class FragmentAdapterExchange(fragment: CoinFragment) : BaseFragmentAdapter(frag
 }
 
 var isDetail = false
+
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 
 import com.code_chabok.coinranking.databinding.FragmentHomeBinding
 import com.code_chabok.coinranking.domain.getCoinDetail
+import com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +43,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     private val bining: FragmentHomeBinding? get() = _binding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: BaseCoinAdapter
+    private lateinit var swipeRefreshLayout: LottieSwipeRefreshLayout
     private val dialog = MySortDialog()
 
     private val timeList = arrayListOf("3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y")
@@ -66,9 +69,20 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setShimmerIndicator(true, HomeShimmer = true)
+
         dialog.isCancelable = true
         viewModel.refresh(true)
+        viewModel.refresh(true)
+        swipeRefreshLayout = _binding!!.swipeRefresh
         setUpSpinners()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            bining?.constParent?.visibility = View.GONE
+            viewModel.refresh(true)
+            setShimmerIndicator(true)
+            swipeRefreshLayout.isRefreshing = false
+        }
+
         viewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
             showSnackBar(errorMessage)
             setShimmerIndicator(false)
@@ -108,29 +122,36 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             }
 
         viewModel.sortListLiveData.observe(viewLifecycleOwner) {
-            checkResponseForView(it) {
+            checkResponseForView(it,onSuccess =  {
                 setShimmerIndicator(false)
                 bining?.constParent?.visibility = View.VISIBLE
                 val coinListModel: List<CoinListModel> = it.data!!
-                adapter.submitList(coinListModel){
+                adapter.submitList(coinListModel) {
                     bining?.rvHome?.smoothScrollToPosition(0)
                 }
-            }
+            },onError = {
+                bining?.constParent?.isVisible = true
+                adapter.submitList(it.data.orEmpty())
+            })
         }
 
 
         //viewModel.refresh()
         viewModel.listCoins.observe(viewLifecycleOwner, {
-            checkResponseForView(it) {
+            checkResponseForView(it,onSuccess =  {
                 viewModel.refresh(false)
+                setShimmerIndicator(false)
                 Log.i("TAG", "refreshing: ")
                 // adapter.submitList(null)
-                val coinListModel: List<CoinListModel> = it.data!!
+                val coinListModel: List<CoinListModel> = it.data.orEmpty()
                 //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
                 bining?.constParent?.visibility = View.VISIBLE
                 adapter.submitList(coinListModel)
 
-            }
+            },onError = {
+                bining?.constParent?.isVisible = true
+                adapter.submitList(it.data.orEmpty())
+            })
         })
 
 
@@ -147,7 +168,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
             _binding?.apply {
                 if (priceFrame.tag == "R.drawable.bg_spinner_framelayout_unselected") {
-                    dialog.show(childFragmentManager,null)
+                    dialog.show(childFragmentManager, null)
 
 
                     priceFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
@@ -172,7 +193,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                     marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
                     marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
                     MarketCapSort.setTextColor(resources.getColor(R.color.white))
-                    dialog.show(childFragmentManager,null)
+                    dialog.show(childFragmentManager, null)
                 } else {
                     viewModel.refresh(true)
                     marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
@@ -267,10 +288,15 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     override fun onResult(isDesc: Boolean) {
         setShimmerIndicator(true)
         _binding?.constParent?.visibility = View.GONE
-        when(isSet){
-             isSortOn.PRICE->{viewModel.onChangeSort(HomeViewModel.SortType.Price("price",isDesc))}
-            isSortOn.TIME ->{}
-            isSortOn.MARKETCAP->{viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap",isDesc))}
+        when (isSet) {
+            isSortOn.PRICE -> {
+                viewModel.onChangeSort(HomeViewModel.SortType.Price("price", isDesc))
+            }
+            isSortOn.TIME -> {
+            }
+            isSortOn.MARKETCAP -> {
+                viewModel.onChangeSort(HomeViewModel.SortType.MarketCap("marketCap", isDesc))
+            }
         }
     }
 

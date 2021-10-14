@@ -49,7 +49,9 @@ class CoinListRepository @Inject constructor(
                 coinDao.insetCoins(serverCoinList)
                 when (type) {
                     is HomeViewModel.SortType.Time -> {
-                        sortedLocalList = coinDao.getPriceOrdered(true)
+                        coinDao.insetCoins(serverCoinList)
+                        sortedLocalList = serverCoinList
+                        //sortedLocalList = coinDao.getPriceOrdered(true)
                     }
                     is HomeViewModel.SortType.Price -> {
                         sortedLocalList = coinDao.getPriceOrdered(type.orderArrow!!)

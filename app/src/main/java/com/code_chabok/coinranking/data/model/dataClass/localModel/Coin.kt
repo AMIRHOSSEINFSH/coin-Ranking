@@ -12,7 +12,7 @@ data class Coin(
     val hVolume: String,
     @PrimaryKey val uuid: String,
     val btcPrice: String,
-    val change: String,
+    val change: String? =null,
     val coinrankingUrl: String,
     val color: String? ,
     val iconUrl: String,
