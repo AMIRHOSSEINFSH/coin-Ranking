@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
-    private val onUpdateClickListener: (String, Boolean, Int) -> Unit,
+    private val onUpdateClickListener: ((String, Boolean, Int) -> Unit)?= null,
     private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
     private val onChangeDir: (Boolean,Int) -> Unit
 
@@ -78,7 +79,7 @@ class BaseCoinAdapter constructor(
 
             binding.cryptoBookmarkIv.setOnClickListener {
                 item?.let { item ->
-                    onUpdateClickListener(item.uuid, !item.isBookmarked, adapterPosition)
+                    onUpdateClickListener?.invoke(item.uuid, !item.isBookmarked, adapterPosition)
                     if (it.tag == R.drawable.ic_bookmarks_fill) {
                         item.isBookmarked = false
                         binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
@@ -105,6 +106,7 @@ class BaseCoinAdapter constructor(
             }
 
             binding.ClickContainer.setOnClickListener {
+                val extras = FragmentNavigatorExtras(binding.cryptoIv to "iconTransition")
                 onChangeDir(isDetail,itemPosition)
                 com.code_chabok.coinranking.common.isDetail = true
             }
@@ -134,64 +136,7 @@ class BaseCoinAdapter constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemCryptoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         val myViewHolder = MyViewHolder(binding)
-        //if (myViewHolder.layoutPosition!=-1)
-        //binding.expandableLayout.isVisible = currentList[myViewHolder.layoutPosition].isExpanded
-        /*if (myViewHolder.layoutPosition!=-1){
-            //var item = currentList[myViewHolder.layoutPosition]
-            if (item.isExpanded){
-
-                */
-        /*binding.constExpandable.setOnTouchListener { view, motionEvent ->
-
-                    when(motionEvent.action){
-                        MotionEvent.ACTION_UP ->{
-                            binding.cryptoDivider.visibility = View.GONE
-                            binding.expandableLayout.visibility = View.GONE
-                            notifyItemChanged(myViewHolder.layoutPosition)
-                        }
-                    }
-
-                    false
-                }*//*
-                *//*binding.cryptoDivider.visibility = View.GONE
-                binding.expandableLayout.visibility = View.GONE*//*
-            }
-            else{
-                binding.constExpandable.setOnLongClickListener {
-                    item.isExpanded = true
-                    binding.cryptoDivider.visibility = View.VISIBLE
-                    binding.expandableLayout.visibility = View.VISIBLE
-                    notifyItemChanged(myViewHolder.layoutPosition)
-                    true
-                }
-                */
-        /*binding.cryptoDivider.visibility = View.VISIBLE
-                binding.expandableLayout.visibility = View.VISIBLE*//*
-            }
-            binding.expandableLayout.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
-        }*/
-
-        /*binding.ClickContainer.setOnClickListener {
-            onChangeDir(isDetail,myViewHolder.layoutPosition)
-            com.code_chabok.coinranking.common.isDetail = true
-        }*/
-
-        /*binding.cryptoBookmarkIv.setOnClickListener {
-            val item = currentList[myViewHolder.layoutPosition]
-            onUpdateClickListener(item.uuid, !item.isBookmarked, myViewHolder.layoutPosition)
-            if (it.tag == R.drawable.ic_bookmarks_fill) {
-                item.isBookmarked = false
-                binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
-                binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
-            } else if (it.tag == R.drawable.ic_bookmarks_empty) {
-                item.isBookmarked = true
-                binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
-                binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
-            }
-
-        }*/
         return myViewHolder
     }
 

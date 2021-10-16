@@ -14,6 +14,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,24 +73,26 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
         dialog.isCancelable = true
         viewModel.refresh(true)
-        viewModel.refresh(true)
         swipeRefreshLayout = _binding!!.swipeRefresh
         setUpSpinners()
 
         swipeRefreshLayout.setOnRefreshListener {
-            bining?.constParent?.visibility = View.GONE
+            onChangeViewsByShimmer(false)
             viewModel.refresh(true)
-            setShimmerIndicator(true)
             swipeRefreshLayout.isRefreshing = false
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
             showSnackBar(errorMessage)
-            setShimmerIndicator(false)
-            bining?.constParent?.visibility = View.VISIBLE
+            onChangeViewsByShimmer(true)
         }
-        if (!isDetail) {
-            //viewModel.backStackDetecter.value = this
+        bining?.apply {
+            priceFrame.visibility = View.GONE
+            priceFrame.isVisible = !isDetail
+            timeFrame.isVisible = !isDetail
+            marketCapFrame.isVisible = !isDetail
+        }
+        if (isDetail) {
         }
         adapter =
             BaseCoinAdapter(
@@ -99,11 +102,9 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 onItemLongClickListener = { coinListModel ->
                     viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
-                }
-                ,
+                },
                 onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
-                        //putParcelable("item", item)
                         putString("uuid", adapter.currentList[position].uuid)
                     }
                     if (!isDetail)
@@ -128,15 +129,16 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
         viewModel.sortListLiveData.observe(viewLifecycleOwner) {
             checkResponseForView(it,onSuccess =  {
-                setShimmerIndicator(false)
-                bining?.constParent?.visibility = View.VISIBLE
+                onChangeViewsByShimmer(true)
                 val coinListModel: List<CoinListModel> = it.data!!
                 adapter.submitList(coinListModel) {
                     bining?.rvHome?.smoothScrollToPosition(0)
                 }
             },onError = {
-                bining?.constParent?.isVisible = true
-                adapter.submitList(it.data.orEmpty())
+                onChangeViewsByShimmer(true)
+                adapter.submitList(it.data.orEmpty()){
+                    bining?.rvHome?.smoothScrollToPosition(0)
+                }
             })
         }
 
@@ -145,17 +147,19 @@ class HomeFragment : CoinFragment(), OnChangeSort {
         viewModel.listCoins.observe(viewLifecycleOwner, {
             checkResponseForView(it,onSuccess =  {
                 viewModel.refresh(false)
-                setShimmerIndicator(false)
                 Log.i("TAG", "refreshing: ")
-                // adapter.submitList(null)
                 val coinListModel: List<CoinListModel> = it.data.orEmpty()
-                //Log.i("OnRecieved", "onViewCreated: +${coinListModel[1].name}")
-                bining?.constParent?.visibility = View.VISIBLE
-                adapter.submitList(coinListModel)
+                onChangeViewsByShimmer(true)
+                adapter.submitList(coinListModel){
+                    bining?.rvHome?.smoothScrollToPosition(0)
+                }
 
             },onError = {
+                onChangeViewsByShimmer(true)
                 bining?.constParent?.isVisible = true
-                adapter.submitList(it.data.orEmpty())
+                adapter.submitList(it.data.orEmpty()){
+                    bining?.rvHome?.smoothScrollToPosition(0)
+                }
             })
         })
 
@@ -210,6 +214,11 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             }
         }
 
+        setUpNavigationSelection()
+    }
+
+    private fun setUpNavigationSelection() {
+
     }
 
     fun setUpSpinners() {
@@ -223,10 +232,6 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             object : AdapterView.OnItemSelectedListener {
                 var isUp = false
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    /*((p0?.getChildAt(0)) as TextView).apply {
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.spinnerBlack))
-                        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12F)
-                    }*/
                     if (!isUp) {
                         if (!isFirstTime) {
                             isSet = isSortOn.TIME
@@ -235,7 +240,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                                 priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                                 marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                             }
-                            bining?.constParent?.visibility = View.GONE
+                            onChangeViewsByShimmer(false)
                             viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         } else {
                             _binding?.apply {
@@ -285,14 +290,8 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        bining?.constParent?.visibility = View.VISIBLE
-    }
-
     override fun onResult(isDesc: Boolean) {
-        setShimmerIndicator(true)
-        _binding?.constParent?.visibility = View.GONE
+        onChangeViewsByShimmer(false)
         when (isSet) {
             isSortOn.PRICE -> {
                 viewModel.onChangeSort(HomeViewModel.SortType.Price("price", isDesc))
@@ -306,12 +305,23 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     }
 
     override fun onCancel() {
-        setShimmerIndicator(false)
         _binding?.apply {
             timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
             priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
             marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
         }
     }
+
+    private fun onChangeViewsByShimmer(mustShow: Boolean){
+        bining?.apply {
+            setShimmerIndicator(!mustShow,true)
+            constParent.isVisible = mustShow
+            priceFrame.isVisible = mustShow
+            timeFrame.isVisible = mustShow
+            marketCapFrame.isVisible = mustShow
+        }
+
+    }
+
 
 }

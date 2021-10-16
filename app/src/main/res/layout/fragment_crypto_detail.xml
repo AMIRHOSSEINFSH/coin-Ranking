@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.code_chabok.coinranking.data.model.Crypto" />
+            type="com.code_chabok.coinranking.data.model.dataClass.CoinDetail" />
 
     </data>
 
@@ -18,6 +18,7 @@
         tools:context=".feature.cryptoDetail.CryptoDetailFragment">
 
         <LinearLayout
+            android:id="@+id/parent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -44,7 +45,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="14dp"
                         android:src="@drawable/ic_bitcoin"
-                        app:loadImg="@{model.img_url}" />
+                         />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -63,7 +64,7 @@
                             android:id="@+id/cryptoAbbrTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.prev,default = BTC}"
+                            android:text="@{model.symbol,default = BTC}"
                             android:textAllCaps="true"
                             android:textAppearance="?textAppearanceCaption"
                             android:textSize="12sp" />
@@ -81,30 +82,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/cryptoPriceTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="12311$"
-                            android:textAppearance="?textAppearanceSubtitle1"
-                            android:textColor="@color/grey_700" />
-
-                        <TextView
-                            android:id="@+id/cryptoPriceChangeTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            tools:text="text"
-                            android:textAppearance="?textAppearanceSubtitle1"
-                            app:rateImpl="@{model.changedRate}"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/cryptoBookmarkIv"
@@ -126,83 +104,101 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <FrameLayout
-                        android:padding="8dp"
-                        android:orientation="horizontal"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/timeFrame"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_framelayout_unselected"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <Spinner
-                            android:dropDownVerticalOffset="40dp"
-                            android:spinnerMode="dropdown"
-                            android:id="@+id/marketCapSpinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:gravity="center" />
-
-                        <ImageView
-                            app:tint="@color/white"
-                            android:id="@+id/iv_marketCap"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="end|center_vertical"
-                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
-
-                    </FrameLayout>
-                    <FrameLayout
-                        android:padding="8dp"
-                        android:orientation="horizontal"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <Spinner
-                            android:dropDownVerticalOffset="40dp"
-                            android:spinnerMode="dropdown"
                             android:id="@+id/timeSpinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="73dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
                             android:background="@null"
-                            android:gravity="center" />
+                            android:dropDownVerticalOffset="40dp"
+                            android:spinnerMode="dropdown" />
 
                         <ImageView
-                            app:tint="@color/white"
-                            android:id="@+id/iv_timeSpinner"
+                            android:id="@+id/iv_time_arrow"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="12dp"
                             app:srcCompat="@drawable/ic_arrow_up_spinner" />
 
                     </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/marketCapFrame"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_spinner_framelayout_unselected"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <Spinner
+                            android:id="@+id/marketCapSpinner"
+                            android:layout_width="73dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:dropDownVerticalOffset="40dp"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:id="@+id/iv_marketcap_arrow"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="12dp"
+                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
+
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:layout_marginTop="17dp"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:text="fivjdksffnd"
+                        android:id="@+id/cryptoPriceTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="323%"
+                        android:textAppearance="?textAppearanceSubtitle1"
+                        android:textColor="@color/grey_700"
+                        app:formatPrice="@{model.price}" />
+
 
                     <TextView
-                        android:text="dikd"
+                        android:id="@+id/cryptoPriceChangeTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?textAppearanceSubtitle1"
+                        android:textColor="#2BCF31"
+                        android:textSize="10sp"
+                        app:rateImpl="@{model.change}" />
+
                 </LinearLayout>
 
             </RelativeLayout>

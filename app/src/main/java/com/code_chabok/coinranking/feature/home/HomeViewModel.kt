@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.feature.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.code_chabok.coinranking.common.CoinView
 import com.code_chabok.coinranking.common.CoinViewModel
@@ -25,10 +26,10 @@ class HomeViewModel @Inject constructor(
     private val getSortedList: getSortedList
 ) : CoinViewModel() {
 
-    sealed class SortType(val body: String,val orderArrow: Boolean?=null) {
+    sealed class SortType(val body: String, val orderArrow: Boolean? = null) {
         class Time(endingRequestBody: String) : SortType(endingRequestBody)
-        class Price(Order: String,orderArrow: Boolean) : SortType(Order,orderArrow)
-        class MarketCap(Order: String,orderArrow: Boolean) : SortType(Order,orderArrow)
+        class Price(Order: String, orderArrow: Boolean) : SortType(Order, orderArrow)
+        class MarketCap(Order: String, orderArrow: Boolean) : SortType(Order, orderArrow)
     }
 
     private val _sortListLiveData = MutableLiveData<Resource<List<CoinListModel>>>()
@@ -65,18 +66,22 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val res = getCoin(uuid).data
             withContext(Dispatchers.Main) {
-                if (res!=null)
-                _coinDetailObserver.value = res!!
+                res?.also {
+                    _coinDetailObserver.value = it
+                }
             }
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("TAG", "onCleared: ")
+    }
 
-    var listCoins = refreshing.switchMap { isLock->
-        if (isLock){
+    var listCoins = refreshing.switchMap { isLock ->
+        if (isLock) {
             getListOfCoins()
-        }
-        else{
+        } else {
             liveData<Resource<List<CoinListModel>>> { emit(Resource.Error<List<CoinListModel>>("refreshing is Lock!!")) }
             //getListOfCoins()
         }

@@ -4,33 +4,54 @@ import android.util.Log
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
 import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.searchModel.SearchResult
 import com.code_chabok.coinranking.services.http.ApiService
 import javax.inject.Inject
 
-class SearchRepository @Inject constructor(private val apiService: ApiService,private val coinDao: CoinDao) {
+class SearchRepository @Inject constructor(
+    private val apiService: ApiService,
+    private val coinDao: CoinDao,
+    private val exchangeDao: ExchangeDao
+) {
 
+    private fun getBookmarks(): List<String> {
+        return coinDao.getBookmarksUuid()
+    }
 
-    suspend fun search(query: String): List<CoinListModel>{
+    suspend fun search(query: String): SearchResult {
         val response = asApiResponse { apiService.getSearchResult(query) }
-        return when(response){
-            is ApiSuccessResponse ->{
-                val result = response.body.data.coins
-                val prevList = coinDao.getBookmarksUuid()
+        return when (response) {
+            is ApiSuccessResponse -> {
+                val coinresult = response.body.data.coins
+                val exchangeResult = response.body.data.exchanges
+                val coinDb: List<Coin> = coinresult.map {
+                    it.convertToCoin()
+                }
+                val exchangeDb: List<Exchange> = exchangeResult.map {
+                    it.exchangeConvert()
+                }
+                coinDao.insetCoins(coinDb)
+                exchangeDao.insertExchange(exchangeDb)
+
+                val prevList = getBookmarks()
                 val resultList = ArrayList<CoinListModel>()
-                result.forEach { coinListModel ->
-                    if (prevList.contains(coinListModel.uuid)){
+                coinresult.forEach { coinListModel ->
+                    if (prevList.contains(coinListModel.uuid)) {
                         coinListModel.isBookmarked = true
                     }
                     resultList.add(coinListModel)
                 }
-                resultList
+                SearchResult(coinresult, exchangeResult)
             }
-            is ApiEmptyResponse ->{
-                emptyList<CoinListModel>()
+            is ApiEmptyResponse -> {
+                SearchResult(null, null)
             }
-            is ApiErrorResponse ->{
-                emptyList<CoinListModel>()
+            is ApiErrorResponse -> {
+                SearchResult(null, null)
             }
         }
     }

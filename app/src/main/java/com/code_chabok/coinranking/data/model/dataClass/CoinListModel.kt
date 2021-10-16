@@ -9,21 +9,21 @@ import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
 @Parcelize
 data class CoinListModel(
     @SerializedName("24hVolume")
-    val hVolume: String,
-    val btcPrice: String,
-    val change: String? =null,
-    val coinrankingUrl: String,
-    val color: String?,
-    val iconUrl: String,
-    val listedAt: Int,
-    val lowVolume: Boolean,
-    val marketCap: Double,
-    val name: String,
-    val price: Double,
-    val rank: Int,
-    val symbol: String,
-    val tier: Int,
-    val uuid: String,
+    val hVolume: String = "",
+    val btcPrice: String= "",
+    val change: String? = "null",
+    val color: String? = "null",
+    val iconUrl: String= "",
+    val lowVolume: Boolean = false,
+    val marketCap: Double = 1.2,
+    val name: String= "",
+    @SerializedName("price")
+    val price: Double = 1.2,
+    val rank: Int = 1,
+    @SerializedName("symbol")
+    val symbol: String= "",
+    val tier: Int = 1,
+    val uuid: String= "",
     var isExpanded: Boolean = false,
     @Ignore
     var isBookmarked: Boolean =false
@@ -33,10 +33,8 @@ data class CoinListModel(
             hVolume = hVolume,
             btcPrice = btcPrice,
             change = change,
-            coinrankingUrl = coinrankingUrl,
             color = color,
             iconUrl = iconUrl,
-            listedAt = listedAt,
             lowVolume = lowVolume,
             marketCap = marketCap,
             name = name,

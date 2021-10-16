@@ -2,6 +2,7 @@ package com.code_chabok.coinranking.data.model.dataClass.localModel
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.google.gson.annotations.SerializedName
 
@@ -13,10 +14,8 @@ data class Coin(
     @PrimaryKey val uuid: String,
     val btcPrice: String,
     val change: String? =null,
-    val coinrankingUrl: String,
     val color: String? ,
     val iconUrl: String,
-    val listedAt: Int,
     val lowVolume: Boolean,
     val marketCap: Double,
     val name: String,
@@ -27,7 +26,7 @@ data class Coin(
     var isBookmarked: Boolean = false,
 
     //val allTimeHigh: AllTimeHigh? = null,
-    val description: String?= null,
+    var description: String?= null,
     val numberOfExchanges: Int? = null,
     val numberOfMarkets: Int? = null,
     //val supply: Supply? = null,
@@ -38,10 +37,8 @@ data class Coin(
             hVolume,
             btcPrice,
             change,
-            coinrankingUrl,
             color,
             iconUrl,
-            listedAt,
             lowVolume,
             marketCap,
             name,
@@ -51,6 +48,28 @@ data class Coin(
             tier,
             uuid,
             isBookmarked = isBookmarked
+        )
+    }
+
+    fun convertToCoinDetail(): CoinDetail{
+        return CoinDetail(
+            btcPrice,
+            change,
+            color,
+            description,
+            hVolume,
+            iconUrl,
+            lowVolume,
+            marketCap,
+            name,
+            numberOfExchanges,
+            numberOfMarkets,
+            price,
+            rank,
+            symbol,
+            tier,
+            uuid,
+            isBookmarked
         )
     }
 }

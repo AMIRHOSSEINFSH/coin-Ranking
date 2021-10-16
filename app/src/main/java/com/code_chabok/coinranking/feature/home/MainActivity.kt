@@ -38,6 +38,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationSet
 
 import android.view.animation.RotateAnimation
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
@@ -82,7 +83,7 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         setUpToolBar()
         setupNavigationUiState()
         setupDrawerLayout()
-
+        setupNavigationSelection()
 
         BubbleShowCaseBuilder(this)
             .title("You can Switch Between Tabs for more Detail")
@@ -93,6 +94,10 @@ class MainActivity : CoinActivity(), OnChangingFragmentListener {
         // Setup the bottom navigation view with navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavigationView.setupWithNavController(navController)
+
+    }
+
+    private fun setupNavigationSelection() {
 
     }
 

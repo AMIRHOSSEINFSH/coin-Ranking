@@ -41,6 +41,9 @@
         <action
             android:id="@+id/all_to_search"
             app:destination="@id/searchFragment" />
+        <argument
+            android:name="uuid"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/cryptoDetailChildFragment"

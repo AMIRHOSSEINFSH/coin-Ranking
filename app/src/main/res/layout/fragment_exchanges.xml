@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".feature.exchanges.ExchangesFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec"
+        <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
+            app:lottie_rawRes="@raw/crypto_refresh"
+            android:id="@+id/swipe_Refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/rv_exchange"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:visibility="gone" />
+
+        </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

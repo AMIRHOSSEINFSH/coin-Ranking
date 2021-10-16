@@ -52,7 +52,7 @@ interface CoinView {
     var rootView: CoordinatorLayout?
     val viewContext: Context?
 
-    fun setShimmerIndicator(mustShow: Boolean, HomeShimmer: Boolean = false) {
+    fun setShimmerIndicator(mustShow: Boolean, HomeShimmer: Boolean = false,DetailPage: Boolean = false) {
         rootView?.let {
             viewContext?.let { context ->
 
@@ -61,8 +61,11 @@ interface CoinView {
                     loadingView =
                         LayoutInflater.from(context)
                             .inflate(
-                                if (HomeShimmer) R.layout.shimmer_coin_page_place_holder
-                                else R.layout.shimmer_placeholder_layout,
+                                when {
+                                    HomeShimmer -> R.layout.shimmer_coin_page_place_holder
+                                    DetailPage -> R.layout.shimmer_detail_page
+                                    else -> R.layout.shimmer_placeholder_layout
+                                },
                                 it,
                                 false
                             )
@@ -79,22 +82,23 @@ interface CoinView {
     fun <T> checkResponseForView(
         resource: Resource<T>,
         onSuccess: () -> Unit,
-        onError: () -> Unit?
+        onError: () -> Unit
     ) {
         when (resource) {
             is Resource.Success -> {
-                setShimmerIndicator(false)
+                //setShimmerIndicator(false)
                 onSuccess()
             }
             is Resource.Error -> {
+
                 showSnackBar(resource.message!!)
-                setShimmerIndicator(false)
+                //setShimmerIndicator(false)
                 if (resource.message != "refreshing is Lock!!"){
                     onError()
                 }
             }
             is Resource.Loading -> {
-                setShimmerIndicator(true)
+                //setShimmerIndicator(true)
             }
         }
     }

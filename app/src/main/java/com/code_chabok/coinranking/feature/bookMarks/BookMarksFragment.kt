@@ -74,7 +74,7 @@ class BookMarksFragment : CoinFragment() {
             setIsDetail(isDetail)
             showBubble = savedInstanceState == null
         }
-        binding.rec.layoutManager =
+        binding.rvBookmark.layoutManager =
             object : LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
                     return true
@@ -85,22 +85,21 @@ class BookMarksFragment : CoinFragment() {
             setShimmerIndicator(false)
             if (list.isNotEmpty()) {
                 adapter.submitList(list)
-                binding.rec.visibility = View.VISIBLE
+                binding.rvBookmark.visibility = View.VISIBLE
             }
             else{
                 binding.lottieAnimation.visibility = View.VISIBLE
-                binding.rec.visibility = View.GONE
+                binding.rvBookmark.visibility = View.GONE
             }
         }
 
-
-        binding.rec.addItemDecoration(
+        binding.rvBookmark.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                (binding.rec.layoutManager as LinearLayoutManager).orientation
+                (binding.rvBookmark.layoutManager as LinearLayoutManager).orientation
             )
         )
-        binding.rec.adapter = adapter
+        binding.rvBookmark.adapter = adapter
 
 
     }

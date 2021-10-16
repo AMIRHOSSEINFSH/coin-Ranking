@@ -9,34 +9,27 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Exchange(
     @SerializedName("24hVolume")
-    val hVolume: String,
-    val coinrankingUrl: String,
-    val iconUrl: String,
+    val hVolume: Double,
     val marketShare: String,
+    val iconUrl: String,
     val name: String,
-    val numberOfCoins: Int,
-    val numberOfMarkets: Int,
     val rank: Int,
-    val recommended: Boolean,
+    val numberOfMarkets: String,
+    val numberOfCoins: String,
     @PrimaryKey val uuid: String,
-    val verified: Boolean,
-    val description: String= "",
-    val lastTickerCreatedAt: Long = 1L,
+    val description: String?= null,
     var isExpanded: Boolean = false,
     ) {
     fun convertExchangeListModel(): ExchangeListModel {
         return ExchangeListModel(
-            hVolume,
-            coinrankingUrl,
-            iconUrl,
-            marketShare,
-            name,
-            numberOfCoins,
-            numberOfMarkets,
-            rank,
-            recommended,
-            uuid,
-            verified
+            hVolume =hVolume,
+            iconUrl =iconUrl,
+            name = name,
+            uuid = uuid,
+            rank = rank,
+            numberOfMarkets = numberOfMarkets,
+            numberOfCoins = numberOfCoins,
+            marketShare = marketShare
         )
     }
 }

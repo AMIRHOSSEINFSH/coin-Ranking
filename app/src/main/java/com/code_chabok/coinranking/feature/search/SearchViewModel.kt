@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.code_chabok.coinranking.common.CoinViewModel
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.searchModel.SearchResult
 import com.code_chabok.coinranking.domain.Search
 import com.code_chabok.coinranking.domain.getCoinDetail
 import com.code_chabok.coinranking.domain.updateBookmark
@@ -28,14 +29,15 @@ class SearchViewModel @Inject constructor(
 
     private var searchJob: Job = Job()
 
-    private val _resultSearchResource = MutableLiveData<List<CoinListModel>>()
-    val resultSearchResource: LiveData<List<CoinListModel>> get() = _resultSearchResource
+    private val _resultSearchResource = MutableLiveData<SearchResult>()
+    val resultSearchResource: LiveData<SearchResult> get() = _resultSearchResource
 
     fun search(query: String) {
         searchJob.cancel()
         searchJob = viewModelScope.launch(Dispatchers.IO) {
-            delay(500)
+            delay(3000)
             val resource = searchDomain(query)
+            if (resource.coins!=null)
             _resultSearchResource.postValue(resource)
         }
     }

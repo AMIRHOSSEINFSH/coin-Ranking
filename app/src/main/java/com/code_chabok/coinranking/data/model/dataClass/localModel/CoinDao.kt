@@ -2,6 +2,7 @@ package com.code_chabok.coinranking.data.model.dataClass.localModel
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 
 @Dao
 interface CoinDao {
@@ -10,8 +11,11 @@ interface CoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insetCoins(coinList: List<Coin>)
 
-    @Query("DELETE FROM coin")
-    suspend fun deleteAll()
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertSearchCoins(coinList: List<Coin>)
+
+    /*@Query("DELETE FROM coin")
+    suspend fun deleteAll()*/
 
     @Query("SELECT * FROM coin")
     fun getCoins(): LiveData<List<Coin>>
@@ -33,9 +37,12 @@ interface CoinDao {
 
     @Query("SELECT uuid FROM coin WHERE isBookmarked =1 ")
     fun getBookmarksUuid(): List<String>
-    /*@Query("SELECT * FROM coin WHERE id = :sendingId")
-    suspend fun getCoin(sendingId: Int): LiveData<Coin>*/
 
+    @Query("SELECT * FROM coin WHERE uuid =:uuid")
+    fun getDetailedCoin(uuid: String): LiveData<Coin>
+
+    @Update
+    fun updateCoin(coin: Coin)
 
 
 }

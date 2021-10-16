@@ -12,7 +12,7 @@ class ExchangesViewModel @Inject constructor(
 ) : CoinViewModel() {
 
 
- val exchangeResource = refreshing.switchMap {
+ val exchangeList = refreshing.switchMap {
      GetExchangeListUseCase()
  }
 

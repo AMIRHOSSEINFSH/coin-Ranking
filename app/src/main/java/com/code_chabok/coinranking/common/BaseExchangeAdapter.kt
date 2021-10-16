@@ -6,10 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.databinding.ItemExchangeBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
@@ -17,9 +19,10 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
 
 class BaseExchangeAdapter constructor(
-    private val onItemClickListener: (ExchangeListModel) -> Unit,
-
-    ) : ListAdapter<ExchangeListModel, BaseExchangeAdapter.MyViewHolder>(
+    private val onItemLongClickListener: (ExchangeListModel) -> Unit,
+    private val onChangeDir: (Boolean, Int) -> Unit,
+    private val onActivityProvider: () -> Activity
+) : ListAdapter<ExchangeListModel, BaseExchangeAdapter.MyViewHolder>(
     object : DiffUtil.ItemCallback<ExchangeListModel>() {
 
         override fun areItemsTheSame(
@@ -37,11 +40,6 @@ class BaseExchangeAdapter constructor(
         }
     }
 ) {
-    private lateinit var activity: Activity
-
-    fun setActivity(activity: Activity) {
-        this.activity = activity
-    }
 
     fun showBubble() {
         BubbleShowCaseSequence()
@@ -57,64 +55,36 @@ class BaseExchangeAdapter constructor(
 
     inner class MyViewHolder(val binding: ItemExchangeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ExchangeListModel) {
-            binding.constExpandable.implementSpringAnimationTrait()
+        var item: ExchangeListModel? = null
+        var itemPosition: Int = -1
 
-            binding.tvName.text = item.name
-            binding.tvPrice.text = item.marketShare
-            binding.tvNumber.text = item.numberOfMarkets.toString()
-            binding.ivPic.load(item.iconUrl)
-
-            if (adapterPosition == 1 && tof) {
-                item.isExpanded = true
-                binding.exchangeDivider.visibility = View.GONE
-                binding.expandableLayout.visibility = View.VISIBLE
-                tof = false
+        init {
+            //binding.constExpandable.implementSpringAnimationTrait()
 
 
-                first = BubbleShowCaseBuilder(activity)
-                    .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.constExpandable).showOnce("BUBBLE_SHOW_CASE_ID_0")
+            binding.constExpandable.setOnLongClickListener {
 
-                second = BubbleShowCaseBuilder(activity)
-                    .title("You can watch more Details here!\n by Long Click")
-                    .targetView(binding.expandableLayout).showOnce("BUBBLE_SHOW_CASE_ID_1")
-
-                if (showBubble) {
-                    showBubble()
-                }
-
-            }
-
-            val isExpanded = item.isExpanded
-            if (isExpanded) {
-
-                binding.constExpandable.setOnLongClickListener {
-                    item.isExpanded = false
-                    binding.exchangeDivider.visibility = View.GONE
-                    binding.expandableLayout.visibility = View.GONE
-                    notifyItemChanged(adapterPosition)
+                item?.let { item ->
+                    Log.d("Logging ...", ": item-> ${item} itemPosition -> ${itemPosition}")
+                    //binding.cryptoNameTv.text = "Bit"
+                    this.item?.isExpanded = !item.isExpanded
+                    binding.expandableLayout.isVisible = item.isExpanded
+                    notifyItemChanged(itemPosition)
                     true
-                }
-            } else {
-
-                binding.constExpandable.setOnLongClickListener {
-                    if (scanList()) {
-                        item.isExpanded = true
-                        binding.exchangeDivider.visibility = View.VISIBLE
-                        binding.expandableLayout.visibility = View.VISIBLE
-                        Log.i("TAGAAB", "bind: ${item.uuid}")
-                        notifyItemChanged(adapterPosition)
-                    }
-
-                    true
-                }
+                } ?: false
             }
-            binding.expandableLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             binding.constExpandable.setOnClickListener {
-                onItemClickListener(item)
+                onChangeDir(isDetail, itemPosition)
             }
+
+        }
+
+        fun bind(item: ExchangeListModel) {
+            binding.constExpandable.implementSpringAnimationTrait()
+            binding.exchangeListModel = item
+            binding.expandableLayout.isVisible = item.isExpanded
+
         }
 
 
@@ -128,6 +98,8 @@ class BaseExchangeAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.item = getItem(position)
+        holder.itemPosition = position
         holder.bind(getItem(position))
     }
 
