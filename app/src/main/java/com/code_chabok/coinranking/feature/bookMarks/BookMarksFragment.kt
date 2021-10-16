@@ -29,7 +29,7 @@ class BookMarksFragment : CoinFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setHasOptionsMenu(true)
         binding = FragmentBookMarksBinding.inflate(inflater, container, false)
         rootView = binding.root as CoordinatorLayout
@@ -54,13 +54,12 @@ class BookMarksFragment : CoinFragment() {
                 adapter.notifyItemRemoved(position)
             },
                 onItemLongClickListener = { coinListModel ->
-                    viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    //viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
-                }
-                ,onChangeDir = {isDetail: Boolean, position: Int ->
+                }, onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
                         //putParcelable("item", item)
-                        putString("uuid", adapter.currentList[position].uuid)
+                        putString("uuid", adapter.currentList[position].coin.uuid)
                     }
                     if (!isDetail)
                         findNavController().navigate(R.id.home_book_same, bundle)
@@ -83,11 +82,16 @@ class BookMarksFragment : CoinFragment() {
 
         viewModel.listCoin.observe(viewLifecycleOwner) { list ->
             setShimmerIndicator(false)
-            if (list.isNotEmpty()) {
-                adapter.submitList(list)
-                binding.rvBookmark.visibility = View.VISIBLE
+            val mainList = list.filter {
+                it.bookmark != null
             }
-            else{
+            if (mainList.isNotEmpty()) {
+
+                adapter.submitList(list.filter {
+                    it.bookmark != null
+                })
+                binding.rvBookmark.visibility = View.VISIBLE
+            } else {
                 binding.lottieAnimation.visibility = View.VISIBLE
                 binding.rvBookmark.visibility = View.GONE
             }
@@ -116,9 +120,6 @@ class BookMarksFragment : CoinFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //Toast.makeText(requireContext(), "onDestroyView called", Toast.LENGTH_SHORT).show()
-        //rootView?.removeAllViews()
-        //setShimmerIndicator(false)
     }
 
 

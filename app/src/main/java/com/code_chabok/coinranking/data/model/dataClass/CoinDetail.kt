@@ -6,28 +6,26 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
 
-@Parcelize
 data class CoinDetail(
     //val allTimeHigh: AllTimeHigh,
-    val btcPrice: String,
+    val btcPrice: String?,
     val change: String?,
     val color: String?,
     var description: String?,
     @SerializedName("24hVolume")
-    val hVolume: String,
-    val iconUrl: String,
-    val lowVolume: Boolean,
-    val marketCap: Double,
-    val name: String,
+    val hVolume: String?,
+    val iconUrl: String?,
+    val lowVolume: Boolean?,
+    val marketCap: Double?,
+    val name: String?,
     val numberOfExchanges: Int?,
     val numberOfMarkets: Int?,
-    val price: Double,
-    val rank: Int,
-    val symbol: String,
-    val tier: Int,
+    val price: Double?,
+    val rank: Int?,
+    val symbol: String?,
+    val tier: Int?,
     val uuid: String,
-    var isBookmark: Boolean = false
-) : Parcelable {
+)  {
     fun convertToCoin(): Coin {
         return Coin(
             hVolume,
@@ -43,7 +41,6 @@ data class CoinDetail(
             rank,
             symbol,
             tier,
-            isBookmark,
             description,
             numberOfExchanges,
             numberOfMarkets

@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.code_chabok.coinranking.R
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
-import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Bookmark
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.databinding.ItemCryptoBinding
+import com.code_chabok.coinranking.domain.getListOfCoins
 import com.code_chabok.coinranking.feature.home.MainActivity
 import com.elconfidencial.bubbleshowcase.BubbleShowCase
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
@@ -30,18 +32,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
-    private val onUpdateClickListener: ((String, Boolean, Int) -> Unit)?= null,
-    private val onItemLongClickListener: suspend (CoinListModel) -> LiveData<CoinDetail>,
-    private val onChangeDir: (Boolean,Int) -> Unit
+    private val onUpdateClickListener: ((String, Boolean, Int) -> Unit)? = null,
+    private val onItemLongClickListener: suspend (CoinAndBookmark) -> LiveData<CoinDetail>,
+    private val onChangeDir: (Boolean, Int) -> Unit
 
-) : ListAdapter<CoinListModel, BaseCoinAdapter.MyViewHolder>(
-    object : DiffUtil.ItemCallback<CoinListModel>() {
+) : ListAdapter<CoinAndBookmark, BaseCoinAdapter.MyViewHolder>(
+    object : DiffUtil.ItemCallback<CoinAndBookmark>() {
 
-        override fun areItemsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
-            return oldItem.uuid == newItem.uuid
+        override fun areItemsTheSame(oldItem: CoinAndBookmark, newItem: CoinAndBookmark): Boolean {
+            return oldItem.coin.uuid == newItem.coin.uuid
         }
 
-        override fun areContentsTheSame(oldItem: CoinListModel, newItem: CoinListModel): Boolean {
+        override fun areContentsTheSame(
+            oldItem: CoinAndBookmark,
+            newItem: CoinAndBookmark
+        ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -71,24 +76,30 @@ class BaseCoinAdapter constructor(
 
     inner class MyViewHolder(val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var item: CoinListModel? = null
+        var item: CoinAndBookmark? = null
         var itemPosition: Int = -1
 
         init {
             binding.constExpandable.implementSpringAnimationTrait()
 
             binding.cryptoBookmarkIv.setOnClickListener {
-                item?.let { item ->
-                    onUpdateClickListener?.invoke(item.uuid, !item.isBookmarked, adapterPosition)
-                    if (it.tag == R.drawable.ic_bookmarks_fill) {
-                        item.isBookmarked = false
-                        binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
-                        binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
-                    } else if (it.tag == R.drawable.ic_bookmarks_empty) {
-                        item.isBookmarked = true
-                        binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
-                        binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
+                onUpdateClickListener?.invoke(
+                    item?.coin?.uuid!!,
+                    item?.bookmark == null,
+                    itemPosition
+                )
+                if (item?.bookmark == null) {
+                    item?.bookmark = Bookmark(item?.coin?.uuid!!)
+                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
+                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
+                } else {
+                    if (!isDetail){
+
+                        currentList.removeAt(adapterPosition)
                     }
+                    item?.bookmark = null
+                    binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
+                    binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
                 }
             }
 
@@ -98,8 +109,8 @@ class BaseCoinAdapter constructor(
                 item?.let { item ->
                     Log.d("Logging ...", ": item-> ${item} itemPosition -> ${itemPosition}")
                     //binding.cryptoNameTv.text = "Bit"
-                    this.item?.isExpanded = !item.isExpanded
-                    binding.expandableLayout.isVisible = item.isExpanded
+                    this.item?.coin?.isExpanded = !item.coin.isExpanded
+                    binding.expandableLayout.isVisible = item.coin.isExpanded
                     notifyItemChanged(itemPosition)
                     true
                 } ?: false
@@ -107,19 +118,19 @@ class BaseCoinAdapter constructor(
 
             binding.ClickContainer.setOnClickListener {
                 val extras = FragmentNavigatorExtras(binding.cryptoIv to "iconTransition")
-                onChangeDir(isDetail,itemPosition)
+                onChangeDir(isDetail, itemPosition)
                 com.code_chabok.coinranking.common.isDetail = true
             }
 
         }
 
-        fun bind(item: CoinListModel) {
+        fun bind(item: CoinAndBookmark) {
 //            this@BaseCoinAdapter.item = item
-            binding.coinListModel = item
-            binding.expandableLayout.isVisible = item.isExpanded
+            binding.coin = item.coin
+            binding.expandableLayout.isVisible = item.coin.isExpanded
 
             binding.cryptoBookmarkIv.also {
-                if (item.isBookmarked) {
+                if (item.bookmark != null) {
                     it.tag = R.drawable.ic_bookmarks_fill
                     it.setImageResource(R.drawable.ic_bookmarks_fill)
                 } else {
@@ -141,7 +152,7 @@ class BaseCoinAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        Log.d("ExpandableTAG", getItem(position).isExpanded.toString())
+        Log.d("ExpandableTAG", getItem(position).coin.isExpanded.toString())
         holder.item = getItem(position)
         holder.itemPosition = position
         holder.bind(getItem(position))
@@ -150,7 +161,7 @@ class BaseCoinAdapter constructor(
     fun scanList(): Boolean {
         var counter = 0
         currentList.forEach {
-            if (it.isExpanded) {
+            if (it.coin.isExpanded) {
                 counter++
                 if (counter > 1)
                     return@forEach

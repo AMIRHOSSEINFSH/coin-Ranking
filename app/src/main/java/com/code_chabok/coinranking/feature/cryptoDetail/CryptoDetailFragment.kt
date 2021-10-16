@@ -12,6 +12,7 @@ import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterCrypto
 import com.code_chabok.coinranking.components.zoomOutTransformer
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.databinding.FragmentCryptoDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +42,9 @@ class CryptoDetailFragment : CoinFragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setShimmerIndicator(true,DetailPage = true)
+        setShimmerIndicator(true, DetailPage = true)
         binding.parent.isVisible = false
         val uuid = arguments?.getString("uuid")
         vieModel.setUuid(uuid!!)
@@ -53,11 +53,11 @@ class CryptoDetailFragment : CoinFragment() {
             if (it.tag == R.drawable.ic_bookmarks_fill) {
                 binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
                 binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_empty)
-                vieModel.updateNewBookmark(uuid,false)
+                vieModel.updateNewBookmark(uuid, false)
             } else if (it.tag == R.drawable.ic_bookmarks_empty) {
                 binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
                 binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
-                vieModel.updateNewBookmark(uuid,true)
+                vieModel.updateNewBookmark(uuid, true)
             }
         }
 
@@ -65,11 +65,11 @@ class CryptoDetailFragment : CoinFragment() {
 
             checkResponseForView(resource, onSuccess = {
                 binding.parent.isVisible = true
-                val coin = resource.data as CoinDetail
-                binding.model = coin
+                val coinAndBookmark = resource.data as CoinAndBookmark
+                binding.model = coinAndBookmark.coin
                 setShimmerIndicator(false)
                 binding.cryptoBookmarkIv.also {
-                    if (coin.isBookmark) {
+                    if (coinAndBookmark.bookmark != null) {
                         it.tag = R.drawable.ic_bookmarks_fill
                         it.setImageResource(R.drawable.ic_bookmarks_fill)
                     } else {
@@ -81,8 +81,8 @@ class CryptoDetailFragment : CoinFragment() {
             },
                 onError = {
                     binding.parent.isVisible = true
-
-                    binding.model = resource.data as CoinDetail
+                    val coinAndBookmark = resource.data as CoinAndBookmark
+                    binding.model = coinAndBookmark.coin
                     setShimmerIndicator(false)
                 }
             )
@@ -115,7 +115,6 @@ class CryptoDetailFragment : CoinFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("TAG", "onDestroyViewsfnvdsnuo: ")
-        vieModel.onFinish()
     }
 
 

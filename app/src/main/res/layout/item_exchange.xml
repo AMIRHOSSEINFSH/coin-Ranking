@@ -7,7 +7,7 @@
 
         <variable
             name="exchangeListModel"
-            type="com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel" />
+            type="com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange" />
 
     </data>
 

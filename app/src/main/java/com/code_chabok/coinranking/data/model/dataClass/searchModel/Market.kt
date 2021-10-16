@@ -2,10 +2,7 @@ package com.code_chabok.coinranking.data.model.dataClass.searchModel
 
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import android.os.Parcelable
 
-@Parcelize
 data class Market(
     @SerializedName("baseSymbol")
     val baseSymbol: String,
@@ -23,4 +20,4 @@ data class Market(
     val quoteUuid: String,
     @SerializedName("uuid")
     val uuid: String
-) : Parcelable
+)

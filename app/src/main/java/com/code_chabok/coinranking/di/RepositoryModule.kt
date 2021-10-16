@@ -1,5 +1,6 @@
 package com.code_chabok.coinranking.data.db
 
+import com.code_chabok.coinranking.data.model.dataClass.localModel.BookmarkDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import com.code_chabok.coinranking.data.model.repo.*
@@ -33,10 +34,11 @@ object RepositoryModule {
     fun provideCoinListRepo(
         //todo
         coinDao: CoinDao,
+        bookmarkDao: BookmarkDao,
         apiService: ApiService
     ): CoinListRepository {
         return CoinListRepository(
-            apiService, coinDao
+            apiService, coinDao,bookmarkDao
         )
 
     }
@@ -60,10 +62,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideExchangeRepoImp(
-        localDataSource: ExchangeLocalDataSource,
-        remoteDataSource: ExchangeRemoteDataSource
+        apiService: ApiService,
+        exchangeDao: ExchangeDao
     ): ExchangeRepository {
-        return ExchangeRepositoryImp(localDataSource,remoteDataSource)
+        return ExchangeRepositoryImp(apiService,exchangeDao)
     }
 
 }

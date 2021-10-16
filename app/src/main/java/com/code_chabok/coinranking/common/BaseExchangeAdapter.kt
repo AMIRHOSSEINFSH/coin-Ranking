@@ -12,29 +12,29 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.code_chabok.coinranking.R
-import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
 import com.code_chabok.coinranking.databinding.ItemExchangeBinding
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
 
 
 class BaseExchangeAdapter constructor(
-    private val onItemLongClickListener: (ExchangeListModel) -> Unit,
+    private val onItemLongClickListener: (Exchange) -> Unit,
     private val onChangeDir: (Boolean, Int) -> Unit,
     private val onActivityProvider: () -> Activity
-) : ListAdapter<ExchangeListModel, BaseExchangeAdapter.MyViewHolder>(
-    object : DiffUtil.ItemCallback<ExchangeListModel>() {
+) : ListAdapter<Exchange, BaseExchangeAdapter.MyViewHolder>(
+    object : DiffUtil.ItemCallback<Exchange>() {
 
         override fun areItemsTheSame(
-            oldItem: ExchangeListModel,
-            newItem: ExchangeListModel
+            oldItem: Exchange,
+            newItem: Exchange
         ): Boolean {
             return oldItem.uuid == newItem.uuid
         }
 
         override fun areContentsTheSame(
-            oldItem: ExchangeListModel,
-            newItem: ExchangeListModel
+            oldItem: Exchange,
+            newItem: Exchange
         ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
@@ -55,7 +55,7 @@ class BaseExchangeAdapter constructor(
 
     inner class MyViewHolder(val binding: ItemExchangeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var item: ExchangeListModel? = null
+        var item: Exchange? = null
         var itemPosition: Int = -1
 
         init {
@@ -80,7 +80,7 @@ class BaseExchangeAdapter constructor(
 
         }
 
-        fun bind(item: ExchangeListModel) {
+        fun bind(item: Exchange) {
             binding.constExpandable.implementSpringAnimationTrait()
             binding.exchangeListModel = item
             binding.expandableLayout.isVisible = item.isExpanded

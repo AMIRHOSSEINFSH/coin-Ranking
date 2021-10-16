@@ -25,6 +25,7 @@ import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.OnChangeSort
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 
 import com.code_chabok.coinranking.databinding.FragmentHomeBinding
 import com.code_chabok.coinranking.domain.getCoinDetail
@@ -72,13 +73,14 @@ class HomeFragment : CoinFragment(), OnChangeSort {
         setShimmerIndicator(true, HomeShimmer = true)
 
         dialog.isCancelable = true
-        viewModel.refresh(true)
+        //viewModel.refresh(true)
+        onChangeViewsByShimmer(false)
         swipeRefreshLayout = _binding!!.swipeRefresh
         setUpSpinners()
 
         swipeRefreshLayout.setOnRefreshListener {
             onChangeViewsByShimmer(false)
-            viewModel.refresh(true)
+            //viewModel.refresh(true)
             swipeRefreshLayout.isRefreshing = false
         }
 
@@ -100,12 +102,12 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                     viewModel.updateNewBookmark(uuid, isBookmark)
                 },
                 onItemLongClickListener = { coinListModel ->
-                    viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    //viewModel.getSpcificCoinDetail(coinListModel.uuid)
                     viewModel.coinDetailObserver
                 },
                 onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
-                        putString("uuid", adapter.currentList[position].uuid)
+                        putString("uuid", adapter.currentList[position].coin.uuid)
                     }
                     if (!isDetail)
                         findNavController().navigate(R.id.home_book_same, bundle)
@@ -127,37 +129,20 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 }
             }
 
-        viewModel.sortListLiveData.observe(viewLifecycleOwner) {
-            checkResponseForView(it,onSuccess =  {
-                onChangeViewsByShimmer(true)
-                val coinListModel: List<CoinListModel> = it.data!!
-                adapter.submitList(coinListModel) {
-                    bining?.rvHome?.smoothScrollToPosition(0)
-                }
-            },onError = {
-                onChangeViewsByShimmer(true)
-                adapter.submitList(it.data.orEmpty()){
-                    bining?.rvHome?.smoothScrollToPosition(0)
-                }
-            })
-        }
-
-
-        //viewModel.refresh()
         viewModel.listCoins.observe(viewLifecycleOwner, {
             checkResponseForView(it,onSuccess =  {
-                viewModel.refresh(false)
+                //viewModel.refresh(false)
                 Log.i("TAG", "refreshing: ")
-                val coinListModel: List<CoinListModel> = it.data.orEmpty()
+                val coinListModel: List<CoinAndBookmark> = it.data as List<CoinAndBookmark>
                 onChangeViewsByShimmer(true)
                 adapter.submitList(coinListModel){
                     bining?.rvHome?.smoothScrollToPosition(0)
                 }
 
             },onError = {
+                //viewModel.refresh(false)
                 onChangeViewsByShimmer(true)
-                bining?.constParent?.isVisible = true
-                adapter.submitList(it.data.orEmpty()){
+                adapter.submitList(it.data as MutableList<CoinAndBookmark>?){
                     bining?.rvHome?.smoothScrollToPosition(0)
                 }
             })
@@ -185,7 +170,8 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                     priceSort.setTextColor(resources.getColor(R.color.white))
                 } else {
                     priceSort.setTextColor(resources.getColor(R.color.spinnerBlack))
-                    viewModel.refresh(true)
+                    onChangeViewsByShimmer(false)
+                    //viewModel.refresh(true)
                     priceFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
                     priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                 }
@@ -198,13 +184,13 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             isSet = isSortOn.MARKETCAP
             _binding?.apply {
                 if (marketCapFrame.tag == "R.drawable.bg_spinner_framelayout_unselected") {
-
                     marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
                     marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
                     MarketCapSort.setTextColor(resources.getColor(R.color.white))
                     dialog.show(childFragmentManager, null)
                 } else {
-                    viewModel.refresh(true)
+                    onChangeViewsByShimmer(false)
+                    //viewModel.refresh(true)
                     marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
                     marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                     MarketCapSort.setTextColor(resources.getColor(R.color.spinnerBlack))
@@ -292,6 +278,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
     override fun onResult(isDesc: Boolean) {
         onChangeViewsByShimmer(false)
+        //viewModel.refresh(true)
         when (isSet) {
             isSortOn.PRICE -> {
                 viewModel.onChangeSort(HomeViewModel.SortType.Price("price", isDesc))
@@ -315,6 +302,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     private fun onChangeViewsByShimmer(mustShow: Boolean){
         bining?.apply {
             setShimmerIndicator(!mustShow,true)
+            viewModel.refresh(!mustShow)
             constParent.isVisible = mustShow
             priceFrame.isVisible = mustShow
             timeFrame.isVisible = mustShow
@@ -323,5 +311,9 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.refresh(true)
+    }
 
 }

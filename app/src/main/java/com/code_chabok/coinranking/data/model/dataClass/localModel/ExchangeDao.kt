@@ -12,8 +12,11 @@ interface ExchangeDao {
     @Query("SELECT * FROM Exchange")
     fun getExchanges(): LiveData<List<Exchange>>
 
-//    @Query("SELECT * FROM Exchange WHERE uuid = :_uuid")
-//    fun getExchange(_uuid: String): LiveData<Exchange>
+    @Query("UPDATE exchange SET iconUrl=:iconUrl,name=:name WHERE uuid=:uuid")
+    fun updateSearchExchange(uuid: String,iconUrl: String,name: String)
+
+    @Query("SELECT * FROM EXCHANGE WHERE name LIKE '%' || :query || '%' ")
+    fun getSearchedExchanges(query: String): List<Exchange>
 
 
 }

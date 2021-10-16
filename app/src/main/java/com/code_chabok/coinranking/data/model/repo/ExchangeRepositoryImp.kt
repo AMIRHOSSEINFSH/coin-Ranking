@@ -4,49 +4,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.NetworkBoundResource
 import com.code_chabok.coinranking.common.Resource
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeResource
 import com.code_chabok.coinranking.data.model.repo.source.ExchangeLocalDataSource
 import com.code_chabok.coinranking.data.model.repo.source.ExchangeRemoteDataSource
+import com.code_chabok.coinranking.services.http.ApiService
 import retrofit2.Response
 import javax.inject.Inject
 
-class ExchangeRepositoryImp @Inject
-constructor(
-    val localDataSource: ExchangeLocalDataSource,
-    val remoteDataSource: ExchangeRemoteDataSource
+class ExchangeRepositoryImp @Inject constructor(
+    private val apiService: ApiService,
+    private val exchangeDao: ExchangeDao
 ) : ExchangeRepository {
 
 
-    override fun getExchangeList(): LiveData<Resource<List<ExchangeListModel>>> =
-        object : NetworkBoundResource<List<ExchangeListModel>, ExchangeResource>() {
+     fun getExchangeList(): LiveData<Resource<List<Exchange>>> =
+        object : NetworkBoundResource<List<Exchange>, ExchangeResource>() {
             override suspend fun saveCallResult(response: ExchangeResource) {
 
                 val exchangeListModels = response.data.exchangeListModels.map {
                     it.exchangeConvert()
                 }
-                localDataSource.insertExchange(exchangeListModels)
+                exchangeDao.insertExchange(exchangeListModels)
 
             }
 
-            override fun loadFromDb(): LiveData<List<ExchangeListModel>> {
-
-                return localDataSource.getExchanges().map { list ->
-                    list.map { exchange ->
-                        exchange.convertExchangeListModel()
-                    }
-                }
+            override fun loadFromDb(): LiveData<List<Exchange>> {
+                return exchangeDao.getExchanges()
             }
 
             override suspend fun createCall(): Response<ExchangeResource> =
-                remoteDataSource.getExchangeList()
+                apiService.getExchangeList()
 
 
         }.asLiveData()
-
-//    override fun getExchange(id: String): LiveData<Resource<ExchangeListModel>> {
-//        TODO("Not yet implemented")
-//    }
-
 
 }

@@ -6,7 +6,7 @@ import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeList
 
 interface ExchangeRepository {
 
-    fun getExchangeList(): LiveData<Resource<List<ExchangeListModel>>>
+
 
 //    fun getExchange(id: String): LiveData<Resource<ExchangeListModel>>
 

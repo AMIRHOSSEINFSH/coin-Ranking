@@ -124,8 +124,8 @@ abstract class CoinViewModel : ViewModel() {
 
     val errorLiveData = MutableLiveData<String>()
 
-    fun refresh(isLock: Boolean) {
-        refreshing.value = isLock
+    fun refresh(shouldRefresh: Boolean) {
+        refreshing.value = shouldRefresh
     }
 
 

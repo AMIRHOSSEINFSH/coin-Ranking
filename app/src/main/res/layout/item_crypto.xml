@@ -7,8 +7,8 @@
 
         <import type="android.view.View"/>
         <variable
-            name="CoinListModel"
-            type="com.code_chabok.coinranking.data.model.dataClass.CoinListModel" />
+            name="coin"
+            type="com.code_chabok.coinranking.data.model.dataClass.localModel.Coin" />
 
      <variable
          name="CoinDetailModel"
@@ -48,7 +48,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="14dp"
                     android:src="@drawable/ic_bitcoin"
-                    app:loadImg="@{CoinListModel.iconUrl}" />
+                    app:loadImg="@{coin.iconUrl}" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                         android:id="@+id/cryptoNameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{CoinListModel.name,default=BitCoin}"
+                        android:text="@{coin.name,default=BitCoin}"
                         android:textAppearance="?textAppearanceSubtitle2"
                         android:textColor="@color/grey_700" />
 
@@ -67,7 +67,7 @@
                         android:id="@+id/cryptoAbbrTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{CoinListModel.symbol,default = BTC}"
+                        android:text="@{coin.symbol,default = BTC}"
                         android:textAllCaps="true"
                         android:textAppearance="?textAppearanceCaption"
                         android:textSize="12sp" />
@@ -96,7 +96,7 @@
                         android:id="@+id/cryptoPriceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:formatPrice="@{CoinListModel.price}"
+                        app:formatPrice="@{coin.price}"
                         tools:text="332%"
                         android:textAppearance="?textAppearanceSubtitle1"
                         android:textColor="@color/grey_700" />
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        app:rateImpl="@{CoinListModel.change}"
+                        app:rateImpl="@{coin.change}"
                         android:textAppearance="?textAppearanceSubtitle1"
                         android:textColor="#2BCF31"
                         android:textSize="10sp" />

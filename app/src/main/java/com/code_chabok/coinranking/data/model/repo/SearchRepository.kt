@@ -4,10 +4,7 @@ import android.util.Log
 import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
-import com.code_chabok.coinranking.data.model.dataClass.localModel.Coin
-import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
-import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
-import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.*
 import com.code_chabok.coinranking.data.model.dataClass.searchModel.SearchResult
 import com.code_chabok.coinranking.services.http.ApiService
 import javax.inject.Inject
@@ -15,37 +12,23 @@ import javax.inject.Inject
 class SearchRepository @Inject constructor(
     private val apiService: ApiService,
     private val coinDao: CoinDao,
-    private val exchangeDao: ExchangeDao
+    private val exchangeDao: ExchangeDao,
+    private val bookmarkDao: BookmarkDao
 ) {
-
-    private fun getBookmarks(): List<String> {
-        return coinDao.getBookmarksUuid()
-    }
 
     suspend fun search(query: String): SearchResult {
         val response = asApiResponse { apiService.getSearchResult(query) }
         return when (response) {
             is ApiSuccessResponse -> {
-                val coinresult = response.body.data.coins
-                val exchangeResult = response.body.data.exchanges
-                val coinDb: List<Coin> = coinresult.map {
-                    it.convertToCoin()
+                val coinList = response.body.data.searchCoins
+                val exchangeList = response.body.data.searchExchanges
+                coinList.map {searchModelCoin->
+                    coinDao.updateSearchCoin(searchModelCoin.uuid,searchModelCoin.iconUrl,searchModelCoin.name)
                 }
-                val exchangeDb: List<Exchange> = exchangeResult.map {
-                    it.exchangeConvert()
+                exchangeList.map {searchModelExchange->
+                    exchangeDao.updateSearchExchange(searchModelExchange.uuid,searchModelExchange.iconUrl,searchModelExchange.name)
                 }
-                coinDao.insetCoins(coinDb)
-                exchangeDao.insertExchange(exchangeDb)
-
-                val prevList = getBookmarks()
-                val resultList = ArrayList<CoinListModel>()
-                coinresult.forEach { coinListModel ->
-                    if (prevList.contains(coinListModel.uuid)) {
-                        coinListModel.isBookmarked = true
-                    }
-                    resultList.add(coinListModel)
-                }
-                SearchResult(coinresult, exchangeResult)
+                SearchResult(coinDao.getSearchedCoins(query), exchangeDao.getSearchedExchanges(query))
             }
             is ApiEmptyResponse -> {
                 SearchResult(null, null)
@@ -57,8 +40,12 @@ class SearchRepository @Inject constructor(
     }
 
 
-    suspend fun updateBookmark(uuid: String, isBookmark: Boolean): Int {
-        return coinDao.updateBookmark(uuid, isBookmark)
+    suspend fun updateBookmark(uuid: String, isBookmark: Boolean) {
+        if (isBookmark) {
+            bookmarkDao.insert(Bookmark(uuid))
+        } else {
+            bookmarkDao.remove(Bookmark(uuid))
+        }
     }
 
     suspend fun getDetailCoin(uuid: String): Resource<CoinDetail> {

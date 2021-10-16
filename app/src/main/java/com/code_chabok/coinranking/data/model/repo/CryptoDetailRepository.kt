@@ -7,6 +7,7 @@ import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
 import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinDetailResource.CoinDetailResource
 import com.code_chabok.coinranking.services.http.ApiService
 import retrofit2.Response
@@ -44,24 +45,17 @@ class CryptoDetailRepository @Inject constructor(
         return result.toString()
     }
 
-    fun getCoinDetailModel(uuid: String): LiveData<Resource<CoinDetail>> =
-        object : NetworkBoundResource<CoinDetail, CoinDetailResource>() {
+    fun getCoinDetailModel(uuid: String): LiveData<Resource<CoinAndBookmark>> =
+        object : NetworkBoundResource<CoinAndBookmark, CoinDetailResource>() {
             override suspend fun saveCallResult(response: CoinDetailResource) {
                 val detail = response.data.coin
-                detail.description = getOptimizedText(detail.description!!,detail.name)
+                detail.description = getOptimizedText(detail.description!!,detail.name!!)
                 val coin = detail.convertToCoin()
-                coinDao.getBookmarksUuid().forEach {
-                    if (it == detail.uuid) {
-                        coin.isBookmarked = true
-                    }
-                }
                 coinDao.updateCoin(coin)
             }
 
-            override fun loadFromDb(): LiveData<CoinDetail> {
-                return Transformations.map(coinDao.getDetailedCoin(uuid)) { coin ->
-                    coin.convertToCoinDetail()
-                }
+            override fun loadFromDb(): LiveData<CoinAndBookmark> {
+                 return coinDao.getDetailedCoin(uuid)
             }
 
             override suspend fun createCall(): Response<CoinDetailResource> {

@@ -17,17 +17,7 @@ import javax.inject.Inject
 class CryptoDetailViewModel @Inject constructor(
     private val coinDetailUseCase: getCryptoDetail,
     private val updateBookmark: updateBookmark,
-    private val savedStateHandle: SavedStateHandle,
-) :
-    CoinViewModel() {
-
-    override fun onCleared() {
-        super.onCleared()
-    }
-
-    fun onFinish(){
-        onCleared()
-    }
+) : CoinViewModel() {
 
     private lateinit var uuid: String
     fun setUuid(uuid: String){

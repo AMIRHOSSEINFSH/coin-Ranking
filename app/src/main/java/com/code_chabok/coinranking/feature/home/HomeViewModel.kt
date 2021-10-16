@@ -32,23 +32,14 @@ class HomeViewModel @Inject constructor(
         class MarketCap(Order: String, orderArrow: Boolean) : SortType(Order, orderArrow)
     }
 
-    private val _sortListLiveData = MutableLiveData<Resource<List<CoinListModel>>>()
-    val sortListLiveData: LiveData<Resource<List<CoinListModel>>> get() = _sortListLiveData
-
     fun onChangeSort(type: SortType) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = getSortedList(type)
-            _sortListLiveData.postValue(result)
-            /*if (result.isEmpty()){
-                errorLiveData.postValue("Sort is Not Compatible")
-            }*/
-            /*if (result.isEmpty()) {
-                errorLiveData.postValue(true)
-            } else {
-                withContext(Dispatchers.Main) {
-                    _listLiveData.value = result
+            when (result) {
+                is Resource.Error -> {
+                    errorLiveData.postValue(result.message)
                 }
-            }*/
+            }
         }
 
     }

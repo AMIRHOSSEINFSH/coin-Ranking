@@ -1,6 +1,7 @@
 package com.code_chabok.coinranking.di
 
 import com.code_chabok.coinranking.data.model.dataBase.CoinRankingDataBase
+import com.code_chabok.coinranking.data.model.dataClass.localModel.BookmarkDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
 import dagger.Module
@@ -21,5 +22,9 @@ object DaoModule {
     @Provides
     @Singleton
     fun provideExchangeDao(db: CoinRankingDataBase): ExchangeDao = db.getExchangeDao()
+
+    @Provides
+    @Singleton
+    fun provideBookmarkDao(db: CoinRankingDataBase): BookmarkDao = db.getBookmarkDao()
 
 }

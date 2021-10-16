@@ -13,6 +13,8 @@ import com.code_chabok.coinranking.common.BaseCoinAdapter
 import com.code_chabok.coinranking.common.BaseExchangeAdapter
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,12 +62,12 @@ class SearchFragment : CoinFragment() {
             BaseCoinAdapter(onUpdateClickListener = { uuid: String, isBookmark: Boolean, _: Int ->
                 viewModel.updateNewBookmark(uuid, isBookmark)
             }, onItemLongClickListener = { coinListModel ->
-                viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                //viewModel.getSpcificCoinDetail(coinListModel.uuid)
                 viewModel.coinDetailObserver
             }, onChangeDir = { isDetail: Boolean, position: Int ->
                 val bundle = Bundle().apply {
                     //putParcelable("item", item)
-                    putString("uuid", coinAdapter.currentList[position].uuid)
+                    putString("uuid", coinAdapter.currentList[position].coin.uuid)
                 }
                 if (!isDetail)
                     findNavController().navigate(R.id.home_book_same, bundle)
@@ -81,7 +83,7 @@ class SearchFragment : CoinFragment() {
                 },
                 onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
-                        putString("uuid", coinAdapter.currentList[position].uuid)
+                        putString("uuid", coinAdapter.currentList[position].coin.uuid)
                     }
                     if (!isDetail)
                         findNavController().navigate(R.id.home_book_same, bundle)
@@ -135,21 +137,21 @@ class SearchFragment : CoinFragment() {
     }
 
     fun search() {
-        binding.etSearch.doOnTextChanged { text, start, before, count ->
+        binding.etSearch.doOnTextChanged { text, _, _, _ ->
             viewModel.search(text.toString().trim())
         }
 
         viewModel.resultSearchResource.observe(viewLifecycleOwner) {
 
-            val coinListModel: List<CoinListModel> = it.coins!!
-            val exchangeList: List<ExchangeListModel> = it.exchanges!!
+            val coinListModel: List<CoinAndBookmark> = it.coins!!
+            val exchangeList: List<Exchange> = it.exchanges!!
             if (binding.etSearch.text.isEmpty()) {
-                /*runBlocking {
+                runBlocking {
                     delay(3000)
                     withContext(Dispatchers.Main){
                         setShimmerIndicator(true)
                     }
-                }*/
+                }
                 coinAdapter.submitList(null)
                 exchangeAdapter.submitList(null)
             } else {
