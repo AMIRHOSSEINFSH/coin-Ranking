@@ -36,9 +36,18 @@ class CoinListRepository @Inject constructor(
                 respone = asApiResponse { apiService.getListAs(kindOfOrder = type.body) }
             }
         }
+
         val localList = coinDao.getCoinsAndBookMarks()
         return when (respone) {
             is ApiSuccessResponse -> {
+                val b = bookmarkDao.getBookmarks().map {
+                    it.uuid
+                }
+                val li = respone.body.data.coinListModels.map {
+                    if (b.contains(it.uuid)) CoinAndBookmark(it.convertToCoin(), Bookmark(it.uuid))
+                    else CoinAndBookmark(it.convertToCoin(), null)
+                }
+
                 //todo use for insert into Local only
                 val insertationList = ArrayList<Coin>()
                 //todo use for take to View Layer
@@ -50,47 +59,51 @@ class CoinListRepository @Inject constructor(
                     insertationList.add(it.convertToCoin())
                 }
 
-                val bookmarkList = bookmarkDao.getBookmarks().map {
-                    bookmark ->  bookmark.uuid
+                val bookmarkList = bookmarkDao.getBookmarks().map { bookmark ->
+                    bookmark.uuid
                 }
-                serverToLocalList.forEach { coin->
+                serverToLocalList.forEach { coin ->
                     var isBookmarked = false
-                    if (bookmarkList.contains(coin.uuid)){
+                    if (bookmarkList.contains(coin.uuid)) {
                         isBookmarked = true
                     }
-                    timeList.add(CoinAndBookmark(coin,if (isBookmarked) Bookmark(coin.uuid) else null))
+                    timeList.add(
+                        CoinAndBookmark(
+                            coin,
+                            if (isBookmarked) Bookmark(coin.uuid) else null
+                        )
+                    )
                 }
                 respone.body.data.coinListModels.forEach {
                     serverToLocalList.add(it.convertToCoin())
                 }
                 coinDao.insetCoins(insertationList.toList())
-                when(type){
+                when (type) {
                     is HomeViewModel.SortType.Time -> {
-                        Resource.Success(timeList)
+                        Resource.Success(li)
                     }
                     is HomeViewModel.SortType.Price -> {
                         Resource.Success(coinDao.getPriceOrdered(type.orderArrow!!))
                     }
                     is HomeViewModel.SortType.MarketCap -> {
-                        Resource.Success(coinDao.getPriceOrdered(type.orderArrow!!))
+                        Resource.Success(coinDao.getMarketCapOrdered(type.orderArrow!!))
                     }
                 }
             }
             //todo if Reach this, it means that we must take the catch only to view layer
             is ApiErrorResponse -> {
-                Resource.Error<List<CoinAndBookmark>>("Error Found in request !!",localList.value)
+                Resource.Error<List<CoinAndBookmark>>("Error Found in request !!", localList.value)
             }
             is ApiEmptyResponse -> {
-                Resource.Error<List<CoinAndBookmark>>("Empty List Found !!",localList.value)
+                Resource.Error<List<CoinAndBookmark>>("Empty List Found !!", localList.value)
             }
         }
     }
 
     suspend fun updateBookmark(uuid: String, isBookmark: Boolean) {
-        if (isBookmark){
+        if (isBookmark) {
             bookmarkDao.insert(Bookmark(uuid))
-        }
-        else{
+        } else {
             bookmarkDao.remove(Bookmark(uuid))
         }
     }
@@ -100,6 +113,8 @@ class CoinListRepository @Inject constructor(
         val resource = asApiResponse { apiService.getDetailedCoin(uuid.trim()) }
         return when (resource) {
             is ApiSuccessResponse -> {
+                val res = resource.body.data.coin
+                coinDao.insertCoin(res.convertToCoin())
                 Resource.Success(resource.body.data.coin)
             }
             is ApiErrorResponse -> {

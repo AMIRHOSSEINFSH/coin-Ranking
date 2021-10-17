@@ -69,10 +69,11 @@ class SearchFragment : CoinFragment() {
                     //putParcelable("item", item)
                     putString("uuid", coinAdapter.currentList[position].coin.uuid)
                 }
-                if (!isDetail)
+                findNavController().navigate(R.id.action_searchFragment_to_cryptoDetailFragment,bundle)
+                /*if (!isDetail)
                     findNavController().navigate(R.id.home_book_same, bundle)
                 else
-                    findNavController().navigate(R.id.action_same_to_same, bundle)
+                    findNavController().navigate(R.id.action_same_to_same, bundle)*/
 
             })
 
@@ -85,10 +86,11 @@ class SearchFragment : CoinFragment() {
                     val bundle = Bundle().apply {
                         putString("uuid", coinAdapter.currentList[position].coin.uuid)
                     }
-                    if (!isDetail)
+                    findNavController().navigate(R.id.action_searchFragment_to_exchangeDetailFragment,bundle)
+                    /*if (!isDetail)
                         findNavController().navigate(R.id.home_book_same, bundle)
                     else
-                        findNavController().navigate(R.id.action_same_to_same, bundle)
+                        findNavController().navigate(R.id.action_same_to_same, bundle)*/
                 },onActivityProvider = {
                     requireActivity()
                 })

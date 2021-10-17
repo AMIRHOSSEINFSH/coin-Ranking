@@ -70,30 +70,54 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setShimmerIndicator(true, HomeShimmer = true)
 
         dialog.isCancelable = true
         //viewModel.refresh(true)
-        onChangeViewsByShimmer(false)
+        //onChangeViewsByShimmer(false)
         swipeRefreshLayout = _binding!!.swipeRefresh
         setUpSpinners()
 
         swipeRefreshLayout.setOnRefreshListener {
             onChangeViewsByShimmer(false)
-            //viewModel.refresh(true)
+            viewModel.refresh(true)
             swipeRefreshLayout.isRefreshing = false
+        }
+
+        viewModel.sortListLiveData.observe(viewLifecycleOwner) {
+            checkResponseForView(it, onSuccess = {
+                val coinListModel: List<CoinAndBookmark> = it.data as List<CoinAndBookmark>
+                //onChangeViewsByShimmer(true)
+                setShimmerIndicator(false)
+                _binding?.apply {
+                    constParent.isVisible = true
+                    priceFrame.isVisible = true
+                    timeFrame.isVisible = true
+                    marketCapFrame.isVisible = true
+                }
+                viewModel.refresh(false)
+                adapter.submitList(coinListModel) {
+                    bining?.rvHome?.smoothScrollToPosition(0)
+                }
+            }, onError = {
+                onChangeViewsByShimmer(true)
+                viewModel.refresh(false)
+                adapter.submitList(it.data as MutableList<CoinAndBookmark>?) {
+                    bining?.rvHome?.smoothScrollToPosition(0)
+                }
+            })
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
             showSnackBar(errorMessage)
             onChangeViewsByShimmer(true)
+            viewModel.refresh(false)
         }
-        bining?.apply {
+        /*bining?.apply {
             priceFrame.visibility = View.GONE
             priceFrame.isVisible = !isDetail
             timeFrame.isVisible = !isDetail
             marketCapFrame.isVisible = !isDetail
-        }
+        }*/
         if (isDetail) {
         }
         adapter =
@@ -102,7 +126,8 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                     viewModel.updateNewBookmark(uuid, isBookmark)
                 },
                 onItemLongClickListener = { coinListModel ->
-                    //viewModel.getSpcificCoinDetail(coinListModel.uuid)
+                    viewModel.refresh(true)
+                    viewModel.getSpcificCoinDetail(coinListModel.coin.uuid)
                     viewModel.coinDetailObserver
                 },
                 onChangeDir = { isDetail: Boolean, position: Int ->
@@ -130,19 +155,19 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             }
 
         viewModel.listCoins.observe(viewLifecycleOwner, {
-            checkResponseForView(it,onSuccess =  {
-                //viewModel.refresh(false)
+            checkResponseForView(it, onSuccess = {
+                viewModel.refresh(false)
                 Log.i("TAG", "refreshing: ")
                 val coinListModel: List<CoinAndBookmark> = it.data as List<CoinAndBookmark>
                 onChangeViewsByShimmer(true)
-                adapter.submitList(coinListModel){
-                    bining?.rvHome?.smoothScrollToPosition(0)
+                adapter.submitList(coinListModel) {
+                   // bining?.rvHome?.smoothScrollToPosition(0)
                 }
 
-            },onError = {
-                //viewModel.refresh(false)
+            }, onError = {
+                viewModel.refresh(false)
                 onChangeViewsByShimmer(true)
-                adapter.submitList(it.data as MutableList<CoinAndBookmark>?){
+                adapter.submitList(it.data as MutableList<CoinAndBookmark>?) {
                     bining?.rvHome?.smoothScrollToPosition(0)
                 }
             })
@@ -164,14 +189,14 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                 if (priceFrame.tag == "R.drawable.bg_spinner_framelayout_unselected") {
                     dialog.show(childFragmentManager, null)
 
-
                     priceFrame.tag = "R.drawable.bg_spinner_framelayout_selected"
                     priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_selected)
                     priceSort.setTextColor(resources.getColor(R.color.white))
                 } else {
+                    setShimmerIndicator(true)
+                    viewModel.refresh(true)
                     priceSort.setTextColor(resources.getColor(R.color.spinnerBlack))
-                    onChangeViewsByShimmer(false)
-                    //viewModel.refresh(true)
+                    //viewModel.refresh(false)
                     priceFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
                     priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                 }
@@ -189,8 +214,8 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                     MarketCapSort.setTextColor(resources.getColor(R.color.white))
                     dialog.show(childFragmentManager, null)
                 } else {
-                    onChangeViewsByShimmer(false)
-                    //viewModel.refresh(true)
+                    setShimmerIndicator(true)
+                    viewModel.refresh(true)
                     marketCapFrame.tag = "R.drawable.bg_spinner_framelayout_unselected"
                     marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                     MarketCapSort.setTextColor(resources.getColor(R.color.spinnerBlack))
@@ -227,6 +252,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
                                 marketCapFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
                             }
                             onChangeViewsByShimmer(false)
+                            viewModel.refresh(false)
                             viewModel.onChangeSort(HomeViewModel.SortType.Time("${timeList[p2]}"))
                         } else {
                             _binding?.apply {
@@ -249,7 +275,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
             }
 
         var timeListAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, timeList)
+            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, timeList)
 
         _binding?.apply {
             timeSpinner.adapter = timeListAdapter
@@ -278,7 +304,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
 
     override fun onResult(isDesc: Boolean) {
         onChangeViewsByShimmer(false)
-        //viewModel.refresh(true)
+        viewModel.refresh(false)
         when (isSet) {
             isSortOn.PRICE -> {
                 viewModel.onChangeSort(HomeViewModel.SortType.Price("price", isDesc))
@@ -292,6 +318,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     }
 
     override fun onCancel() {
+        onChangeViewsByShimmer(true)
         _binding?.apply {
             timeFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
             priceFrame.setBackgroundResource(R.drawable.bg_spinner_framelayout_unselected)
@@ -299,10 +326,9 @@ class HomeFragment : CoinFragment(), OnChangeSort {
         }
     }
 
-    private fun onChangeViewsByShimmer(mustShow: Boolean){
+    private fun onChangeViewsByShimmer(mustShow: Boolean) {
         bining?.apply {
-            setShimmerIndicator(!mustShow,true)
-            viewModel.refresh(!mustShow)
+            setShimmerIndicator(!mustShow, true)
             constParent.isVisible = mustShow
             priceFrame.isVisible = mustShow
             timeFrame.isVisible = mustShow
@@ -314,6 +340,7 @@ class HomeFragment : CoinFragment(), OnChangeSort {
     override fun onStart() {
         super.onStart()
         viewModel.refresh(true)
+        onChangeViewsByShimmer(false)
     }
 
 }

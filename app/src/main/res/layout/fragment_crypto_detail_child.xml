@@ -6,7 +6,7 @@
     <data>
         <variable
             name="childModel"
-            type="com.code_chabok.coinranking.data.model.dataClass.CoinDetail" />
+            type="com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -30,7 +30,7 @@
 
 
                     <TextView
-                        android:text="@{@string/symbol_value(childModel.symbol)}"
+                        android:text="@{@string/symbol_value(childModel.coin.symbol)}"
                         android:id="@+id/tv_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                             android:text="Price to USD" />
 
                         <TextView
-                            app:formatPrice="@{childModel.price}"
+                            app:formatPrice="@{childModel.coin.price}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -98,7 +98,7 @@
                             android:text="Price to BTC" />
 
                         <TextView
-                            android:text="@{@string/symbol_value(childModel.btcPrice),default=12233}"
+                            android:text="@{@string/symbol_value(childModel.coin.btcPrice),default=12233}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -135,7 +135,7 @@
                             android:text="Rank" />
 
                         <TextView
-                            android:text="@{Integer.toString(childModel.rank),default=1}"
+                            android:text="@{Integer.toString(childModel.coin.rank),default=1}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -206,7 +206,7 @@
                             android:text="Market cap" />
 
                         <TextView
-                            app:bindVolume="@{childModel.marketCap}"
+                            app:bindVolume="@{childModel.coin.marketCap}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

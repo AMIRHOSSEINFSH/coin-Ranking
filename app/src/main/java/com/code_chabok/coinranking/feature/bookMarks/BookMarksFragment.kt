@@ -43,6 +43,11 @@ class BookMarksFragment : CoinFragment() {
         return this
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.lottieAnimation.visibility = View.GONE
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -33,7 +33,7 @@ import kotlinx.coroutines.withContext
 
 class BaseCoinAdapter constructor(
     private val onUpdateClickListener: ((String, Boolean, Int) -> Unit)? = null,
-    private val onItemLongClickListener: suspend (CoinAndBookmark) -> LiveData<CoinDetail>,
+    private val onItemLongClickListener:  (CoinAndBookmark) -> Unit,
     private val onChangeDir: (Boolean, Int) -> Unit
 
 ) : ListAdapter<CoinAndBookmark, BaseCoinAdapter.MyViewHolder>(
@@ -47,7 +47,7 @@ class BaseCoinAdapter constructor(
             oldItem: CoinAndBookmark,
             newItem: CoinAndBookmark
         ): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.coin.uuid == newItem.coin.uuid
         }
     }
 
@@ -93,9 +93,9 @@ class BaseCoinAdapter constructor(
                     binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_fill
                     binding.cryptoBookmarkIv.setImageResource(R.drawable.ic_bookmarks_fill)
                 } else {
-                    if (!isDetail){
-
-                        currentList.removeAt(adapterPosition)
+                    if (!com.code_chabok.coinranking.common.isDetail){
+                        item?.bookmark = null
+                        //submitList()
                     }
                     item?.bookmark = null
                     binding.cryptoBookmarkIv.tag = R.drawable.ic_bookmarks_empty
@@ -107,6 +107,7 @@ class BaseCoinAdapter constructor(
             binding.constExpandable.setOnLongClickListener {
 
                 item?.let { item ->
+                    onItemLongClickListener(item)
                     Log.d("Logging ...", ": item-> ${item} itemPosition -> ${itemPosition}")
                     //binding.cryptoNameTv.text = "Bit"
                     this.item?.coin?.isExpanded = !item.coin.isExpanded

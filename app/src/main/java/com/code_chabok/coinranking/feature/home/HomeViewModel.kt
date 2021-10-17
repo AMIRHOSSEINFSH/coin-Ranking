@@ -8,6 +8,7 @@ import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.data.model.Crypto
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.data.model.repo.CryptoRepository
 import com.code_chabok.coinranking.domain.getCoinDetail
 import com.code_chabok.coinranking.domain.getListOfCoins
@@ -32,10 +33,16 @@ class HomeViewModel @Inject constructor(
         class MarketCap(Order: String, orderArrow: Boolean) : SortType(Order, orderArrow)
     }
 
+    private val _sortListLiveData = MutableLiveData<Resource<List<CoinAndBookmark>>>()
+    val sortListLiveData: LiveData<Resource<List<CoinAndBookmark>>> get() = _sortListLiveData
+
     fun onChangeSort(type: SortType) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = getSortedList(type)
             when (result) {
+                is Resource.Success->{
+                    _sortListLiveData.postValue(result)
+                }
                 is Resource.Error -> {
                     errorLiveData.postValue(result.message)
                 }

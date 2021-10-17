@@ -6,20 +6,18 @@ import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
-@Parcelize
 data class ExchangeListModel(
     @SerializedName("24hVolume")
-    val hVolume: Double,
-    val numberOfMarkets: String,
-    val numberOfCoins: String,
-    val marketShare: String,
-    val iconUrl: String,
-    val name: String,
-    val rank: Int,
+    val hVolume: Double?,
+    val numberOfMarkets: String?,
+    val numberOfCoins: String?,
+    val marketShare: String?,
+    val iconUrl: String?,
+    val name: String?,
+    val rank: Int?,
     val uuid: String,
     var isExpanded: Boolean = false,
-    ) : Parcelable {
+    )  {
     fun exchangeConvert(): Exchange {
         return Exchange(
             hVolume = hVolume,

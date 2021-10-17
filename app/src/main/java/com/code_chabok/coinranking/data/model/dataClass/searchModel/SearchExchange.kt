@@ -12,4 +12,11 @@ data class SearchExchange(
     @SerializedName("uuid")
     val uuid: String
 ){
+    fun convertToExchange(): Exchange{
+        return Exchange(
+            uuid = uuid,
+            name = name,
+            iconUrl = iconUrl
+        )
+    }
 }

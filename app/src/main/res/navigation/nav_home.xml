@@ -25,9 +25,15 @@
         android:name="com.code_chabok.coinranking.feature.search.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search" >
-        <action
+        <!--<action
             android:id="@+id/home_book_same"
+            app:destination="@id/cryptoDetailFragment2" />-->
+        <action
+            android:id="@+id/action_searchFragment_to_cryptoDetailFragment"
             app:destination="@id/cryptoDetailFragment2" />
+        <action
+            android:id="@+id/action_searchFragment_to_exchangeDetailFragment"
+            app:destination="@id/exchangeDetailFragment3" />
     </fragment>
 
     <fragment

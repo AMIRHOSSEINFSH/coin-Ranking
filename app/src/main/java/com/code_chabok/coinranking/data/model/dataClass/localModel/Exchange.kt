@@ -9,13 +9,13 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Exchange(
     @SerializedName("24hVolume")
-    val hVolume: Double,
-    val marketShare: String,
-    val iconUrl: String,
-    val name: String,
-    val rank: Int,
-    val numberOfMarkets: String,
-    val numberOfCoins: String,
+    val hVolume: Double? = null,
+    val marketShare: String? = null,
+    val iconUrl: String? = null,
+    val name: String? = null,
+    val rank: Int? = null,
+    val numberOfMarkets: String? = null,
+    val numberOfCoins: String? = null,
     @PrimaryKey val uuid: String,
     val description: String?= null,
     var isExpanded: Boolean = false,

@@ -18,6 +18,7 @@ import java.util.regex.Pattern
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.navigation.navGraphViewModels
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import javax.inject.Inject
 
 
@@ -40,7 +41,7 @@ class CryptoDetailChildFragment : CoinFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCryptoDetailChildBinding.inflate(inflater, container, false)
-        viewModel.refresh(true)
+        //viewModel.refresh(true)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -51,13 +52,13 @@ class CryptoDetailChildFragment : CoinFragment() {
         viewModel.coinDetail.observe(viewLifecycleOwner){resource->
             checkResponseForView(resource,onSuccess = {
                 binding.parent.isVisible = true
-                val coinDetail = resource.data as CoinDetail
+                val coinDetail = resource.data as CoinAndBookmark
                 binding.childModel = coinDetail
 
                 val tvList = ArrayList<TextView>()
 
                 val pattern1 = Pattern.compile("\n(.*?)\n", Pattern.DOTALL)
-                val matcher1 = pattern1.matcher(coinDetail.description.toString())
+                val matcher1 = pattern1.matcher(coinDetail.coin.description.toString())
                 var index = 0
                 while (matcher1.find()){
                     var textView = TextView(requireContext())
@@ -75,7 +76,7 @@ class CryptoDetailChildFragment : CoinFragment() {
             },
                 onError = {
                     binding.parent.isVisible = true
-                    binding.childModel = resource.data as CoinDetail
+                    binding.childModel = resource.data as CoinAndBookmark
                     setShimmerIndicator(false)
             })
         }
