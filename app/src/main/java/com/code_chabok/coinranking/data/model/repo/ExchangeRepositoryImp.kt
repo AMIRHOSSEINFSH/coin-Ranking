@@ -1,15 +1,11 @@
 package com.code_chabok.coinranking.data.model.repo
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.code_chabok.coinranking.common.NetworkBoundResource
 import com.code_chabok.coinranking.common.Resource
 import com.code_chabok.coinranking.data.model.dataClass.localModel.Exchange
 import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
-import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeListModel
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.exchangeListResource.ExchangeResource
-import com.code_chabok.coinranking.data.model.repo.source.ExchangeLocalDataSource
-import com.code_chabok.coinranking.data.model.repo.source.ExchangeRemoteDataSource
 import com.code_chabok.coinranking.services.http.ApiService
 import retrofit2.Response
 import javax.inject.Inject
@@ -17,7 +13,7 @@ import javax.inject.Inject
 class ExchangeRepositoryImp @Inject constructor(
     private val apiService: ApiService,
     private val exchangeDao: ExchangeDao
-) : ExchangeRepository {
+)  {
 
 
      fun getExchangeList(): LiveData<Resource<List<Exchange>>> =

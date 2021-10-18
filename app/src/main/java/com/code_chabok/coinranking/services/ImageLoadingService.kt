@@ -20,21 +20,23 @@ class ImageLoadingService {
 @BindingAdapter("app:loadImg")
 fun load(imageView: ImageView, imageUrl: String?) {
 
+    imageUrl?.let {url->
+        GlideToVectorYou.init()
+            .with(imageView.context)
+            .withListener(object : GlideToVectorYouListener{
+                override fun onLoadFailed() {
 
-    GlideToVectorYou.init()
-        .with(imageView.context)
-        .withListener(object : GlideToVectorYouListener{
-            override fun onLoadFailed() {
+                    Log.d("TAG", "onLoadFailed: ")
+                }
 
-                Log.d("TAG", "onLoadFailed: ")
-            }
+                override fun onResourceReady() {
+                    Log.d("TAG", "onResourceReady: ")
+                }
 
-            override fun onResourceReady() {
-                Log.d("TAG", "onResourceReady: ")
-            }
+            })
+            .load(Uri.parse(url),imageView)
+    }
 
-        })
-        .load(Uri.parse(imageUrl),imageView)
 
 
 

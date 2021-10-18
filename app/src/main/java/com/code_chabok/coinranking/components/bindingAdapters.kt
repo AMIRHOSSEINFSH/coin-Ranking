@@ -38,10 +38,11 @@ fun formatVolume(tv: TextView, numbert: Double?) {
 fun implRate(tv: TextView, number: String?) {
 
     if (number?.length!=0 && number!=null) {
-        tv.text = number
         if (number.substring(0, 1).equals("-")) {
+            tv.text = "$number%"
             tv.setTextColor(Color.parseColor("#eb5e2c"))
         } else {
+            tv.text = "+${number}%"
             tv.setTextColor(Color.parseColor("#2BCF31"))
         }
     }

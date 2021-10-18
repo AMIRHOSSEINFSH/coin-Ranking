@@ -61,9 +61,10 @@
                         android:layout_height="wrap_content"
                         android:text="@{coin.name,default=BitCoin}"
                         android:textAppearance="?textAppearanceSubtitle2"
-                        android:textColor="@color/grey_700" />
+                        android:textColor="@color/valueColor" />
 
                     <TextView
+                        android:textColor="@color/symbol"
                         android:id="@+id/cryptoAbbrTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -99,7 +100,7 @@
                         app:formatPrice="@{coin.price}"
                         tools:text="332%"
                         android:textAppearance="?textAppearanceSubtitle1"
-                        android:textColor="@color/grey_700" />
+                        android:textColor="@color/valueColor" />
 
                     <TextView
                         android:id="@+id/cryptoPriceChangeTv"

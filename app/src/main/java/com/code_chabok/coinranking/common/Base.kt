@@ -98,7 +98,7 @@ interface CoinView {
                 }
             }
             is Resource.Loading -> {
-                //setShimmerIndicator(true)
+                setShimmerIndicator(true)
             }
         }
     }

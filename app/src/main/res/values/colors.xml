@@ -12,7 +12,7 @@
     <color name="color_divider">@color/gray_50</color>
 
     <color name="bookmarkColor">@color/color_primary</color>
-    <color name="color_et_hint_search">@color/gray_400</color>
+    <color name="symbol">@color/gray_400</color>
     <color name="et_bg_color">@color/white</color>
     <color name="headLineColor">@color/grey_700</color>
     <color name="spinnerbgColorUnSelected">@color/titan_white</color>
@@ -29,12 +29,15 @@
     <color name="gray_200">#c4c4c4</color>
     <color name="green">#13b2b2</color>
     <color name="grey_500">#979797</color>
+    <color name="autoCompleteColor">@color/titan_white</color>
+    <color name="textSpinner">#686868</color>
+    <color name="fillBookmarkColor">@color/color_primary</color>
+    <color name="valueColor">@color/grey_700</color>
 
     <color name="titan_white">#ecefff</color>
     <color name="black_600">#000000</color>
     <color name="black_400">#FF000000</color>
     <color name="black_200">#2c324b</color>
-    <color name="spinnerBlack">#686868</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#97a9ff</color>
     <color name="colorGrey">#dddddd</color>

@@ -1,11 +1,13 @@
 package com.code_chabok.coinranking.data.model.repo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.code_chabok.coinranking.common.NetworkBoundResource
-import com.code_chabok.coinranking.common.Resource
+import com.code_chabok.coinranking.common.*
 import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
 import com.code_chabok.coinranking.data.model.dataClass.CoinListModel
+import com.code_chabok.coinranking.data.model.dataClass.localModel.Bookmark
+import com.code_chabok.coinranking.data.model.dataClass.localModel.BookmarkDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
 import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinDetailResource.CoinDetailResource
@@ -17,10 +19,70 @@ import javax.inject.Inject
 
 class CryptoDetailRepository @Inject constructor(
     private val apiService: ApiService,
-    private val coinDao: CoinDao
+    private val coinDao: CoinDao,
+    private val bookmarkDao: BookmarkDao
 ) {
 
-    fun getOptimizedText(description: String,name: String): String {
+    suspend fun updateCoin(uuid: String) {
+        val result = asApiResponse { apiService.getDetailedCoin(uuid) }
+        when (result) {
+            is ApiSuccessResponse -> {
+                coinDao.updateCoin(result.body.data.coin.convertToCoin())
+            }
+            is ApiErrorResponse -> {
+            }
+            is ApiEmptyResponse -> {
+            }
+        }
+
+    }
+
+    suspend fun getSortedItemBy(
+        uuid: String,
+        ref: String,
+        time: String
+    ): Resource<CoinAndBookmark> {
+        val bookmarkList = bookmarkDao.getBookmarks().map {
+            it.uuid
+        }
+        val apiRequest = asApiResponse { apiService.getDetailCoinAs(uuid, ref, time) }
+        Log.i("svdjisvdi", "getSortedItemBy: ${apiRequest}")
+        return when (apiRequest) {
+            is ApiSuccessResponse -> {
+                var finalCoin: CoinAndBookmark
+
+                if (bookmarkList.contains(apiRequest.body.data.coin.uuid)) {
+                    finalCoin = CoinAndBookmark(
+                        apiRequest.body.data.coin.convertToCoin(),
+                        Bookmark(apiRequest.body.data.coin.uuid)
+                    )
+                } else {
+                    finalCoin = CoinAndBookmark(apiRequest.body.data.coin.convertToCoin(),
+                        null)
+                }
+                coinDao.insertCoin(apiRequest.body.data.coin.apply {
+                    description = getOptimizedText(description!!, name!!)
+                }.convertToCoin())
+
+                Resource.Success(finalCoin.apply {
+                    coin.description = getOptimizedText(coin.description!!, coin.name!!)
+                })
+            }
+            is ApiErrorResponse -> {
+                val localCoin = coinDao.getCoin(uuid)
+                Log.i("bffdo", "getSortedItemBy: ${localCoin}")
+                Resource.Error("you should Check your Connection before doing Sort!!", localCoin)
+            }
+            is ApiEmptyResponse -> {
+                val localCoin = coinDao.getCoin(uuid)
+                Log.i("bffdo", "getSortedItemBy: ${localCoin}")
+                Resource.Error("Empty Response", localCoin)
+            }
+        }
+
+    }
+
+    private fun getOptimizedText(description: String, name: String): String {
         val pattern1 = Pattern.compile("<p>(.*?)</p>", Pattern.DOTALL)
         val pattern2 = Pattern.compile("<h3>(.*?)</h3>", Pattern.DOTALL)
         val matcher1 = pattern1.matcher(description)
@@ -49,13 +111,13 @@ class CryptoDetailRepository @Inject constructor(
         object : NetworkBoundResource<CoinAndBookmark, CoinDetailResource>() {
             override suspend fun saveCallResult(response: CoinDetailResource) {
                 val detail = response.data.coin
-                detail.description = getOptimizedText(detail.description!!,detail.name!!)
+                detail.description = getOptimizedText(detail.description!!, detail.name!!)
                 val coin = detail.convertToCoin()
                 coinDao.updateCoin(coin)
             }
 
             override fun loadFromDb(): LiveData<CoinAndBookmark> {
-                 return coinDao.getDetailedCoin(uuid)
+                return coinDao.getDetailedCoin(uuid)
             }
 
             override suspend fun createCall(): Response<CoinDetailResource> {

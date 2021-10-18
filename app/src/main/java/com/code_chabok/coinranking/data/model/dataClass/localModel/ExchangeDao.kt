@@ -12,6 +12,9 @@ interface ExchangeDao {
     @Query("SELECT * FROM Exchange")
     fun getExchanges(): LiveData<List<Exchange>>
 
+    @Query("SELECT * FROM exchange WHERE uuid=:uuid")
+    fun getExchange(uuid: String):LiveData<Exchange>
+
     @Query("UPDATE exchange SET iconUrl=:iconUrl,name=:name WHERE uuid=:uuid")
     fun updateSearchExchange(uuid: String,iconUrl: String,name: String)
 

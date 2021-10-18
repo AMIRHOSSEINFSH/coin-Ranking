@@ -53,12 +53,13 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_title">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_price_usd"
                             android:drawablePadding="2dp"
-                            android:text="Price to USD" />
+                            android:text="@string/price_to_usd"
+                            app:drawableStartCompat="@drawable/ic_price_usd" />
 
                         <TextView
                             app:formatPrice="@{childModel.coin.price}"
@@ -90,12 +91,13 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_usd">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_price_to_btc"
                             android:drawablePadding="2dp"
-                            android:text="Price to BTC" />
+                            android:text="@string/price_to_btc"
+                            app:drawableStartCompat="@drawable/ic_price_to_btc" />
 
                         <TextView
                             android:text="@{@string/symbol_value(childModel.coin.btcPrice),default=12233}"
@@ -127,12 +129,13 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_btc">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_rank"
                             android:drawablePadding="2dp"
-                            android:text="Rank" />
+                            android:text="@string/rank"
+                            app:drawableStartCompat="@drawable/ic_rank" />
 
                         <TextView
                             android:text="@{Integer.toString(childModel.coin.rank),default=1}"
@@ -163,12 +166,13 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_volume">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_24h_volume"
                             android:drawablePadding="2dp"
-                            android:text="24h volume" />
+                            android:text="@string/_24h_volume"
+                            app:drawableStartCompat="@drawable/ic_24h_volume" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -198,12 +202,13 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_rank">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_market_cap"
                             android:drawablePadding="2dp"
-                            android:text="Market cap" />
+                            android:text="@string/market_cap"
+                            app:drawableStartCompat="@drawable/ic_market_cap" />
 
                         <TextView
                             app:bindVolume="@{childModel.coin.marketCap}"
@@ -234,12 +239,13 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_Cryptocurrencies">
 
                         <TextView
+                            android:textColor="@color/valueColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_all_time"
                             android:drawablePadding="2dp"
-                            android:text="All-time high (daily avg." />
+                            android:text="@string/all_time_high_daily_avg"
+                            app:drawableStartCompat="@drawable/ic_all_time" />
 
 
                         <TextView

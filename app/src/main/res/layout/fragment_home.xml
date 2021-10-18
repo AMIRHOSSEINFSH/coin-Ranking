@@ -6,7 +6,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="@dimen/spacing_4x">
 
         <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
             app:lottie_rawRes="@raw/crypto_refresh"
@@ -25,7 +25,7 @@
                     android:id="@+id/tv_Cryptocurrency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="@dimen/spacing_3x"
                     android:text="@string/cryptocurrency_title"
                     android:textAppearance="?textAppearanceHeadline5"
                     android:textColor="@color/headLineColor"
@@ -34,94 +34,87 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:weightSum="3"
                     app:layout_constraintTop_toBottomOf="@id/tv_Cryptocurrency">
 
-                    <FrameLayout
-                        android:id="@+id/priceFrame"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        android:tag="R.drawable.bg_spinner_framelayout_unselected"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:id="@+id/et_price_filter"
+                        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/spacing_18x"
+                        android:layout_marginTop="@dimen/spacing_4x"
+                        android:layout_marginEnd="@dimen/spacing_2x"
+                        app:endIconDrawable="@drawable/ic_arrow_down_spinner"
+                        >
 
-                        <TextView
-                            android:id="@+id/priceSort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="56dp"
+                        <AutoCompleteTextView
                             android:layout_gravity="center"
-                            android:drawableEnd="@drawable/ic_arrow_up_spinner"
-                            android:drawablePadding="12dp"
+                            android:id="@+id/av_price_filter_drop_down"
+                            style="@style/Widget.MyTheme.AutoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Price"
-                            android:textColor="@color/spinnerBlack" />
+                            android:paddingStart="@dimen/spacing_base"
+                            android:paddingEnd="@dimen/spacing_base"
+                            android:text="price" />
 
-                    </FrameLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <FrameLayout
-                        android:id="@+id/timeFrame"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="8dp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <Spinner
-                            android:id="@+id/timeSpinner"
-                            android:layout_width="wrap_content"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:dropDownVerticalOffset="40dp"
-                            android:spinnerMode="dropdown" />
-
-                        <ImageView
-                            android:id="@+id/iv_time_arrow"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="end|center_vertical"
-                            android:layout_marginEnd="12dp"
-                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/marketCapFrame"
+                        android:id="@+id/et_time_filter"
+                        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        android:tag="R.drawable.bg_spinner_framelayout_unselected"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_height="@dimen/spacing_18x"
+                        android:layout_marginTop="@dimen/spacing_4x"
+                        android:layout_marginEnd="@dimen/spacing_2x"
+                        app:endIconDrawable="@drawable/ic_arrow_down_spinner"
+                        >
 
-                        <TextView
-                            android:id="@+id/MarketCapSort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"
-                            android:drawableEnd="@drawable/ic_arrow_up_spinner"
-                            android:drawablePadding="12dp"
+                        <AutoCompleteTextView
+                            android:id="@+id/av_time_filter_drop_down"
+                            style="@style/Widget.MyTheme.AutoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="MarketCap"
-                            android:textColor="@color/spinnerBlack" />
+                            android:paddingStart="@dimen/spacing_base"
+                            android:paddingEnd="@dimen/spacing_base"
+                            android:text="24h" />
 
-                    </FrameLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/et_market_filter"
+                        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/spacing_18x"
+                        android:layout_marginTop="@dimen/spacing_4x"
+                        android:layout_marginEnd="@dimen/spacing_2x"
+                        app:endIconDrawable="@drawable/ic_arrow_down_spinner"
+                        >
+
+                        <AutoCompleteTextView
+                            android:id="@+id/av_market_filter_drop_down"
+                            style="@style/Widget.MyTheme.AutoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_base"
+                            android:paddingEnd="@dimen/spacing_base"
+                            android:text="marketCap" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </LinearLayout>
 
 

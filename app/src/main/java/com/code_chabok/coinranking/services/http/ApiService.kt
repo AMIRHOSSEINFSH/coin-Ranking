@@ -1,5 +1,7 @@
 package com.code_chabok.coinranking.services.http
 
+import com.code_chabok.coinranking.data.model.dataClass.CoinDetail
+import com.code_chabok.coinranking.data.model.dataClass.localModel.relation.CoinAndBookmark
 import com.code_chabok.coinranking.data.model.dataClass.searchModel.SearchResource
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinDetailResource.CoinDetailResource
 import com.code_chabok.coinranking.data.model.dataClass.serverModel.coinListResource.CoinListResource
@@ -26,6 +28,13 @@ interface ApiService {
         @Query("orderBy") kindOfOrder: String? = null,
         @Query("timePeriod") timePeriod: String? = null
     ): Response<CoinListResource>
+
+    @GET("coin/{uuid}")
+    suspend fun getDetailCoinAs(
+        @Path(value = "uuid") nowCurr: String,
+        @Query("referenceCurrencyUuid") ref: String,
+        @Query("timePeriod") timePeriod: String
+    ):Response<CoinDetailResource>
 
 
     @GET("exchanges")

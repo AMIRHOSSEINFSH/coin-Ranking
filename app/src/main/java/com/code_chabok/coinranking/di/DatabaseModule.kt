@@ -19,6 +19,6 @@ object DatabaseModule {
     fun provideDatabase(
         @ApplicationContext context: Context
     ): CoinRankingDataBase =
-        Room.databaseBuilder(context, CoinRankingDataBase::class.java, "CoinRankingDataBase").build()
+        Room.databaseBuilder(context, CoinRankingDataBase::class.java, "CoinRankingDataBase").allowMainThreadQueries().build()
 
 }

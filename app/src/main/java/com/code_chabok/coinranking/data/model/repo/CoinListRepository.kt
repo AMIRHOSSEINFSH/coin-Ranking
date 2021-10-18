@@ -22,7 +22,41 @@ class CoinListRepository @Inject constructor(
     private val bookmarkDao: BookmarkDao
 ) {
 
-    suspend fun getSortedList(type: HomeViewModel.SortType): Resource<List<CoinAndBookmark>> {
+    suspend fun getSortedCoins(limit: Int,orderBy: String,timePeriod: String,orderDirection: String): Resource<List<CoinAndBookmark>>{
+        val databaseBookmarkList = bookmarkDao.getBookmarks().map { it.uuid }
+        val apiRequest = asApiResponse { apiService.getListAs(orderBy,timePeriod) }
+        return when(apiRequest){
+            is ApiSuccessResponse ->{
+                val list = apiRequest.body.data.coinListModels.map {
+                    val coin = it.convertToCoin()
+                    if (databaseBookmarkList.contains(coin.uuid)){
+                        CoinAndBookmark(coin,Bookmark((it.uuid)))
+                    }
+                    else{
+                        CoinAndBookmark(coin,null)
+                    }
+                }
+                val insertCoinList= list.map {
+                    it.coin
+                }
+                coinDao.insetCoins(insertCoinList)
+                Resource.Success(list)
+            }
+            is ApiErrorResponse ->{
+                if (orderBy == "Price")
+                Resource.Error("connection Error!!",coinDao.getPriceOrdered(orderDirection))
+                else Resource.Error("connection Error!!",coinDao.getMarketCapOrdered(orderDirection))
+            }
+            is ApiEmptyResponse ->{
+                if (orderBy == "Price")
+                Resource.Error("connection Error!!",coinDao.getPriceOrdered(orderDirection))
+                else Resource.Error("connection Error!!",coinDao.getMarketCapOrdered(orderDirection))
+            }
+        }
+
+    }
+
+    /*suspend fun getSortedList(type: HomeViewModel.SortType): Resource<List<CoinAndBookmark>> {
 
         var respone: ApiResponse<CoinListResource>
         when (type) {
@@ -83,10 +117,10 @@ class CoinListRepository @Inject constructor(
                         Resource.Success(li)
                     }
                     is HomeViewModel.SortType.Price -> {
-                        Resource.Success(coinDao.getPriceOrdered(type.orderArrow!!))
+                        Resource.Success(coinDao.getPriceOrdered("DESC"))
                     }
                     is HomeViewModel.SortType.MarketCap -> {
-                        Resource.Success(coinDao.getMarketCapOrdered(type.orderArrow!!))
+                        Resource.Success(coinDao.getMarketCapOrdered("DESC"))
                     }
                 }
             }
@@ -98,7 +132,7 @@ class CoinListRepository @Inject constructor(
                 Resource.Error<List<CoinAndBookmark>>("Empty List Found !!", localList.value)
             }
         }
-    }
+    }*/
 
     suspend fun updateBookmark(uuid: String, isBookmark: Boolean) {
         if (isBookmark) {
@@ -127,6 +161,7 @@ class CoinListRepository @Inject constructor(
 
     }
 
+
     fun getListOfCoin(): LiveData<Resource<List<CoinAndBookmark>>> =
 
         object : NetworkBoundResource<List<CoinAndBookmark>, CoinListResource>() {
@@ -136,7 +171,8 @@ class CoinListRepository @Inject constructor(
                 response.data.coinListModels.forEach {
                     list.add(it.convertToCoin())
                 }
-                coinDao.insetCoins(list)
+
+               coinDao.insetCoins(list)
 
             }
 

@@ -48,6 +48,7 @@
                 tools:text="Binance" />
 
             <TextView
+                android:textColor="@color/symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
@@ -60,6 +61,7 @@
                 tools:text="$ 23.20 billion" />
 
             <TextView
+                android:textColor="@color/symbol"
                 android:id="@+id/tv_marketsNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -10,8 +10,13 @@ import javax.inject.Inject
 
 class getSortedList @Inject constructor(val repo: CoinListRepository) {
 
-    suspend operator fun invoke(type: HomeViewModel.SortType): Resource<List<CoinAndBookmark>> =
-        repo.getSortedList(type)
+    suspend operator fun invoke(
+        limit: Int,
+        orderBy: String,
+        timePeriod: String,
+        orderDirection: String
+    ): Resource<List<CoinAndBookmark>> =
+        repo.getSortedCoins(limit,orderBy,timePeriod,orderDirection)
 
 
 }

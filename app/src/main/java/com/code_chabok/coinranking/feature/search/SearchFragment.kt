@@ -84,7 +84,7 @@ class SearchFragment : CoinFragment() {
                 },
                 onChangeDir = { isDetail: Boolean, position: Int ->
                     val bundle = Bundle().apply {
-                        putString("uuid", coinAdapter.currentList[position].coin.uuid)
+                        putString("uuid", exchangeAdapter.currentList[position].uuid)
                     }
                     findNavController().navigate(R.id.action_searchFragment_to_exchangeDetailFragment,bundle)
                     /*if (!isDetail)

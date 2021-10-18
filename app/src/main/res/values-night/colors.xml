@@ -19,7 +19,12 @@
     <color name="headLineColor">@color/color_primary_variant</color>
     <color name="spinnerbgColorUnSelected">@color/color_On_Surface</color>
     <color name="spinnerbgColorSelected">#4557aa</color>
+    <color name="symbol">@color/indigo_300</color>
+    <color name="autoCompleteColor">@color/indigo_300</color>
+    <color name="fillBookmarkColor">@color/blue_50</color>
+    <color name="valueColor">@color/blue_50</color>
 
+    <color name="textSpinner">@color/blue_50</color>
     <color name="cloud_burst_alpha_23">#3A1C2449</color>
     <color name="blue_grey_900">#1C2449</color>
     <color name="blue_grey_950">#0D122B</color>

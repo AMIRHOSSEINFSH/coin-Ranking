@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/autoCompleteColor</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/spacing_8x</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/spacing_8x</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/spacing_8x</item>
+        <item name="boxCornerRadiusTopStart">@dimen/spacing_8x</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@null</item>
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="Widget.MyTheme.AutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="iconTint">@color/textSpinner</item>
+        <item name="drawableTint">@color/textSpinner</item>
+        <item name="background">@null</item>
+        <item name="android:inputType">none</item>
+        <item name="android:paddingTop">@dimen/spacing_base</item>
+        <item name="android:paddingBottom">@dimen/spacing_base</item>
+        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
+        <item name="android:textColor">@color/textSpinner</item>
+        <item name="android:dropDownVerticalOffset">3dp</item>
+    </style>
+
     <style name="Base.CardView.Spinner" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">30dp</item>
         <item name="startIconDrawable">@drawable/ic_arrow_bottom</item>

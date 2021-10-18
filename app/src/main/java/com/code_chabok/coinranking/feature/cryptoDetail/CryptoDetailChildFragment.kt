@@ -25,9 +25,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CryptoDetailChildFragment : CoinFragment() {
 
-    /*@Inject
-    val vmf: ViewModel.Factory */
-
     private lateinit var binding: FragmentCryptoDetailChildBinding
     private val viewModel: CryptoDetailViewModel by /*navGraphViewModels<CryptoDetailViewModel>(R.id.nav_home) {vmf}*/activityViewModels()
 
@@ -36,51 +33,65 @@ class CryptoDetailChildFragment : CoinFragment() {
         super.onCreate(savedInstanceState)
         uuuId = viewModel.getUuid()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCryptoDetailChildBinding.inflate(inflater, container, false)
-        //viewModel.refresh(true)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.parent.isVisible = false
-        viewModel.coinDetail.observe(viewLifecycleOwner){resource->
-            checkResponseForView(resource,onSuccess = {
-                binding.parent.isVisible = true
-                val coinDetail = resource.data as CoinAndBookmark
-                binding.childModel = coinDetail
+        observe()
 
-                val tvList = ArrayList<TextView>()
+    }
 
-                val pattern1 = Pattern.compile("\n(.*?)\n", Pattern.DOTALL)
-                val matcher1 = pattern1.matcher(coinDetail.coin.description.toString())
-                var index = 0
-                while (matcher1.find()){
-                    var textView = TextView(requireContext())
-                    textView.setTextColor(resources.getColor(R.color.gray_600))
-                    textView.id = index
-                    textView.text = matcher1.group()
-                    binding.leanerDescription.addView(textView)
-                    Log.i("TAGAACsuc", "onViewCreated: ${matcher1.group()}")
-                    tvList.add(textView)
-                    index++
-                }
-                Log.i("TAGAACsuc", "onViewCreated: ---------------------")
+    private fun observe() {
+        viewModel.coinDetailOnSort.observe(viewLifecycleOwner) { resource ->
+            checkResponseForView(resource, onSuccess = {
+                onChangeViewsByShimmer(true)
+                val model = resource.data as CoinAndBookmark
+                binding.childModel = model
+                getOptimizedText(model.coin.description.toString())
+            }, onError = {
+                onChangeViewsByShimmer(true)
+                val model = resource.data as CoinAndBookmark
+                binding.childModel = model
+                getOptimizedText(model.coin.description.toString())
+            }
+            )
+        }
+    }
 
+    private fun onChangeViewsByShimmer(mustShow: Boolean) {
 
-            },
-                onError = {
-                    binding.parent.isVisible = true
-                    binding.childModel = resource.data as CoinAndBookmark
-                    setShimmerIndicator(false)
-            })
+        binding.apply {
+            setShimmerIndicator(!mustShow, DetailPage = true)
+            parent.isVisible = mustShow
         }
 
+    }
+
+    private fun getOptimizedText(description: String){
+        binding.leanerDescription.removeAllViews()
+        val tvList = ArrayList<TextView>()
+
+        val pattern1 = Pattern.compile("\n(.*?)\n", Pattern.DOTALL)
+        val matcher1 = pattern1.matcher(description)
+        var index = 0
+        while (matcher1.find()) {
+            var textView = TextView(requireContext())
+            textView.setTextColor(resources.getColor(R.color.gray_600))
+            textView.id = index
+            textView.text = matcher1.group()
+            binding.leanerDescription.addView(textView)
+            Log.i("TAGAACsuc", "onViewCreated: ${matcher1.group()}")
+            tvList.add(textView)
+            index++
+        }
     }
 
 

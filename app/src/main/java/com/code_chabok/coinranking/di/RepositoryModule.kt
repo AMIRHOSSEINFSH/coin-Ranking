@@ -1,22 +1,14 @@
 package com.code_chabok.coinranking.data.db
 
-import com.code_chabok.coinranking.data.model.dataClass.localModel.BookmarkDao
-import com.code_chabok.coinranking.data.model.dataClass.localModel.CoinDao
-import com.code_chabok.coinranking.data.model.dataClass.localModel.ExchangeDao
-import com.code_chabok.coinranking.data.model.repo.*
-import com.code_chabok.coinranking.data.model.repo.source.*
-import com.code_chabok.coinranking.services.http.ApiService
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-    @Provides
+ /*   @Provides
     @Singleton
     fun provideCryptoRepository(
         //todo
@@ -67,5 +59,5 @@ object RepositoryModule {
     ): ExchangeRepository {
         return ExchangeRepositoryImp(apiService,exchangeDao)
     }
-
+*/
 }

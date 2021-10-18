@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.code_chabok.coinranking.common.CoinFragment
 import com.code_chabok.coinranking.common.FragmentAdapterExchange
@@ -14,14 +16,19 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ExchangeDetailFragment : CoinFragment() {
 
     private lateinit var binding: FragmentExchangeDetailBinding
-//    lateinit var viewModel: ExchangeDetailViewModel
+    private val viewModel: ExchangeDetailViewModel by activityViewModels()
+    private var uuid: String? = null
+
+    private fun getData() {
+        uuid = arguments?.getString("uuid")
+        viewModel.setUuid(uuid!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-//        viewModel = ViewModelProvider(requireActivity()).get(ExchangeDetailViewModel::class.java)
+
         binding = FragmentExchangeDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,18 +36,53 @@ class ExchangeDetailFragment : CoinFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        binding.pager.adapter = FragmentAdapterExchange(this)
-        binding.pager.setPageTransformer(zoomOutTransformer())
+        binding.viewPager.adapter = FragmentAdapterExchange(this)
+        binding.viewPager.setPageTransformer(zoomOutTransformer())
         setup()
+        getData()
+        viewModel.exchangeItem.observe(viewLifecycleOwner){
+            checkResponseForView(it,onSuccess = {
+                onChangeViewsByShimmer(true)
+                binding.model = it.data
+            },onError = {
+                binding.model = it.data
+                onChangeViewsByShimmer(true)
+            }
+
+            )}
     }
 
     private fun setup() {
-        TabLayoutMediator(binding.tab, binding.pager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Overview"
-                1 -> tab.text = "Cryptocurrencies"
+                0 -> {
+                    tab.text = "OverView"
+                }
+                1 -> {
+                    tab.text = "Cryptocurrencies"
+                    setHasOptionsMenu(false)
+                }
             }
         }.attach()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        onChangeViewsByShimmer(true)
+    }
+
+    private fun onChangeViewsByShimmer(mustShow: Boolean) {
+        binding.apply {
+            setShimmerIndicator(!mustShow, DetailPage = true)
+            constParent.isVisible = mustShow
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        onChangeViewsByShimmer(false)
     }
 
 

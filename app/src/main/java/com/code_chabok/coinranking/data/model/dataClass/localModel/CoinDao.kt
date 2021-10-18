@@ -19,10 +19,10 @@ interface CoinDao {
     @Query("SELECT * FROM coin")
     fun getCoinsAndBookMarks(): LiveData<List<CoinAndBookmark>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insetCoins(coinList: List<Coin>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCoin(coin: Coin)
 
     @Update
@@ -32,15 +32,19 @@ interface CoinDao {
     fun getCoins(): LiveData<List<Coin>>
 
     @Transaction
-    @Query("SELECT * FROM coin ORDER BY CASE WHEN :isDesc = 1 THEN price END DESC , CASE WHEN :isDesc = 0 THEN price END ASC")
-    fun getPriceOrdered(isDesc: Boolean): List<CoinAndBookmark>
+    @Query("SELECT * FROM coin ORDER BY price =:orderDirection")
+    fun getPriceOrdered(orderDirection: String): List<CoinAndBookmark>
 
     @Transaction
-    @Query("SELECT * FROM coin ORDER BY CASE WHEN :isDesc = 1 THEN marketCap END DESC , CASE WHEN :isDesc = 0 THEN marketCap END ASC")
-    fun getMarketCapOrdered(isDesc: Boolean): List<CoinAndBookmark>
+    @Query("SELECT * FROM coin ORDER BY marketCap =:orderDirection")
+    fun getMarketCapOrdered(orderDirection: String): List<CoinAndBookmark>
 
     @Query("SELECT * FROM coin WHERE uuid =:uuid")
     fun getDetailedCoin(uuid: String): LiveData<CoinAndBookmark>
+
+    @Transaction
+    @Query("SELECT * FROM coin WHERE uuid =:uuid")
+    fun getCoin(uuid: String):CoinAndBookmark
 
 
 

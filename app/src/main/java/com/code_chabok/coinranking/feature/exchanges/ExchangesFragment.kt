@@ -56,7 +56,7 @@ class ExchangesFragment : CoinFragment() {
         //if (!isDetail)
 
         swipeRefreshLayout.setOnRefreshListener {
-            binding.rvExchange.visibility = View.VISIBLE
+            binding.rvExchange.visibility = View.GONE
             viewModel.refresh(true)
             setShimmerIndicator(true)
             swipeRefreshLayout.isRefreshing = false
@@ -72,11 +72,7 @@ class ExchangesFragment : CoinFragment() {
                 if (isDetail)
                     findNavController().navigate(R.id.action_same_to_same, bundle)
                 else {
-                    findNavController().navigate(
-                        ExchangesFragmentDirections.actionExchangesFragmentToExchangeDetailFragment(
-                            adapter.currentList[position].uuid
-                        )
-                    )
+                    findNavController().navigate(R.id.action_exchangesFragment_to_exchangeDetailFragment,bundle)
                 }
 
             },onItemLongClickListener = {

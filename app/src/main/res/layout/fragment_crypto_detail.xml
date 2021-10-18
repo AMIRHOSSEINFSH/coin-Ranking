@@ -18,7 +18,7 @@
         tools:context=".feature.cryptoDetail.CryptoDetailFragment">
 
         <LinearLayout
-            android:id="@+id/parent"
+            android:id="@+id/constParent"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -39,6 +39,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        app:loadImg="@{model.iconUrl}"
                         android:id="@+id/cryptoIv"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
@@ -104,71 +105,58 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
 
-                    <FrameLayout
-                        android:id="@+id/timeFrame"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="8dp"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_weight="1"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:id="@+id/et_time_filter"
+                        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/spacing_10x"
+                        android:layout_marginTop="@dimen/spacing_4x"
+                        android:layout_marginEnd="@dimen/spacing_2x"
+                        app:endIconDrawable="@drawable/ic_arrow_down_spinner"
+                        >
 
-                        <Spinner
-                            android:id="@+id/timeSpinner"
-                            android:layout_width="73dp"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:dropDownVerticalOffset="40dp"
-                            android:spinnerMode="dropdown" />
+                        <AutoCompleteTextView
+                            android:id="@+id/av_time_filter_drop_down"
+                            style="@style/Widget.MyTheme.AutoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_base"
+                            android:paddingEnd="@dimen/spacing_base"
+                            android:text="24h" />
 
-                        <ImageView
-                            android:id="@+id/iv_time_arrow"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="end|center_vertical"
-                            android:layout_marginEnd="12dp"
-                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/marketCapFrame"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:weightSum="1"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_spinner_framelayout_unselected"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:id="@+id/et_ref_filter"
+                        style="@style/Widget.MyTheme.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/spacing_10x"
+                        android:layout_marginTop="@dimen/spacing_4x"
+                        android:layout_marginEnd="@dimen/spacing_2x"
+                        app:endIconDrawable="@drawable/ic_arrow_down_spinner"
+                        >
 
-                        <Spinner
-                            android:id="@+id/marketCapSpinner"
-                            android:layout_width="73dp"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:dropDownVerticalOffset="40dp"
-                            android:spinnerMode="dropdown" />
+                        <AutoCompleteTextView
+                            android:id="@+id/av_ref_filter_drop_down"
+                            style="@style/Widget.MyTheme.AutoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_base"
+                            android:paddingEnd="@dimen/spacing_base"
+                            android:text="USD" />
 
-                        <ImageView
-                            android:id="@+id/iv_marketcap_arrow"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="end|center_vertical"
-                            android:layout_marginEnd="12dp"
-                            app:srcCompat="@drawable/ic_arrow_up_spinner" />
-
-                    </FrameLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
