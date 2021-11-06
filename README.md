@@ -1,6 +1,6 @@
 
 # Open source Crypto Currency Tracker Application
-based on Clean Artichecture and also using https://developers.coinranking.com/api/documentation api for it.
+based on Clean Architecture and also using https://developers.coinranking.com/api/documentation api for it.
 (Retrofit+Corutine+Navigation Component+dataBinding+Room)
 
 
